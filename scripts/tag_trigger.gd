@@ -13,5 +13,5 @@ func _process(delta: float) -> void:
 
 
 func _on_body_entered(body: Node3D) -> void:
-	if body != my_body:
+	if body.get_instance_id() != my_body.get_instance_id():
 		print("tagger entered body: ", body)
