@@ -215,12 +215,12 @@ func handle_jumping():
 				if jump_animation:
 					JUMP_ANIMATION.play("jump", 0.25)
 				velocity.y += jump_velocity # Adding instead of setting so jumping on slopes works properly
+				print("jump")
 		else:
 			if Input.is_action_just_pressed(JUMP) and is_on_floor() and !low_ceiling:
 				if jump_animation:
 					JUMP_ANIMATION.play("jump", 0.25)
 				velocity.y += jump_velocity
-				print("jump")
 
 
 func handle_movement(delta, input_dir):
