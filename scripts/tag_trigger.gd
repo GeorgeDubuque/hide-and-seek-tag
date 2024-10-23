@@ -30,9 +30,8 @@ func _process(delta: float) -> void:
 
 @rpc("any_peer", "call_local", "reliable")
 func freeze_player():
-	if is_multiplayer_authority():
-		is_frozen = true
-		print("is_frozen yay: ", is_frozen)
+	is_frozen = true
+	print("is_frozen yay: ", is_frozen)
 
 # Check on server if a player can be tagged and if they can freeze their input
 @rpc("any_peer", "call_local", "reliable")
@@ -42,7 +41,7 @@ func try_tag_player(taggee_id):
 		print("tagger ", tagger_id, " tried to tag ", taggee_id)
 		if potential_tags.has(tagger_id) and potential_tags[tagger_id] == taggee_id:
 			print("tagger ", tagger_id, " TAGGED ", taggee_id)
-			freeze_player.rpc_id(taggee_id)
+			freeze_player.rpc()
 
 
 # sets potential tag for this game object 
