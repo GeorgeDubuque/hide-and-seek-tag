@@ -27,10 +27,12 @@ func _process(delta: float) -> void:
 		if Input.is_action_just_pressed(INTERACT) and last_taggee != null:
 			try_tag_player.rpc_id(1, last_taggee) # 1 is the server id
 
+
 @rpc("any_peer", "call_local", "reliable")
 func freeze_player():
-	is_frozen = true
-	print("is_frozen yay: ", is_frozen)
+	if is_multiplayer_authority():
+		is_frozen = true
+		print("is_frozen yay: ", is_frozen)
 
 # Check on server if a player can be tagged and if they can freeze their input
 @rpc("any_peer", "call_local", "reliable")
