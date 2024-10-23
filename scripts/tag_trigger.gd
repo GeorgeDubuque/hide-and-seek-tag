@@ -43,7 +43,8 @@ func try_tag_player(taggee_id):
 		print("tagger ", tagger_id, " tried to tag ", taggee_id)
 		if potential_tags.has(tagger_id) and potential_tags[tagger_id] == taggee_id:
 			print("tagger ", tagger_id, " TAGGED ", taggee_id)
-			freeze_player.rpc_id(taggee_id, true)
+			(peer_id_to_node[taggee_id] as Character).tagManager.freeze_player.rpc_id(taggee_id, true)
+			#freeze_player.rpc_id(taggee_id, true)
 
 
 # sets potential tag for this game object 
@@ -58,7 +59,7 @@ func _on_body_entered(body: Node3D) -> void:
 
 		if multiplayer.is_server():
 			potential_tags[tagger_id] = taggee_id
-			peer_id_to_node[taggee_id] = body as Character
+			peer_id_to_node[taggee_id] = (body as Character)
 			print(tagger_id, " can tag ", taggee_id)
 
 		# TODO: add this body to a list of objects in array 
