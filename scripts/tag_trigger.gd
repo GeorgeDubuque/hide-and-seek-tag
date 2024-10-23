@@ -15,3 +15,7 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node3D) -> void:
 	if body.get_instance_id() != my_body.get_instance_id():
 		print("tagger entered body: ", body)
+		if multiplayer.is_server():
+			print("add ", body.name, " to array")
+
+		# TODO: add this body to a list of objects in array 
