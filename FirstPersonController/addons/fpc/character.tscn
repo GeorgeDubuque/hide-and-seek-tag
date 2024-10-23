@@ -1,6 +1,7 @@
-[gd_scene load_steps=25 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=26 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/character.gd" id="1_0t4e8"]
+[ext_resource type="Script" path="res://scripts/tag_trigger.gd" id="2_tat53"]
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/EditorModule.gd" id="3_v3ckk"]
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/debug.gd" id="3_x1wcc"]
 
@@ -19,10 +20,9 @@ height = 0.5
 [sub_resource type="BoxMesh" id="BoxMesh_3uy6v"]
 size = Vector3(0.5, 0.3, 0.2)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uy03j"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_pnvx4"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_u7pwd"]
-size = Vector3(1, 2, 1)
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uy03j"]
 
 [sub_resource type="Animation" id="Animation_j8cx7"]
 resource_name = "RESET"
@@ -373,6 +373,7 @@ properties/2/spawn = true
 properties/2/replication_mode = 1
 
 [node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH")]
+collision_mask = 7
 script = ExtResource("1_0t4e8")
 default_reticle = "res://FirstPersonController/addons/fpc/reticles/reticle_1.tscn"
 HEAD = NodePath("Head")
@@ -405,13 +406,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.4098)
 mesh = SubResource("BoxMesh_3uy6v")
 skeleton = NodePath("../../Head")
 
+[node name="TagTrigger" type="Area3D" parent="Graphics" node_paths=PackedStringArray("my_body")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
+collision_layer = 4
+script = ExtResource("2_tat53")
+my_body = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Graphics/TagTrigger"]
+shape = SubResource("BoxShape3D_pnvx4")
+
 [node name="Collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_uy03j")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
-shape = SubResource("BoxShape3D_u7pwd")
 
 [node name="CrouchAnimation" type="AnimationPlayer" parent="."]
 libraries = {
@@ -471,3 +477,5 @@ script = ExtResource("3_v3ckk")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_56ji0")
+
+[connection signal="body_entered" from="Graphics/TagTrigger" to="Graphics/TagTrigger" method="_on_body_entered"]
