@@ -111,7 +111,7 @@ material = SubResource("StandardMaterial3D_7j4uu")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("spawns", "startGameButton")]
 _spawnable_scenes = PackedStringArray("res://scenes/character.tscn")
-spawn_path = NodePath(".")
+spawn_path = NodePath("../Players")
 script = ExtResource("4_c1ilg")
 playerScene = ExtResource("5_8501o")
 spawns = [NodePath("../Spawns/Spawn1"), NodePath("../Spawns/Spawn2"), NodePath("../Spawns/Spawn3"), NodePath("../Spawns/Spawn4"), NodePath("../Spawns/Spawn5")]
