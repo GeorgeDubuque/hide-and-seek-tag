@@ -1,6 +1,7 @@
 # COPYRIGHT Colormatic Studios
 # MIT licence
 # Quality Godot First Person Controller v2
+class_name Character
 
 
 extends CharacterBody3D
@@ -207,6 +208,9 @@ func _physics_process(delta):
 	
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
 
+@rpc("authority", "call_local", "reliable")
+func freeze_player():
+	immobile = true
 
 func handle_jumping():
 	if jumping_enabled:

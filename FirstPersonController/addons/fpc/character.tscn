@@ -479,3 +479,4 @@ script = ExtResource("3_v3ckk")
 replication_config = SubResource("SceneReplicationConfig_56ji0")
 
 [connection signal="body_entered" from="Graphics/TagTrigger" to="Graphics/TagTrigger" method="_on_body_entered"]
+[connection signal="body_exited" from="Graphics/TagTrigger" to="Graphics/TagTrigger" method="_on_body_exited"]
