@@ -30,8 +30,9 @@ func _process(delta: float) -> void:
 
 @rpc("authority", "call_local", "reliable")
 func freeze_player(freeze_state):
-	is_frozen = freeze_state
-	print("is_frozen: ", is_frozen)
+	if is_multiplayer_authority():
+		is_frozen = freeze_state
+		print("is_frozen: ", is_frozen)
 
 
 # Check on server if a player can be tagged and if they can freeze their input
