@@ -212,9 +212,8 @@ func _physics_process(delta):
 @rpc("any_peer", "call_local", "reliable")
 func freeze_player():
 	print("freeze player rpc called")
-	if is_multiplayer_authority():
-		is_frozen = true
-		print("is_frozen yay: ", is_frozen)
+	is_frozen = true
+	print("is_frozen yay: ", is_frozen)
 
 func handle_jumping():
 	if jumping_enabled:
