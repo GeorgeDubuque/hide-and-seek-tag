@@ -6,8 +6,11 @@ var lobby_id = 0
 var peer = SteamMultiplayerPeer.new()
 
 @export var lobbyLevelPath = ""
+@export var testLevelPath = ""
 
 @onready var ms = $MultiplayerSpawner
+
+var lobbyLevel: Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -24,7 +27,7 @@ func spawn_level(data):
 func _on_host_pressed() -> void:
 	peer.create_lobby(SteamMultiplayerPeer.LOBBY_TYPE_PUBLIC)
 	multiplayer.multiplayer_peer = peer
-	ms.spawn(lobbyLevelPath)
+	lobbyLevel = ms.spawn(lobbyLevelPath)
 	hide_lobby_buttons()
 
 func join_lobby(id):
@@ -83,10 +86,11 @@ func change_level(level_scene):
 		var newLevel = load(level_scene).instantiate()
 		level.add_child(newLevel)
 
+
 		# await get_tree().create_timer(4).timeout
 
-		# for c in level.get_children():
-		# 	if c != newLevel:
-		# 		level.remove_child(c)
-		# 		c.queue_free()
+		for c in level.get_children():
+			if c != newLevel:
+				level.remove_child(c)
+				c.queue_free()
 		# Add new level.
