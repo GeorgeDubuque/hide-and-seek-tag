@@ -220,6 +220,7 @@ func handle_jumping():
 				if jump_animation:
 					JUMP_ANIMATION.play("jump", 0.25)
 				velocity.y += jump_velocity
+				print("jump")
 
 
 func handle_movement(delta, input_dir):
