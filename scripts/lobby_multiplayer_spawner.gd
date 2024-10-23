@@ -25,7 +25,7 @@ func spawnPlayer(data):
 	var nextSpawn = spawns.pop_front()
 	p.position = nextSpawn.position
 	spawns.push_back(nextSpawn)
-	p.set_multiplayer_authority(data)
+	p.set_multiplayer_authority(1)
 	players[data] = p
 
 	if multiplayer.is_server():
