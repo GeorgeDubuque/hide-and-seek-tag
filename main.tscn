@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1ql5itxphi0f"]
+
+[ext_resource type="Script" path="res://steam.gd" id="1_0tqd3"]
+[ext_resource type="Script" path="res://main.gd" id="1_f1i2n"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_f1i2n")
+levelPath = "res://FirstPersonController/test_world.tscn"
+
+[node name="Steam" type="Node3D" parent="."]
+script = ExtResource("1_0tqd3")
+
+[node name="Host" type="Button" parent="."]
+offset_right = 134.0
+offset_bottom = 102.0
+text = "Host"
+
+[node name="Refresh" type="Button" parent="."]
+offset_top = 104.0
+offset_right = 134.0
+offset_bottom = 206.0
+text = "Refresh"
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("..")
+
+[node name="LobbyContainer" type="ScrollContainer" parent="."]
+offset_left = 136.0
+offset_right = 736.0
+offset_bottom = 300.0
+
+[node name="Lobbies" type="VBoxContainer" parent="LobbyContainer"]
+layout_mode = 2
+
+[connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Refresh" to="." method="_on_refresh_pressed"]
