@@ -1,6 +1,7 @@
 extends Area3D
 
 @export var my_body: Node3D
+var tags = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -14,8 +15,8 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node3D) -> void:
 	if body.get_instance_id() != my_body.get_instance_id():
-		print("my authority: ", get_multiplayer_authority())
+		print(get_multiplayer_authority(), " tagged ", body.get_multiplayer_authority())
 		if multiplayer.is_server():
-			print("add ", get_instance_id(), " to array")
+			tags[get_multiplayer_authority()] = body.get_multiplayer_authority()
 
 		# TODO: add this body to a list of objects in array 
