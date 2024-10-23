@@ -76,7 +76,7 @@ func _on_multiplayer_spawner_spawned(node: Node) -> void:
 
 func change_level(level_scene):
 	if multiplayer.is_server():
-		print("START LEVEL: ", level_scene.resource_name)
+		#print("START LEVEL: ", level_scene.resource_name)
 		# Remove old level if any.
 		var level = $Level
 		for c in level.get_children():
