@@ -76,3 +76,10 @@ func _on_multiplayer_spawner_spawned(node: Node) -> void:
 
 func change_level(level_scene: PackedScene):
 	print("START LEVEL: ", level_scene.resource_name)
+	# Remove old level if any.
+	var level = $Level
+	for c in level.get_children():
+		level.remove_child(c)
+		c.queue_free()
+	# Add new level.
+	level.add_child(level_scene.instantiate())
