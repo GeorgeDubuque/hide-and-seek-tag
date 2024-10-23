@@ -35,5 +35,7 @@ layout_mode = 2
 
 [node name="Level" type="Node" parent="."]
 
+[node name="Players" type="Node" parent="."]
+
 [connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Refresh" to="." method="_on_refresh_pressed"]
