@@ -15,6 +15,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if !is_multiplayer_authority():
 		if Input.is_action_pressed(INTERACT) and last_taggee != null:
+			print("tag local: ", last_taggee)
 			check_can_tag.rpc_id(1, last_taggee)
 
 @rpc("any_peer", "call_local", "reliable")
