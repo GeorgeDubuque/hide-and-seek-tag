@@ -29,7 +29,7 @@ func _process(delta: float) -> void:
 			try_tag_player.rpc_id(1, last_taggee) # 1 is the server id
 
 
-@rpc("authority", "call_local", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func freeze_player(freeze_state):
 	is_frozen = !is_frozen
 	print("is_frozen: ", is_frozen)
