@@ -10,12 +10,12 @@
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_edcox"]
 ground_color = Color(0.160784, 0.815686, 0.905882, 1)
 
-[sub_resource type="Sky" id="Sky_2iust"]
+[sub_resource type="Sky" id="Sky_y0tvu"]
 sky_material = SubResource("PhysicalSkyMaterial_edcox")
 
 [sub_resource type="Environment" id="Environment_20rw3"]
 background_mode = 2
-sky = SubResource("Sky_2iust")
+sky = SubResource("Sky_y0tvu")
 tonemap_mode = 1
 ssao_enabled = true
 
@@ -139,7 +139,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0046, 0, 18.5579)
 script = ExtResource("6_grrxg")
 
 [node name="StartGameButton" type="Button" parent="."]
-visible = false
 offset_left = 475.0
 offset_top = 563.0
 offset_right = 648.0
