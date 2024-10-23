@@ -380,6 +380,8 @@ func headbob_animation(moving):
 
 
 func _process(delta):
+	if !is_multiplayer_authority():
+		return
 	$UserInterface/DebugPanel.add_property("FPS", Performance.get_monitor(Performance.TIME_FPS), 0)
 	var status: String = state
 	if !is_on_floor():
