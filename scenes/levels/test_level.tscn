@@ -12,7 +12,7 @@ size = Vector3(45.4373, 1, 40.014)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("spawns")]
 _spawnable_scenes = PackedStringArray("res://scenes/character.tscn")
-spawn_path = NodePath("..")
+spawn_path = NodePath(".")
 script = ExtResource("1_x28ij")
 playerScene = ExtResource("2_x3up0")
 spawns = [NodePath("../Spawns/Spawn1"), NodePath("../Spawns/Spawn2"), NodePath("../Spawns/Spawn3"), NodePath("../Spawns/Spawn4")]
