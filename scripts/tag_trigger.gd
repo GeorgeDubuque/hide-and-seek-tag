@@ -14,7 +14,7 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node3D) -> void:
 	if body.get_instance_id() != my_body.get_instance_id():
-		print("my instance id: ", get_instance_id())
+		print("my authority: ", get_multiplayer_authority())
 		if multiplayer.is_server():
 			print("add ", get_instance_id(), " to array")
 
