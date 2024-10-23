@@ -6,7 +6,7 @@ var potential_tags = {}
 var tags = {}
 @export var INTERACT: String = "interact"
 @export var character: Character
-var is_frozen: bool = false
+static var is_frozen: bool = false
 
 var last_taggee = null
 
