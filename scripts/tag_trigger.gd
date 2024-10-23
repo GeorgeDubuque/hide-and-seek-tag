@@ -1,3 +1,4 @@
+class_name TagManager
 extends Area3D
 
 @export var my_body: Node3D
@@ -5,6 +6,7 @@ var potential_tags = {}
 var tags = {}
 @export var INTERACT: String = "interact"
 @export var character: Character
+var is_frozen: bool = false
 
 var last_taggee = null
 
@@ -25,6 +27,11 @@ func _process(delta: float) -> void:
 		if Input.is_action_just_pressed(INTERACT) and last_taggee != null:
 			try_tag_player.rpc_id(1, last_taggee) # 1 is the server id
 
+@rpc("any_peer", "call_local", "reliable")
+func freeze_player():
+	is_frozen = true
+	print("is_frozen yay: ", is_frozen)
+
 # Check on server if a player can be tagged and if they can freeze their input
 @rpc("any_peer", "call_local", "reliable")
 func try_tag_player(taggee_id):
@@ -33,7 +40,7 @@ func try_tag_player(taggee_id):
 		print("tagger ", tagger_id, " tried to tag ", taggee_id)
 		if potential_tags.has(tagger_id) and potential_tags[tagger_id] == taggee_id:
 			print("tagger ", tagger_id, " TAGGED ", taggee_id)
-			character.freeze_player.rpc_id(taggee_id)
+			freeze_player.rpc_id(taggee_id)
 
 
 # sets potential tag for this game object 

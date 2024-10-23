@@ -372,7 +372,7 @@ properties/2/path = NodePath("Graphics:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH")]
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH", "tagManager")]
 collision_mask = 7
 script = ExtResource("1_0t4e8")
 default_reticle = "res://FirstPersonController/addons/fpc/reticles/reticle_1.tscn"
@@ -383,6 +383,7 @@ HEADBOB_ANIMATION = NodePath("Head/HeadbobAnimation")
 JUMP_ANIMATION = NodePath("Head/JumpAnimation")
 CROUCH_ANIMATION = NodePath("CrouchAnimation")
 COLLISION_MESH = NodePath("Collision")
+tagManager = NodePath("Graphics/TagTrigger")
 
 [node name="Graphics" type="Node3D" parent="."]
 

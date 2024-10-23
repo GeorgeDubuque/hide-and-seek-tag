@@ -82,6 +82,9 @@ extends CharacterBody3D
 ## Use with caution.
 @export var gravity_enabled: bool = true
 
+@export_group("References")
+@export var tagManager: TagManager
+
 
 # Member variables
 var speed: float = base_speed
@@ -183,7 +186,7 @@ func _physics_process(delta):
 	handle_jumping()
 	
 	var input_dir = Vector2.ZERO
-	if !is_frozen: # Immobility works by interrupting user input, so other forces can still be applied to the player
+	if !immobile and !tagManager.is_frozen: # Immobility works by interrupting user input, so other forces can still be applied to the player
 		input_dir = Input.get_vector(LEFT, RIGHT, FORWARD, BACKWARD)
 	handle_movement(delta, input_dir)
 
@@ -209,11 +212,6 @@ func _physics_process(delta):
 	
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
 
-@rpc("any_peer", "call_local", "reliable")
-func freeze_player():
-	print("freeze player rpc called")
-	is_frozen = true
-	print("is_frozen yay: ", is_frozen)
 
 func handle_jumping():
 	if jumping_enabled:
