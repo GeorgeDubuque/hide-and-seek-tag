@@ -6,7 +6,7 @@ var potential_tags = {}
 var tags = {}
 @export var INTERACT: String = "interact"
 @export var character: Character
-@export var is_frozen: bool = false # TODO making this static made it so the variable is set, idk why
+static var is_frozen: bool = false # TODO making this static made it so the variable is set, idk why
 
 var last_taggee = null
 
