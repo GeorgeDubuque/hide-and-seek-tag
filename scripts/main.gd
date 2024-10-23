@@ -75,6 +75,7 @@ func _on_multiplayer_spawner_spawned(node: Node) -> void:
 	print("spawned player: ", node)
 
 func change_level(level_scene):
+	ms.add_spawnable_scene(level_scene)
 	if multiplayer.is_server():
 		# print("START LEVEL: ", level_scene.resource_name)
 		# Remove old level if any.
@@ -83,7 +84,4 @@ func change_level(level_scene):
 			level.remove_child(c)
 			c.queue_free()
 		# Add new level.
-		# level.add_child(level_scene.instantiate())
-
-		multiplayer.multiplayer_peer = peer
-		ms.spawn(level_scene)
+		level.add_child(level_scene.instantiate())
