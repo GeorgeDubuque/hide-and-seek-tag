@@ -1,9 +1,9 @@
 [gd_scene load_steps=26 format=3 uid="uid://cc1m2a1obsyn4"]
 
-[ext_resource type="Script" path="res://scripts/character.gd" id="1_0t4e8"]
-[ext_resource type="Script" path="res://scripts/tag_trigger.gd" id="2_tat53"]
-[ext_resource type="Script" path="res://FirstPersonController/addons/fpc/EditorModule.gd" id="3_v3ckk"]
-[ext_resource type="Script" path="res://FirstPersonController/addons/fpc/debug.gd" id="3_x1wcc"]
+[ext_resource type="Script" path="res://scripts/character.gd" id="1_ifg6f"]
+[ext_resource type="Script" path="res://scripts/tag_trigger.gd" id="2_urax8"]
+[ext_resource type="Script" path="res://FirstPersonController/addons/fpc/debug.gd" id="3_fepvu"]
+[ext_resource type="Script" path="res://FirstPersonController/addons/fpc/EditorModule.gd" id="4_mwxu7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
@@ -377,7 +377,7 @@ properties/3/replication_mode = 1
 
 [node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH", "tagManager")]
 collision_mask = 7
-script = ExtResource("1_0t4e8")
+script = ExtResource("1_ifg6f")
 default_reticle = "res://FirstPersonController/addons/fpc/reticles/reticle_1.tscn"
 HEAD = NodePath("Head")
 GRAPHICS = NodePath("Graphics")
@@ -413,7 +413,7 @@ skeleton = NodePath("../../Head")
 [node name="TagTrigger" type="Area3D" parent="Graphics" node_paths=PackedStringArray("my_body", "character")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
 collision_layer = 4
-script = ExtResource("2_tat53")
+script = ExtResource("2_urax8")
 my_body = NodePath("../..")
 character = NodePath("../..")
 
@@ -464,7 +464,7 @@ offset_top = 10.0
 offset_right = 453.0
 offset_bottom = 50.0
 theme = SubResource("Theme_wdf0f")
-script = ExtResource("3_x1wcc")
+script = ExtResource("3_fepvu")
 
 [node name="MarginContainer" type="MarginContainer" parent="UserInterface/DebugPanel"]
 layout_mode = 2
@@ -478,7 +478,7 @@ shape = SubResource("SphereShape3D_k4wwl")
 target_position = Vector3(0, 0.5, 0)
 
 [node name="EditorModule" type="Node" parent="."]
-script = ExtResource("3_v3ckk")
+script = ExtResource("4_mwxu7")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_56ji0")

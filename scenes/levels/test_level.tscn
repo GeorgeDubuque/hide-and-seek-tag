@@ -6,10 +6,12 @@
 [node name="TestLevel" type="Node3D"]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.18053, 0, -2.9464)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.18053, -3, -2.9464)
+use_collision = true
 size = Vector3(45.4373, 1, 40.014)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("spawns")]
+_spawnable_scenes = PackedStringArray("res://scenes/character.tscn")
 spawn_path = NodePath(".")
 script = ExtResource("1_x28ij")
 playerScene = ExtResource("2_x3up0")
