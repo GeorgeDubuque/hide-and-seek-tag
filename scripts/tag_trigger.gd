@@ -19,6 +19,7 @@ func _process(delta: float) -> void:
 
 @rpc("any_peer", "call_local", "reliable")
 func check_can_tag(taggee_id):
+	print("rpc called")
 	if multiplayer.is_server():
 		print("tagger ", multiplayer.get_remote_sender_id(), " tried to tag ", taggee_id)
 
