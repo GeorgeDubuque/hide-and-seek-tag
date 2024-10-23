@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgi70slkbl27f"]
+
+[ext_resource type="Script" path="res://scripts/multiplayer_spawner.gd" id="1_x28ij"]
+[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://FirstPersonController/addons/fpc/character.tscn" id="2_x3up0"]
+
+[node name="TestLevel" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.18053, 0, -2.9464)
+size = Vector3(45.4373, 1, 40.014)
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("spawns")]
+spawn_path = NodePath(".")
+script = ExtResource("1_x28ij")
+playerScene = ExtResource("2_x3up0")
+spawns = [NodePath("../Spawns/Spawn1"), NodePath("../Spawns/Spawn2"), NodePath("../Spawns/Spawn3"), NodePath("../Spawns/Spawn4")]
+
+[node name="Spawns" type="Node" parent="."]
+
+[node name="Spawn1" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85585, 1.90735e-06, 6.93132)
+
+[node name="Spawn2" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7497, 3.8147e-06, 8.98033)
+
+[node name="Spawn3" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.6589, 1.90735e-06, -13.0949)
+
+[node name="Spawn4" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3919, 1.90735e-06, -12.3068)

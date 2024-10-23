@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhluw745pvkem"]
+[gd_scene load_steps=2 format=3 uid="uid://barcu7ymhfdbh"]
 
-[ext_resource type="Script" path="res://multiplayer_spawner.gd" id="1_b8xq1"]
+[ext_resource type="Script" path="res://scripts/multiplayer_spawner.gd" id="1_b8xq1"]
 
 [node name="TestLevel" type="Node3D"]
 

@@ -20,6 +20,10 @@ func spawnPlayer(data):
 	spawns.push_back(nextSpawn)
 	p.set_multiplayer_authority(data)
 	players[data] = p
+
+	if multiplayer.is_server():
+		print("server spawned new player: ", players.size())
+
 	return p
 
 
