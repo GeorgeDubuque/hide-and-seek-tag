@@ -214,6 +214,11 @@ func _physics_process(delta):
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
 
 
+@rpc("any_peer", "call_local", "reliable")
+func freeze_player():
+	immobile = !immobile
+	print("is_frozen: ", is_frozen)
+
 func handle_jumping():
 	if jumping_enabled:
 		if continuous_jumping: # Hold down the jump button

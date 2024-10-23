@@ -3,7 +3,7 @@ extends Area3D
 
 @export var my_body: Node3D
 var potential_tags = {}
-var peer_id_to_node = {}
+var peer_id_to_character = {}
 var tags = {}
 @export var INTERACT: String = "interact"
 @export var character: Character
@@ -29,12 +29,6 @@ func _process(delta: float) -> void:
 			try_tag_player.rpc_id(1, last_taggee) # 1 is the server id
 
 
-@rpc("any_peer", "call_local", "reliable")
-func freeze_player(freeze_state):
-	is_frozen = !is_frozen
-	print("is_frozen: ", is_frozen)
-
-
 # Check on server if a player can be tagged and if they can freeze their input
 @rpc("any_peer", "call_local", "reliable")
 func try_tag_player(taggee_id):
@@ -43,9 +37,7 @@ func try_tag_player(taggee_id):
 		print("tagger ", tagger_id, " tried to tag ", taggee_id)
 		if potential_tags.has(tagger_id) and potential_tags[tagger_id] == taggee_id:
 			print("tagger ", tagger_id, " TAGGED ", taggee_id)
-			print()
-			(peer_id_to_node[taggee_id] as Character).tagManager.freeze_player.rpc_id(taggee_id, true)
-			#freeze_player.rpc_id(taggee_id, true)
+			peer_id_to_character[taggee_id].freeze_player.rpc_id(taggee_id)
 
 
 # sets potential tag for this game object 
@@ -57,7 +49,7 @@ func _on_body_entered(body: Node3D) -> void:
 		# TODO: this could potentially cause problems if multiple people are in the taggers tag box
 		#		consider storing a list of taggees and getting the closest one
 		last_taggee = taggee_id
-		peer_id_to_node[taggee_id] = (body as Character)
+		peer_id_to_character[taggee_id] = (body as Character)
 		
 		if multiplayer.is_server():
 			potential_tags[tagger_id] = taggee_id
