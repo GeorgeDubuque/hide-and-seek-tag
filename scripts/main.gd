@@ -84,4 +84,4 @@ func change_level(level_scene):
 			level.remove_child(c)
 			c.queue_free()
 		# Add new level.
-		level.add_child(level_scene.instantiate())
+		level.add_child(load(level_scene).instantiate())
