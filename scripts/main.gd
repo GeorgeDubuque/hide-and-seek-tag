@@ -83,6 +83,8 @@ func change_level(level_scene):
 		var newLevel = load(level_scene).instantiate()
 		level.add_child(newLevel)
 
+		await get_tree().create_timer(4).timeout
+
 		for c in level.get_children():
 			if c != newLevel:
 				level.remove_child(c)
