@@ -1,10 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://b27cc1cri2fdw"]
+[gd_scene load_steps=15 format=3 uid="uid://b27cc1cri2fdw"]
 
 [ext_resource type="Texture2D" uid="uid://pe7a4weirj2g" path="res://FirstPersonController/textures/dark.png" id="1_l6lx6"]
 [ext_resource type="Texture2D" uid="uid://cxjxvqmf4boxq" path="res://FirstPersonController/textures/green.png" id="2_q6pct"]
 [ext_resource type="Texture2D" uid="uid://dsv4jm4vydflb" path="res://FirstPersonController/textures/orange.png" id="3_2307o"]
-[ext_resource type="Script" path="res://scripts/lobby_multiplayer_spawner.gd" id="4_c1ilg"]
-[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://scenes/character.tscn" id="5_8501o"]
 [ext_resource type="Script" path="res://FirstPersonController/lobby_manager.gd" id="6_grrxg"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_edcox"]
@@ -109,15 +107,6 @@ collision_layer = 2
 size = Vector3(19, 8, 1)
 material = SubResource("StandardMaterial3D_7j4uu")
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("spawns", "startGameButton")]
-_spawnable_scenes = PackedStringArray("res://scenes/character.tscn")
-spawn_path = NodePath(".")
-script = ExtResource("4_c1ilg")
-playerScene = ExtResource("5_8501o")
-spawns = [NodePath("../Spawns/Spawn1"), NodePath("../Spawns/Spawn2"), NodePath("../Spawns/Spawn3"), NodePath("../Spawns/Spawn4"), NodePath("../Spawns/Spawn5")]
-startGameButton = NodePath("../StartGameButton")
-testLevelPath = "res://scenes/levels/test_level.tscn"
-
 [node name="Spawns" type="Node3D" parent="."]
 
 [node name="Spawn1" type="Node3D" parent="Spawns"]
@@ -145,5 +134,3 @@ offset_top = 563.0
 offset_right = 648.0
 offset_bottom = 624.0
 text = "START GAME"
-
-[connection signal="pressed" from="StartGameButton" to="MultiplayerSpawner" method="_on_start_game_button_pressed"]

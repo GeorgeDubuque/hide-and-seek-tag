@@ -1,3 +1,4 @@
+class_name PlayerSpawner
 extends MultiplayerSpawner
 
 @export var playerScene: PackedScene
@@ -13,7 +14,7 @@ extends MultiplayerSpawner
 var players = {}
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func spawn_players() -> void:
 	spawn_path = get_tree().get_root().get_node("Main").get_node("Players").get_path()
 	spawn_function = spawnPlayer
 	if is_multiplayer_authority():

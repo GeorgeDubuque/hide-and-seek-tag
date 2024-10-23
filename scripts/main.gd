@@ -7,6 +7,7 @@ var peer = SteamMultiplayerPeer.new()
 
 @export var lobbyLevelPath = ""
 @export var testLevelPath = ""
+@export var playerSpawner: PlayerSpawner
 
 @onready var ms = $MultiplayerSpawner
 
@@ -28,12 +29,14 @@ func _on_host_pressed() -> void:
 	peer.create_lobby(SteamMultiplayerPeer.LOBBY_TYPE_PUBLIC)
 	multiplayer.multiplayer_peer = peer
 	lobbyLevel = ms.spawn(lobbyLevelPath)
+	playerSpawner.spawn_players()
 	hide_lobby_buttons()
 
 func join_lobby(id):
 	peer.connect_lobby(id)
 	multiplayer.multiplayer_peer = peer
 	lobby_id = id
+	playerSpawner.spawn_players()
 	hide_lobby_buttons()
 
 func on_lobby_created(connected, id):

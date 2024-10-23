@@ -1,11 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://d1ql5itxphi0f"]
+[gd_scene load_steps=5 format=3 uid="uid://d1ql5itxphi0f"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_1p8wj"]
 [ext_resource type="Script" path="res://scripts/steam.gd" id="2_woepv"]
+[ext_resource type="Script" path="res://scripts/lobby_multiplayer_spawner.gd" id="3_8ccg2"]
+[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://scenes/character.tscn" id="4_uk1g5"]
 
-[node name="Main" type="Node3D"]
+[node name="Main" type="Node3D" node_paths=PackedStringArray("playerSpawner")]
 script = ExtResource("1_1p8wj")
 lobbyLevelPath = "res://scenes/levels/lobby_level.tscn"
+testLevelPath = "res://scenes/levels/test_level.tscn"
+playerSpawner = NodePath("PlayerSpawner")
 
 [node name="Steam" type="Node3D" parent="."]
 script = ExtResource("2_woepv")
@@ -36,6 +40,15 @@ layout_mode = 2
 [node name="Level" type="Node" parent="."]
 
 [node name="Players" type="Node" parent="."]
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("spawns", "startGameButton")]
+_spawnable_scenes = PackedStringArray("res://scenes/character.tscn")
+spawn_path = NodePath(".")
+script = ExtResource("3_8ccg2")
+playerScene = ExtResource("4_uk1g5")
+spawns = [NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath("")]
+startGameButton = NodePath("")
+testLevelPath = "res://scenes/levels/test_level.tscn"
 
 [connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Refresh" to="." method="_on_refresh_pressed"]
