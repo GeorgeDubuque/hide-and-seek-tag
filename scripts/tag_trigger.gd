@@ -3,10 +3,11 @@ extends Area3D
 
 @export var my_body: Node3D
 var potential_tags = {}
+var peer_id_to_node = {}
 var tags = {}
 @export var INTERACT: String = "interact"
 @export var character: Character
-static var is_frozen: bool = false # TODO making this static made it so the variable is set, idk why
+var is_frozen: bool = false # TODO making this static made it so the variable is set, idk why
 
 var last_taggee = null
 
@@ -57,6 +58,7 @@ func _on_body_entered(body: Node3D) -> void:
 
 		if multiplayer.is_server():
 			potential_tags[tagger_id] = taggee_id
+			peer_id_to_node[taggee_id] = body as Character
 			print(tagger_id, " can tag ", taggee_id)
 
 		# TODO: add this body to a list of objects in array 
