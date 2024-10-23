@@ -109,7 +109,6 @@ size = Vector3(19, 8, 1)
 material = SubResource("StandardMaterial3D_7j4uu")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("spawns")]
-_spawnable_scenes = PackedStringArray("", "")
 spawn_path = NodePath(".")
 script = ExtResource("4_xvqfl")
 playerScene = ExtResource("1_e18vq")

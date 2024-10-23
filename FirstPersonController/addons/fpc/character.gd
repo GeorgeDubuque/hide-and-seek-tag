@@ -210,6 +210,7 @@ func _physics_process(delta):
 
 @rpc("authority", "call_local", "reliable")
 func freeze_player():
+	print("freezing player")
 	immobile = true
 
 func handle_jumping():
