@@ -1,14 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://d1ql5itxphi0f"]
 
-[ext_resource type="Script" path="res://scripts/steam.gd" id="1_0tqd3"]
-[ext_resource type="Script" path="res://scripts/main.gd" id="1_f1i2n"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_1p8wj"]
+[ext_resource type="Script" path="res://scripts/steam.gd" id="2_woepv"]
 
 [node name="Main" type="Node3D"]
-script = ExtResource("1_f1i2n")
+script = ExtResource("1_1p8wj")
 levelPath = "res://FirstPersonController/test_world.tscn"
 
 [node name="Steam" type="Node3D" parent="."]
-script = ExtResource("1_0tqd3")
+script = ExtResource("2_woepv")
 
 [node name="Host" type="Button" parent="."]
 offset_right = 134.0

@@ -1,7 +1,13 @@
 extends MultiplayerSpawner
 
 @export var playerScene: PackedScene
+
+@export_group("Lobby Settings")
 @export var spawns: Array[Node3D]
+@export var minNumPlayers = 2
+
+@export_group("References")
+@export var startGameButton: Button
 
 var players = {}
 
@@ -22,7 +28,9 @@ func spawnPlayer(data):
 	players[data] = p
 
 	if multiplayer.is_server():
-		print("server spawned new player: ", players.size())
+		if players.size() >= minNumPlayers:
+			startGameButton.show()
+
 
 	return p
 
@@ -30,3 +38,7 @@ func spawnPlayer(data):
 func removePlayer(data):
 	players[data].queue_free()
 	players.erase(data)
+
+
+func _on_start_game_button_pressed() -> void:
+	print("START GAME")
