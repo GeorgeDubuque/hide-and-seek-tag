@@ -103,7 +103,17 @@ use_collision = true
 size = Vector3(19, 8, 1)
 material = SubResource("StandardMaterial3D_7j4uu")
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("spawns")]
+_spawnable_scenes = PackedStringArray("", "")
 spawn_path = NodePath(".")
 script = ExtResource("4_xvqfl")
 playerScene = ExtResource("1_e18vq")
+spawns = [NodePath("../Spawns/Spawn1"), NodePath("../Spawns/Spawn2")]
+
+[node name="Spawns" type="Node3D" parent="."]
+
+[node name="Spawn1" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.39718, 0, -0.855971)
+
+[node name="Spawn2" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.33811, 0, 9.46471)

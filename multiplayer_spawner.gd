@@ -1,6 +1,7 @@
 extends MultiplayerSpawner
 
 @export var playerScene: PackedScene
+@export var spawns: Array[Node3D]
 
 var players = {}
 
@@ -13,7 +14,10 @@ func _ready() -> void:
 		multiplayer.peer_disconnected.connect(removePlayer)
 
 func spawnPlayer(data):
-	var p = playerScene.instantiate()
+	var p: Node3D = playerScene.instantiate()
+	var nextSpawn = spawns.pop_front()
+	p.position = nextSpawn.position
+	spawns.push_back(nextSpawn)
 	p.set_multiplayer_authority(data)
 	players[data] = p
 	return p

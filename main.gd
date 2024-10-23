@@ -60,9 +60,14 @@ func _on_refresh_pressed() -> void:
 	if $LobbyContainer/Lobbies.get_child_count() > 0:
 		for n in $LobbyContainer/Lobbies.get_children():
 			n.queue_free()
+	open_lobby_list()
 
 
 func hide_lobby_buttons():
 	$Host.hide()
 	$LobbyContainer/Lobbies.hide()
 	$Refresh.hide()
+
+
+func _on_multiplayer_spawner_spawned(node: Node) -> void:
+	print("spawned player: ", node)
