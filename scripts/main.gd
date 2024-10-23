@@ -85,4 +85,5 @@ func change_level(level_scene):
 		# Add new level.
 		# level.add_child(level_scene.instantiate())
 
+		multiplayer.multiplayer_peer = peer
 		ms.spawn(level_scene)
