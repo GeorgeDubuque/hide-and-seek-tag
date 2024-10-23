@@ -46,4 +46,5 @@ func _on_start_game_button_pressed() -> void:
 	while current_node != null:
 		if current_node is Main:
 			startGameButton.hide()
+			(current_node as Main).change_level.call_deferred(load(testLevelPath))
 		current_node = current_node.get_parent() # Move up to the next parent node
