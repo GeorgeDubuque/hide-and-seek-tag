@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=25 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/EditorModule.gd" id="3_v3ckk"]
@@ -20,6 +20,9 @@ height = 0.5
 size = Vector3(0.5, 0.3, 0.2)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uy03j"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u7pwd"]
+size = Vector3(1, 2, 1)
 
 [sub_resource type="Animation" id="Animation_j8cx7"]
 resource_name = "RESET"
@@ -405,6 +408,10 @@ skeleton = NodePath("../../Head")
 [node name="Collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_uy03j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
+shape = SubResource("BoxShape3D_u7pwd")
 
 [node name="CrouchAnimation" type="AnimationPlayer" parent="."]
 libraries = {
