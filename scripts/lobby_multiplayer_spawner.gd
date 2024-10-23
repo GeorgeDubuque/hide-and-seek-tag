@@ -11,6 +11,8 @@ extends MultiplayerSpawner
 @export var startGameButton: Button
 @export var testLevelPath = ""
 
+var spawnPos = Vector3(0, 0, 0)
+
 var players = {}
 
 # Called when the node enters the scene tree for the first time.
@@ -28,9 +30,11 @@ func _process(delta: float) -> void:
 
 func spawnPlayer(data):
 	var p: Node3D = playerScene.instantiate()
-	var nextSpawn = spawns.pop_front()
-	p.position = nextSpawn.position
-	spawns.push_back(nextSpawn)
+	# var nextSpawn = spawns.pop_front()
+	# p.position = nextSpawn.position
+	# spawns.push_back(nextSpawn)
+	p.position = spawnPos
+	spawnPos += Vector3(2, 0, 0)
 	p.set_multiplayer_authority(data)
 	players[data] = p
 
