@@ -5,7 +5,7 @@
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_1p8wj")
-levelPath = "res://FirstPersonController/test_world.tscn"
+levelPath = "res://scenes/levels/lobby_level.tscn"
 
 [node name="Steam" type="Node3D" parent="."]
 script = ExtResource("2_woepv")
