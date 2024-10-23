@@ -31,8 +31,10 @@ func _process(delta: float) -> void:
 
 @rpc("any_peer", "call_local", "reliable")
 func freeze_player():
+	set_is_frozen()
+
+func set_is_frozen():
 	is_frozen = true
-	print("is_frozen: ", is_frozen)
 
 # Check on server if a player can be tagged and if they can freeze their input
 @rpc("any_peer", "call_local", "reliable")
