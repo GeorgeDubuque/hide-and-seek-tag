@@ -74,7 +74,7 @@ func hide_lobby_buttons():
 func _on_multiplayer_spawner_spawned(node: Node) -> void:
 	print("spawned player: ", node)
 
-func change_level(level_scene: PackedScene):
+func change_level(level_scene):
 	if multiplayer.is_server():
 		print("START LEVEL: ", level_scene.resource_name)
 		# Remove old level if any.
@@ -83,4 +83,6 @@ func change_level(level_scene: PackedScene):
 			level.remove_child(c)
 			c.queue_free()
 		# Add new level.
-		level.add_child(level_scene.instantiate())
+		# level.add_child(level_scene.instantiate())
+
+		ms.spawn(level_scene)

@@ -15,6 +15,7 @@ func _ready() -> void:
 		multiplayer.peer_disconnected.connect(removePlayer)
 
 func spawnPlayer(data):
+	print("spawnPlayer called with data: ", data)
 	var p: Node3D = playerScene.instantiate()
 	var nextSpawn = spawns.pop_front()
 	p.position = nextSpawn.position
