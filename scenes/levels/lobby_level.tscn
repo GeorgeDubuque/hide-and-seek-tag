@@ -1,11 +1,11 @@
 [gd_scene load_steps=17 format=3 uid="uid://b27cc1cri2fdw"]
 
-[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://FirstPersonController/addons/fpc/character.tscn" id="1_e18vq"]
-[ext_resource type="Texture2D" uid="uid://pe7a4weirj2g" path="res://FirstPersonController/textures/dark.png" id="2_08fdt"]
-[ext_resource type="Texture2D" uid="uid://cxjxvqmf4boxq" path="res://FirstPersonController/textures/green.png" id="3_q4clv"]
-[ext_resource type="Texture2D" uid="uid://dsv4jm4vydflb" path="res://FirstPersonController/textures/orange.png" id="4_1ns5t"]
-[ext_resource type="Script" path="res://scripts/lobby_multiplayer_spawner.gd" id="4_uc1cf"]
-[ext_resource type="Script" path="res://FirstPersonController/lobby_manager.gd" id="6_yo7wu"]
+[ext_resource type="Texture2D" uid="uid://pe7a4weirj2g" path="res://FirstPersonController/textures/dark.png" id="1_l6lx6"]
+[ext_resource type="Texture2D" uid="uid://cxjxvqmf4boxq" path="res://FirstPersonController/textures/green.png" id="2_q6pct"]
+[ext_resource type="Texture2D" uid="uid://dsv4jm4vydflb" path="res://FirstPersonController/textures/orange.png" id="3_2307o"]
+[ext_resource type="Script" path="res://scripts/lobby_multiplayer_spawner.gd" id="4_c1ilg"]
+[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://FirstPersonController/addons/fpc/character.tscn" id="5_8501o"]
+[ext_resource type="Script" path="res://FirstPersonController/lobby_manager.gd" id="6_grrxg"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_edcox"]
 ground_color = Color(0.160784, 0.815686, 0.905882, 1)
@@ -39,7 +39,7 @@ uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gomnb"]
-albedo_texture = ExtResource("2_08fdt")
+albedo_texture = ExtResource("1_l6lx6")
 metallic = 0.81
 metallic_specular = 0.2
 roughness = 0.5
@@ -47,7 +47,7 @@ uv1_triplanar = true
 uv1_triplanar_sharpness = 0.000850145
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u0sbk"]
-albedo_texture = ExtResource("3_q4clv")
+albedo_texture = ExtResource("2_q6pct")
 metallic = 0.81
 metallic_specular = 0.2
 roughness = 0.5
@@ -55,14 +55,14 @@ uv1_triplanar = true
 uv1_triplanar_sharpness = 0.000850145
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7j4uu"]
-albedo_texture = ExtResource("4_1ns5t")
+albedo_texture = ExtResource("3_2307o")
 metallic = 0.81
 metallic_specular = 0.2
 roughness = 0.5
 uv1_triplanar = true
 uv1_triplanar_sharpness = 0.000850145
 
-[node name="test_world" type="Node3D"]
+[node name="lobby_level" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_20rw3")
@@ -111,8 +111,8 @@ material = SubResource("StandardMaterial3D_7j4uu")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("spawns", "startGameButton")]
 spawn_path = NodePath(".")
-script = ExtResource("4_uc1cf")
-playerScene = ExtResource("1_e18vq")
+script = ExtResource("4_c1ilg")
+playerScene = ExtResource("5_8501o")
 spawns = [NodePath("../Spawns/Spawn1"), NodePath("../Spawns/Spawn2"), NodePath("../Spawns/Spawn3"), NodePath("../Spawns/Spawn4"), NodePath("../Spawns/Spawn5")]
 startGameButton = NodePath("../StartGameButton")
 testLevelPath = "res://scenes/levels/test_level.tscn"
@@ -135,7 +135,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.0383, 0, 3.34354)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0046, 0, 18.5579)
 
 [node name="LobbyManager" type="Node" parent="."]
-script = ExtResource("6_yo7wu")
+script = ExtResource("6_grrxg")
 
 [node name="StartGameButton" type="Button" parent="."]
 visible = false

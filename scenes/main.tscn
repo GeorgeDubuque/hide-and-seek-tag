@@ -22,6 +22,7 @@ offset_bottom = 206.0
 text = "Refresh"
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("")
 spawn_path = NodePath("../Level")
 
 [node name="LobbyContainer" type="ScrollContainer" parent="."]
