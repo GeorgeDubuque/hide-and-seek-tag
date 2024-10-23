@@ -406,11 +406,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.4098)
 mesh = SubResource("BoxMesh_3uy6v")
 skeleton = NodePath("../../Head")
 
-[node name="TagTrigger" type="Area3D" parent="Graphics" node_paths=PackedStringArray("my_body")]
+[node name="TagTrigger" type="Area3D" parent="Graphics" node_paths=PackedStringArray("my_body", "character")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
 collision_layer = 4
 script = ExtResource("2_tat53")
 my_body = NodePath("../..")
+character = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Graphics/TagTrigger"]
 shape = SubResource("BoxShape3D_pnvx4")
