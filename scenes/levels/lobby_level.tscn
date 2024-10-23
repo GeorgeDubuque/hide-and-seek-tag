@@ -139,6 +139,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0046, 0, 18.5579)
 script = ExtResource("6_grrxg")
 
 [node name="StartGameButton" type="Button" parent="."]
+visible = false
 offset_left = 475.0
 offset_top = 563.0
 offset_right = 648.0
