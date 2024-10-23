@@ -80,9 +80,11 @@ func change_level(level_scene):
 		# print("START LEVEL: ", level_scene.resource_name)
 		# Remove old level if any.
 		var level = $Level
-		level.add_child(load(level_scene).instantiate())
+		var newLevel = load(level_scene).instantiate()
+		level.add_child(newLevel)
 
-		# for c in level.get_children():
-		# 	level.remove_child(c)
-		# 	c.queue_free()
+		for c in level.get_children():
+			if c != newLevel:
+				level.remove_child(c)
+				c.queue_free()
 		# Add new level.
