@@ -114,8 +114,9 @@ func _ready():
 	HEAD.rotation.y = rotation.y
 	rotation.y = 0
 	
-	if default_reticle:
-		change_reticle(default_reticle)
+	if is_multiplayer_authority():
+		if default_reticle:
+			change_reticle(default_reticle)
 	
 	# Reset the camera position
 	# If you want to change the default head height, change these animations.

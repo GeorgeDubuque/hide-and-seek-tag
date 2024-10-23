@@ -8,6 +8,7 @@ extends MultiplayerSpawner
 
 @export_group("References")
 @export var startGameButton: Button
+@export var testLevelPath = ""
 
 var players = {}
 
@@ -18,6 +19,10 @@ func _ready() -> void:
 		spawn(1)
 		multiplayer.peer_connected.connect(spawn)
 		multiplayer.peer_disconnected.connect(removePlayer)
+
+func spawn_level(data):
+	var a = (load(data) as PackedScene).instantiate()
+	return a
 
 func spawnPlayer(data):
 	var p: Node3D = playerScene.instantiate()
@@ -41,4 +46,6 @@ func removePlayer(data):
 
 
 func _on_start_game_button_pressed() -> void:
-	print("START GAME")
+	spawn_function = spawn_level
+	spawn(testLevelPath)
+	startGameButton.hide()
