@@ -43,6 +43,7 @@ func try_tag_player(taggee_id):
 		print("tagger ", tagger_id, " tried to tag ", taggee_id)
 		if potential_tags.has(tagger_id) and potential_tags[tagger_id] == taggee_id:
 			print("tagger ", tagger_id, " TAGGED ", taggee_id)
+			print()
 			(peer_id_to_node[taggee_id] as Character).tagManager.freeze_player.rpc_id(taggee_id, true)
 			#freeze_player.rpc_id(taggee_id, true)
 
@@ -56,10 +57,10 @@ func _on_body_entered(body: Node3D) -> void:
 		# TODO: this could potentially cause problems if multiple people are in the taggers tag box
 		#		consider storing a list of taggees and getting the closest one
 		last_taggee = taggee_id
-
+		peer_id_to_node[taggee_id] = (body as Character)
+		
 		if multiplayer.is_server():
 			potential_tags[tagger_id] = taggee_id
-			peer_id_to_node[taggee_id] = (body as Character)
 			print(tagger_id, " can tag ", taggee_id)
 
 		# TODO: add this body to a list of objects in array 
