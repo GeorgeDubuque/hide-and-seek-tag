@@ -183,7 +183,6 @@ func _physics_process(delta):
 	handle_jumping()
 	
 	var input_dir = Vector2.ZERO
-	print(is_frozen)
 	if !immobile and !is_frozen: # Immobility works by interrupting user input, so other forces can still be applied to the player
 		input_dir = Input.get_vector(LEFT, RIGHT, FORWARD, BACKWARD)
 	handle_movement(delta, input_dir)
@@ -214,6 +213,7 @@ func _physics_process(delta):
 func freeze_player():
 	if is_multiplayer_authority():
 		is_frozen = true
+		print("is_frozen: ", is_frozen)
 
 func handle_jumping():
 	if jumping_enabled:
