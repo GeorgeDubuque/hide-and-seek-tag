@@ -21,6 +21,10 @@ func _ready() -> void:
 		multiplayer.peer_connected.connect(spawn)
 		multiplayer.peer_disconnected.connect(removePlayer)
 
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_accept"):
+		_on_start_game_button_pressed()
+
 func spawnPlayer(data):
 	var p: Node3D = playerScene.instantiate()
 	var nextSpawn = spawns.pop_front()
