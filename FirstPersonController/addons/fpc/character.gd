@@ -210,10 +210,9 @@ func _physics_process(delta):
 	
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
 
-@rpc("authority", "call_local", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func freeze_player():
 	if is_multiplayer_authority():
-		print("freezing player")
 		is_frozen = true
 
 func handle_jumping():
