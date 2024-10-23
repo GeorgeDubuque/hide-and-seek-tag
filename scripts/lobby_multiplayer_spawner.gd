@@ -14,7 +14,7 @@ var players = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	spawn_path = get_tree().get_root().get_node("Players").get_path()
+	spawn_path = get_tree().get_root().get_node("Main").get_node("Players").get_path()
 	spawn_function = spawnPlayer
 	if is_multiplayer_authority():
 		spawn(1)
