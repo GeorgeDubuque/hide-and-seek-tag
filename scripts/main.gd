@@ -1,9 +1,11 @@
+class_name Main
+
 extends Node3D
 
 var lobby_id = 0
 var peer = SteamMultiplayerPeer.new()
 
-@export var levelPath = ""
+@export var lobbyLevelPath = ""
 
 @onready var ms = $MultiplayerSpawner
 
@@ -22,7 +24,7 @@ func spawn_level(data):
 func _on_host_pressed() -> void:
 	peer.create_lobby(SteamMultiplayerPeer.LOBBY_TYPE_PUBLIC)
 	multiplayer.multiplayer_peer = peer
-	ms.spawn(levelPath)
+	ms.spawn(lobbyLevelPath)
 	hide_lobby_buttons()
 
 func join_lobby(id):
@@ -71,3 +73,6 @@ func hide_lobby_buttons():
 
 func _on_multiplayer_spawner_spawned(node: Node) -> void:
 	print("spawned player: ", node)
+
+func change_level(level_scene: PackedScene):
+	print("START LEVEL: ", level_scene.resource_name)

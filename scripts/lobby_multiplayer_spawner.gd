@@ -20,10 +20,6 @@ func _ready() -> void:
 		multiplayer.peer_connected.connect(spawn)
 		multiplayer.peer_disconnected.connect(removePlayer)
 
-func spawn_level(data):
-	var a = (load(data) as PackedScene).instantiate()
-	return a
-
 func spawnPlayer(data):
 	var p: Node3D = playerScene.instantiate()
 	var nextSpawn = spawns.pop_front()
@@ -46,6 +42,13 @@ func removePlayer(data):
 
 
 func _on_start_game_button_pressed() -> void:
-	spawn_function = spawn_level
-	spawn(testLevelPath)
-	startGameButton.hide()
+	if multiplayer.is_server():
+
+		# find the main node in ancestors and call change level
+		var current_node = get_parent() # Start with the parent node
+		while current_node != null:
+			if current_node is Main:
+				print("found main node")
+				startGameButton.hide()
+				(current_node as Main).change_level.call_deferred(load(testLevelPath))
+			current_node = current_node.get_parent() # Move up to the next parent node

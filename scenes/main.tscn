@@ -5,7 +5,7 @@
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_1p8wj")
-levelPath = "res://scenes/levels/lobby_level.tscn"
+lobbyLevelPath = "res://scenes/levels/lobby_level.tscn"
 
 [node name="Steam" type="Node3D" parent="."]
 script = ExtResource("2_woepv")
@@ -22,7 +22,6 @@ offset_bottom = 206.0
 text = "Refresh"
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("")
 spawn_path = NodePath("../Level")
 
 [node name="LobbyContainer" type="ScrollContainer" parent="."]
