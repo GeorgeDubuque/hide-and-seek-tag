@@ -187,7 +187,10 @@ func _physics_process(delta):
 	
 	var input_dir = Vector2.ZERO
 	if !immobile and !tagManager.is_frozen: # Immobility works by interrupting user input, so other forces can still be applied to the player
+		print("move")
 		input_dir = Input.get_vector(LEFT, RIGHT, FORWARD, BACKWARD)
+	else:
+		print("dont move")
 	handle_movement(delta, input_dir)
 
 	handle_head_rotation()
