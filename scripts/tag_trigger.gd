@@ -41,7 +41,7 @@ func try_tag_player(taggee_id):
 		print("tagger ", tagger_id, " tried to tag ", taggee_id)
 		if potential_tags.has(tagger_id) and potential_tags[tagger_id] == taggee_id:
 			print("tagger ", tagger_id, " TAGGED ", taggee_id)
-			freeze_player.rpc()
+			freeze_player.rpc_id(taggee_id)
 
 
 # sets potential tag for this game object 
