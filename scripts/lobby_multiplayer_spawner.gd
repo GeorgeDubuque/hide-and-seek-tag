@@ -42,7 +42,6 @@ func removePlayer(data):
 
 
 func _on_start_game_button_pressed() -> void:
-	# if multiplayer.is_server():
 
 	# find the main node in ancestors and call change level
 	var current_node = get_parent() # Start with the parent node
