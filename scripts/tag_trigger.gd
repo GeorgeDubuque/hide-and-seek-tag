@@ -30,7 +30,7 @@ func _process(delta: float) -> void:
 
 @rpc("authority", "call_local", "reliable")
 func freeze_player(freeze_state):
-	is_frozen = freeze_state
+	is_frozen = !is_frozen
 	print("is_frozen: ", is_frozen)
 
 
