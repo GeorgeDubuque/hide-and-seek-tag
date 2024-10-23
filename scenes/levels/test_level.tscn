@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bgi70slkbl27f"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer_spawner.gd" id="1_x28ij"]
-[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://FirstPersonController/addons/fpc/character.tscn" id="2_x3up0"]
+[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://scenes/character.tscn" id="2_x3up0"]
 
 [node name="TestLevel" type="Node3D"]
 

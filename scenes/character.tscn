@@ -1,6 +1,6 @@
 [gd_scene load_steps=26 format=3 uid="uid://cc1m2a1obsyn4"]
 
-[ext_resource type="Script" path="res://FirstPersonController/addons/fpc/character.gd" id="1_0t4e8"]
+[ext_resource type="Script" path="res://scripts/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" path="res://scripts/tag_trigger.gd" id="2_tat53"]
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/EditorModule.gd" id="3_v3ckk"]
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/debug.gd" id="3_x1wcc"]
