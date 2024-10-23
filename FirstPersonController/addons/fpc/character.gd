@@ -213,7 +213,7 @@ func _physics_process(delta):
 func freeze_player():
 	if is_multiplayer_authority():
 		is_frozen = true
-		print("is_frozen: ", is_frozen)
+		print("is_frozen yay: ", is_frozen)
 
 func handle_jumping():
 	if jumping_enabled:
