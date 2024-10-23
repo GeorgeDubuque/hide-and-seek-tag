@@ -115,6 +115,7 @@ script = ExtResource("4_uc1cf")
 playerScene = ExtResource("1_e18vq")
 spawns = [NodePath("../Spawns/Spawn1"), NodePath("../Spawns/Spawn2"), NodePath("../Spawns/Spawn3"), NodePath("../Spawns/Spawn4"), NodePath("../Spawns/Spawn5")]
 startGameButton = NodePath("../StartGameButton")
+testLevelPath = "res://scenes/levels/test_level.tscn"
 
 [node name="Spawns" type="Node3D" parent="."]
 
