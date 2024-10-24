@@ -382,19 +382,13 @@ properties/4/replication_mode = 2
 properties/5/path = NodePath(".:canMove")
 properties/5/spawn = true
 properties/5/replication_mode = 1
+properties/6/path = NodePath("Graphics/Label_Username:text")
+properties/6/spawn = true
+properties/6/replication_mode = 2
 
 [node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH", "tagManager", "playerBodyMesh")]
 collision_mask = 7
 script = ExtResource("1_ifg6f")
-base_speed = null
-sprint_speed = null
-crouch_speed = null
-acceleration = null
-jump_velocity = null
-mouse_sensitivity = null
-invert_mouse_y = null
-canMove = null
-playerType = null
 default_reticle = "res://FirstPersonController/addons/fpc/reticles/reticle_1.tscn"
 HEAD = NodePath("Head")
 GRAPHICS = NodePath("Graphics")
@@ -403,27 +397,6 @@ HEADBOB_ANIMATION = NodePath("Head/HeadbobAnimation")
 JUMP_ANIMATION = NodePath("Head/JumpAnimation")
 CROUCH_ANIMATION = NodePath("CrouchAnimation")
 COLLISION_MESH = NodePath("Collision")
-JUMP = null
-LEFT = null
-RIGHT = null
-FORWARD = null
-BACKWARD = null
-PAUSE = null
-CROUCH = null
-SPRINT = null
-jumping_enabled = null
-in_air_momentum = null
-motion_smoothing = null
-sprint_enabled = null
-crouch_enabled = null
-crouch_mode = null
-sprint_mode = null
-dynamic_fov = null
-continuous_jumping = null
-view_bobbing = null
-jump_animation = null
-pausing_enabled = null
-gravity_enabled = null
 tagManager = NodePath("Graphics/TagTrigger")
 playerBodyMesh = NodePath("Graphics/Mesh")
 taggerMaterial = ExtResource("2_vi7ko")
@@ -460,6 +433,11 @@ character = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Graphics/TagTrigger"]
 shape = SubResource("BoxShape3D_pnvx4")
+
+[node name="Label_Username" type="Label3D" parent="Graphics"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.41273, 0)
+billboard = 1
+text = "test"
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

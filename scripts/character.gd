@@ -129,6 +129,9 @@ func _ready():
 
 	#It is safe to comment this line if your game doesn't start with the mouse captured
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if is_multiplayer_authority():
+		$Graphics/Label_Username.text = Steam.getPersonaName()
+
 
 	# If the controller is rotated in a certain direction for game design purposes, redirect this rotation into the head.
 	HEAD.rotation.y = rotation.y
@@ -172,6 +175,11 @@ func check_controls(): # If you add a control, you might want to add a check for
 	if !InputMap.has_action(SPRINT):
 		push_error("No control mapped for sprint. Please add an input map control. Disabling sprinting.")
 		sprint_enabled = false
+
+@rpc("any_peer", "call_local", "reliable")
+func freeze_player():
+	canMove = !canMove
+	print("is_frozen: ", is_frozen)
 
 @rpc("any_peer", "reliable", "call_local")
 func set_player_type(type: globals.PlayerType):
@@ -236,12 +244,6 @@ func _physics_process(delta):
 					JUMP_ANIMATION.play("land_right", 0.25)
 	
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
-
-
-@rpc("any_peer", "call_local", "reliable")
-func freeze_player():
-	canMove = !canMove
-	print("is_frozen: ", is_frozen)
 
 func handle_jumping():
 	if jumping_enabled:
@@ -404,6 +406,7 @@ func headbob_animation(moving):
 
 
 func _process(delta):
+	# $Graphics/Label_Username.look_at(get_viewport().get_camera_3d().global_position)
 	if !is_multiplayer_authority():
 		return
 	$UserInterface/DebugPanel.add_property("FPS", Performance.get_monitor(Performance.TIME_FPS), 0)
