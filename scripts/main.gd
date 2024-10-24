@@ -88,7 +88,7 @@ func change_level(level_scene):
 		var level = $Level
 		var newLevel = load(level_scene).instantiate()
 		level.add_child(newLevel)
-
+		GameManager.assignPlayerTypes()
 
 		# await get_tree().create_timer(4).timeout
 

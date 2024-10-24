@@ -49,7 +49,11 @@ func _on_body_entered(body: Node3D) -> void:
 		# TODO: this could potentially cause problems if multiple people are in the taggers tag box
 		#		consider storing a list of taggees and getting the closest one
 		last_taggee = taggee_id
-		peer_id_to_character[taggee_id] = (body as Character)
+		var taggeeCharacter = (body as Character)
+		peer_id_to_character[taggee_id] = taggeeCharacter
+
+		if character.isHider && taggeeCharacter.isHider and !taggeeCharacter.canMove:
+			return
 		
 		if multiplayer.is_server():
 			potential_tags[tagger_id] = taggee_id

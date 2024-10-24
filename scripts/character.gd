@@ -25,7 +25,17 @@ extends CharacterBody3D
 ## Invert the Y input for mouse and joystick
 @export var invert_mouse_y: bool = false # Possibly add an invert mouse X in the future
 ## Wether the player can use movement inputs. Does not stop outside forces or jumping. See Jumping Enabled.
-@export var immobile: bool = false
+@export var canMove: bool = true
+# Whether the player is tagger or taggee
+@export var playerType: globals.PlayerType
+# Whether the player is tagger or taggee
+var isHider: bool:
+	get:
+		return playerType == globals.PlayerType.HIDER
+# Whether the player is tagger or taggee
+var isTagger: bool:
+	get:
+		return playerType == globals.PlayerType.TAGGER
 ## The reticle file to import at runtime. By default are in res://addons/fpc/reticles/. Set to an empty string to remove.
 @export_file var default_reticle
 
@@ -133,16 +143,16 @@ func check_controls(): # If you add a control, you might want to add a check for
 		jumping_enabled = false
 	if !InputMap.has_action(LEFT):
 		push_error("No control mapped for move left. Please add an input map control. Disabling movement.")
-		immobile = true
+		canMove = false
 	if !InputMap.has_action(RIGHT):
 		push_error("No control mapped for move right. Please add an input map control. Disabling movement.")
-		immobile = true
+		canMove = false
 	if !InputMap.has_action(FORWARD):
 		push_error("No control mapped for move forward. Please add an input map control. Disabling movement.")
-		immobile = true
+		canMove = false
 	if !InputMap.has_action(BACKWARD):
 		push_error("No control mapped for move backward. Please add an input map control. Disabling movement.")
-		immobile = true
+		canMove = false
 	if !InputMap.has_action(PAUSE):
 		push_error("No control mapped for pause. Please add an input map control. Disabling pausing.")
 		pausing_enabled = false
@@ -187,7 +197,7 @@ func _physics_process(delta):
 	handle_jumping()
 	
 	var input_dir = Vector2.ZERO
-	if !immobile && !tagManager.is_frozen: # Immobility works by interrupting user input, so other forces can still be applied to the player
+	if canMove: # Immobility works by interrupting user input, so other forces can still be applied to the player
 		input_dir = Input.get_vector(LEFT, RIGHT, FORWARD, BACKWARD)
 
 	handle_movement(delta, input_dir)
@@ -217,7 +227,7 @@ func _physics_process(delta):
 
 @rpc("any_peer", "call_local", "reliable")
 func freeze_player():
-	immobile = !immobile
+	canMove = !canMove
 	print("is_frozen: ", is_frozen)
 
 func handle_jumping():

@@ -30,6 +30,7 @@ func _process(delta: float) -> void:
 
 func spawnPlayer(data):
 	var p: Node3D = playerScene.instantiate()
+	GameManager.addPlayer(data, p as Character)
 	# var nextSpawn = spawns.pop_front()
 	# p.position = nextSpawn.position
 	# spawns.push_back(nextSpawn)
