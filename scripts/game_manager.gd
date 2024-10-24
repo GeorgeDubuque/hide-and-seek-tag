@@ -20,7 +20,7 @@ func addPlayer(playerId, character: Character):
 
 func assignPlayerTypes():
 	var characters = id_to_characters.values()
-	var randomTaggerIndex = randi_range(0, characters.size())
+	var randomTaggerIndex = randi_range(0, characters.size() - 1)
 
 	var curr_index = 0
 	for character in characters:
