@@ -45,12 +45,13 @@ func on_lobby_created(connected, id):
 		lobby_id = id
 		Steam.setLobbyData(lobby_id, "name", str(Steam.getPersonaName() + "'s Lobby"))
 		Steam.setLobbyJoinable(lobby_id, true)
+		# lobbyIdLabel.text = lobby_id
 		print(lobby_id)
 	else:
 		print("not connected")
 
 func open_lobby_list():
-	# Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
+	Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
 	Steam.requestLobbyList()
 
 func _on_lobby_match_list(lobbies):

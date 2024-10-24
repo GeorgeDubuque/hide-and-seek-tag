@@ -58,6 +58,13 @@ offset_right = 648.0
 offset_bottom = 624.0
 text = "START GAME"
 
+[node name="LobbyIdLabel" type="RichTextLabel" parent="."]
+offset_left = 426.0
+offset_top = 17.0
+offset_right = 808.0
+offset_bottom = 57.0
+text = "123123123123"
+
 [connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Refresh" to="." method="_on_refresh_pressed"]
 [connection signal="pressed" from="StartGameButton" to="PlayerSpawner" method="_on_start_game_button_pressed"]
