@@ -23,10 +23,12 @@ func _ready() -> void:
 	Steam.lobby_match_list.connect(_on_lobby_match_list)
 	open_lobby_list()
 
+# Custom spawn function for main function that spawns a level scene
 func spawn_level(data):
 	var a = (load(data) as PackedScene).instantiate()
 	return a
 
+# singal callback for when the host presses host button
 func _on_host_pressed() -> void:
 	lobby_id = peer.create_lobby(SteamMultiplayerPeer.LOBBY_TYPE_PUBLIC)
 	multiplayer.multiplayer_peer = peer
@@ -34,6 +36,7 @@ func _on_host_pressed() -> void:
 	playerSpawner.spawn_players()
 	hide_lobby_buttons()
 
+# singal callback for lobby list item button click for joining other lobbies
 func join_lobby(id):
 	peer.connect_lobby(id)
 	multiplayer.multiplayer_peer = peer
@@ -42,6 +45,7 @@ func join_lobby(id):
 	playerSpawner.spawn_players()
 	hide_lobby_buttons()
 
+# called when a lobby is created 
 func on_lobby_created(connected, id):
 	print("on_lobby_created")
 	if connected:
@@ -54,10 +58,13 @@ func on_lobby_created(connected, id):
 	else:
 		print("not connected")
 
+# requests list of lobbies for app based on worldwide distance
 func open_lobby_list():
 	Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
 	Steam.requestLobbyList()
 
+# consumes signal from when lobby is requested, displays list of lobbies and sets
+# up on click events for each lobby item in the list
 func _on_lobby_match_list(lobbies):
 	for lobby in lobbies:
 		var lobby_name = Steam.getLobbyData(lobby, "name")
