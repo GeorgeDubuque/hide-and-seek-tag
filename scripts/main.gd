@@ -50,7 +50,7 @@ func on_lobby_created(connected, id):
 		print("not connected")
 
 func open_lobby_list():
-	Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
+	# Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
 	Steam.requestLobbyList()
 
 func _on_lobby_match_list(lobbies):
