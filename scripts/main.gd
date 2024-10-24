@@ -11,6 +11,7 @@ var peer = SteamMultiplayerPeer.new()
 
 @onready var ms = $MultiplayerSpawner
 @onready var lobbyIdInput: LineEdit = $LobbyIdInput
+@onready var labelLobbyId: Label = $Label_LobbyId
 
 var lobbyLevel: Node
 
@@ -27,7 +28,7 @@ func spawn_level(data):
 	return a
 
 func _on_host_pressed() -> void:
-	peer.create_lobby(SteamMultiplayerPeer.LOBBY_TYPE_PUBLIC)
+	lobby_id = peer.create_lobby(SteamMultiplayerPeer.LOBBY_TYPE_PUBLIC)
 	multiplayer.multiplayer_peer = peer
 	lobbyLevel = ms.spawn(lobbyLevelPath)
 	playerSpawner.spawn_players()
@@ -37,6 +38,7 @@ func join_lobby(id):
 	peer.connect_lobby(id)
 	multiplayer.multiplayer_peer = peer
 	lobby_id = id
+	labelLobbyId.text = "Lobby ID: " + str(lobby_id)
 	playerSpawner.spawn_players()
 	hide_lobby_buttons()
 
@@ -46,6 +48,7 @@ func on_lobby_created(connected, id):
 		lobby_id = id
 		Steam.setLobbyData(lobby_id, "name", str(Steam.getPersonaName() + "'s Lobby"))
 		Steam.setLobbyJoinable(lobby_id, true)
+		labelLobbyId.text = "Lobby ID: " + str(lobby_id)
 		# lobbyIdLabel.text = lobby_id
 		print(lobby_id)
 	else:

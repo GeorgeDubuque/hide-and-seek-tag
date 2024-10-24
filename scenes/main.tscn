@@ -32,17 +32,27 @@ offset_right = 134.0
 offset_bottom = 206.0
 text = "Refresh"
 
-[node name="LobbyIdLabel" type="RichTextLabel" parent="."]
-offset_left = 426.0
-offset_top = 17.0
-offset_right = 808.0
-offset_bottom = 57.0
-text = "123123123123"
-
 [node name="LobbyIdInput" type="LineEdit" parent="."]
 offset_top = 326.0
 offset_right = 221.0
 offset_bottom = 364.0
+placeholder_text = "Enter Lobby Id"
+
+[node name="Label_LobbyId" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -41.5
+offset_top = -23.0
+offset_right = 41.5
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+text = "Lobby ID: 123141122"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/levels/lobby_level.tscn", "res://scenes/levels/test_level.tscn")
@@ -65,7 +75,7 @@ _spawnable_scenes = PackedStringArray("res://scenes/character.tscn")
 spawn_path = NodePath(".")
 script = ExtResource("3_8ccg2")
 playerScene = ExtResource("4_uk1g5")
-spawns = [NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath("")]
+spawns = [null, null, null, null, null]
 startGameButton = NodePath("../StartGameButton")
 testLevelPath = "res://scenes/levels/test_level.tscn"
 
