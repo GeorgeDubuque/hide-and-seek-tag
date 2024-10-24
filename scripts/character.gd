@@ -27,7 +27,14 @@ extends CharacterBody3D
 ## Wether the player can use movement inputs. Does not stop outside forces or jumping. See Jumping Enabled.
 @export var canMove: bool = true
 # Whether the player is tagger or taggee
-@export var playerType: globals.PlayerType
+@export var playerType: globals.PlayerType:
+	set(value):
+		playerType = value
+		if value == globals.PlayerType.HIDER:
+			playerBodyMesh.material_override = hiderMaterial
+		else:
+			playerBodyMesh.material_override = taggerMaterial
+
 # Whether the player is tagger or taggee
 var isHider: bool:
 	get:
@@ -94,6 +101,9 @@ var isTagger: bool:
 
 @export_group("References")
 @export var tagManager: TagManager
+@export var playerBodyMesh: MeshInstance3D
+@export var taggerMaterial: StandardMaterial3D
+@export var hiderMaterial: StandardMaterial3D
 
 
 # Member variables
