@@ -173,6 +173,9 @@ func check_controls(): # If you add a control, you might want to add a check for
 		push_error("No control mapped for sprint. Please add an input map control. Disabling sprinting.")
 		sprint_enabled = false
 
+@rpc("any_peer", "reliable", "call_local")
+func set_player_type(type: globals.PlayerType):
+	playerType = type
 
 func change_reticle(reticle): # Yup, this function is kinda strange
 	if RETICLE:
