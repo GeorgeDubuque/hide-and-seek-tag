@@ -10,6 +10,7 @@ var peer = SteamMultiplayerPeer.new()
 @export var playerSpawner: PlayerSpawner
 
 @onready var ms = $MultiplayerSpawner
+@onready var lobbyIdInput: LineEdit = $LobbyIdInput
 
 var lobbyLevel: Node
 
@@ -98,3 +99,6 @@ func change_level(level_scene):
 				level.remove_child(c)
 				c.queue_free()
 		# Add new level.
+
+func _on_join_by_lobb_id_button_pressed() -> void:
+	join_lobby(int(lobbyIdInput.text))
