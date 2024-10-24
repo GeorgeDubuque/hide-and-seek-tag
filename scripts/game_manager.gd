@@ -24,13 +24,13 @@ func assignPlayerTypes():
 
 	var curr_index = 0
 	for character in characters:
-		print("set hider: ", character)
-		character.playerType = globals.PlayerType.HIDER
+		# print("set hider: ", character)
+		# character.playerType = globals.PlayerType.HIDER
 		# TODO: uncomment to actually assign taggers again
-		# if curr_index == randomTaggerIndex:
-		# 	print("set tagger: ", character)
-		# 	character.playerType = globals.PlayerType.TAGGER
-		# else:
-		# 	print("set hider: ", character)
-		# 	character.playerType = globals.PlayerType.HIDER
+		if curr_index == randomTaggerIndex:
+			print("set tagger: ", character)
+			character.playerType = globals.PlayerType.TAGGER
+		else:
+			print("set hider: ", character)
+			character.playerType = globals.PlayerType.HIDER
 		curr_index += 1
