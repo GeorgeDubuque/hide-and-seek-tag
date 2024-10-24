@@ -52,7 +52,7 @@ func _on_body_entered(body: Node3D) -> void:
 		var taggeeCharacter = (body as Character)
 		peer_id_to_character[taggee_id] = taggeeCharacter
 
-		if character.isHider && taggeeCharacter.isHider and !taggeeCharacter.canMove:
+		if character.isHider && taggeeCharacter.isHider and taggeeCharacter.canMove:
 			return
 		
 		if multiplayer.is_server():
