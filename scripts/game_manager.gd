@@ -53,8 +53,8 @@ func placePlayersInLobby():
 	var lastSpawnPos = Vector3(0, 0, 0)
 	for player in id_to_characters.values():
 		print("placing player ", player, " at position in lobby: ", lastSpawnPos)
-		player.position = lastSpawnPos
-		lastSpawnPos += Vector3(-2, 1, 0)
+		player.global_position = lastSpawnPos
+		lastSpawnPos += Vector3(0, 10, 0)
 
 func load_lobby():
 	if multiplayer.is_server():
