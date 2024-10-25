@@ -33,7 +33,7 @@ func assignPlayerTypes():
 	var available_characters = id_to_characters.values()
 
 	# choose taggers, store in array and remove from characters list
-	var chosenTaggers = []
+	var chosenTaggers: Array[Character]
 	while chosenTaggers.size() < numTaggers:
 		var randomTaggerIndex = randi_range(0, available_characters.size() - 1)
 		if available_characters[randomTaggerIndex] not in chosenTaggers:
