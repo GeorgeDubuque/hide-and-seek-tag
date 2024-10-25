@@ -62,6 +62,19 @@ func placePlayers(level: GameLevel):
 		hider.position = available_hider_spawns[randomHiderSpawnIndex].position
 		available_hider_spawns.remove_at(randomHiderSpawnIndex)
 
+func load_lobby():
+	if multiplayer.is_server():
+
+		# Spawn Lobby Level
+		var newLevel = load(lobbyLevelPath).instantiate()
+		levelNode.add_child(newLevel)
+
+		# Remove everthing BUT new level
+		for c in levelNode.get_children():
+			if c != newLevel:
+				levelNode.remove_child(c)
+				c.queue_free()
+
 func change_level(level_scene):
 	if multiplayer.is_server():
 
@@ -90,4 +103,4 @@ func setPlayerStatus(peer_id, status: globals.PlayerStatus):
 
 	if frozenCount == hiders.size():
 		print("taggers win!!!")
-		change_level(lobbyLevelPath)
+		load_lobby()
