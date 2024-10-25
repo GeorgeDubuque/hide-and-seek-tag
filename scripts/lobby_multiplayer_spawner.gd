@@ -53,5 +53,5 @@ func removePlayer(data):
 
 
 func _on_start_game_button_pressed() -> void:
-	GameManager.change_level.call_deferred(testLevelPath)
+	GameManager.change_level.call_deferred(testLevelPath, true)
 	startGameButton.hide()

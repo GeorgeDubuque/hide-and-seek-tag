@@ -85,7 +85,7 @@ func placePlayers(level: GameLevel):
 	var lastTaggerSpawnPos: Vector3 = level.taggerSpawn.position
 	for tagger in taggers:
 		(tagger as Character).set_player_position.rpc(lastTaggerSpawnPos)
-		print("setting player " + tagger + " as tagger at position: " + str(lastTaggerSpawnPos))
+		print("setting player ", tagger, " as tagger at position: ", lastTaggerSpawnPos)
 		lastTaggerSpawnPos += Vector3(1, 0, 0)
 
 	# place hiders
@@ -93,7 +93,7 @@ func placePlayers(level: GameLevel):
 	for hider in hiders:
 		var randomHiderSpawnIndex = randi_range(0, available_hider_spawns.size() - 1)
 		var randomSpawnPosition: Vector3 = available_hider_spawns[randomHiderSpawnIndex].position
-		print("setting player " + hider + " as hider at position: " + str(randomSpawnPosition))
+		print("setting player ", hider, " as hider at position: ", randomSpawnPosition)
 		(hider as Character).set_player_position.rpc(randomSpawnPosition)
 		available_hider_spawns.remove_at(randomHiderSpawnIndex)
 
