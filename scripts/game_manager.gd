@@ -53,8 +53,8 @@ func placePlayersInLobby():
 	var lastSpawnPos = Vector3(0, 0, 0)
 	for player in id_to_characters.values():
 		print("placing player ", player, " at position in lobby: ", lastSpawnPos)
-		player.global_position = lastSpawnPos
-		lastSpawnPos += Vector3(0, 10, 0)
+		player.position = lastSpawnPos
+		lastSpawnPos += Vector3(0, 100, 0)
 
 func load_lobby():
 	if multiplayer.is_server():
@@ -63,13 +63,14 @@ func load_lobby():
 		var newLevel = load(lobbyLevelPath).instantiate()
 		levelNode.add_child(newLevel)
 
-		placePlayersInLobby()
 
 		# Remove everthing BUT new level
 		for c in levelNode.get_children():
 			if c != newLevel:
 				levelNode.remove_child(c)
 				c.queue_free()
+
+		placePlayersInLobby()
 
 func placePlayers(level: GameLevel):
 	#place taggers
