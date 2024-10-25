@@ -53,9 +53,5 @@ func removePlayer(data):
 
 
 func _on_start_game_button_pressed() -> void:
-	var current_node = get_parent() # Start with the parent node
-	while current_node != null:
-		if current_node is Main:
-			startGameButton.hide()
-			(current_node as Main).change_level.call_deferred(testLevelPath)
-		current_node = current_node.get_parent() # Move up to the next parent node
+	GameManager.change_level.call_deferred(testLevelPath)
+	startGameButton.hide()

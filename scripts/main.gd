@@ -90,24 +90,6 @@ func hide_lobby_buttons():
 func _on_multiplayer_spawner_spawned(node: Node) -> void:
 	print("spawned player: ", node)
 
-func change_level(level_scene):
-	ms.add_spawnable_scene(level_scene)
-	if multiplayer.is_server():
-
-		# Spawn New Level
-		var level = $Level
-		var newLevel = load(level_scene).instantiate()
-		level.add_child(newLevel)
-
-		GameManager.assignPlayerTypes()
-
-		# Remove everthing BUT new level
-		for c in level.get_children():
-			if c != newLevel:
-				level.remove_child(c)
-				c.queue_free()
-
-		GameManager.placePlayers(newLevel as GameLevel)
 
 func _on_join_by_lobb_id_button_pressed() -> void:
 	join_lobby(int(lobbyIdInput.text))

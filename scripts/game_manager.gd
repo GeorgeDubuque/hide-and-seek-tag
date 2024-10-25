@@ -6,9 +6,12 @@ var hiders = []
 var frozenHiders = {}
 var numTaggers = 1
 var id_to_status = {}
+var levelNode
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	levelNode = get_tree().root.get_node("Main/Level")
+	print("root node: ", levelNode)
 	pass # Replace with function body.
 
 
@@ -57,6 +60,22 @@ func placePlayers(level: GameLevel):
 		hider.position = available_hider_spawns[randomHiderSpawnIndex].position
 		available_hider_spawns.remove_at(randomHiderSpawnIndex)
 
+func change_level(level_scene):
+	if multiplayer.is_server():
+
+		# Spawn New Level
+		var newLevel = load(level_scene).instantiate()
+		levelNode.add_child(newLevel)
+
+		assignPlayerTypes()
+
+		# Remove everthing BUT new level
+		for c in levelNode.get_children():
+			if c != newLevel:
+				levelNode.remove_child(c)
+				c.queue_free()
+
+		placePlayers(newLevel as GameLevel)
 
 @rpc("reliable", "any_peer", "call_local")
 func setPlayerStatus(peer_id, status: globals.PlayerStatus):

@@ -51,7 +51,12 @@ func _on_body_entered(body: Node3D) -> void:
 		var taggeeCharacter = (body as Character)
 		GameManager.id_to_characters[taggee_id] = taggeeCharacter
 
-		if character.isHider && taggeeCharacter.isHider and taggeeCharacter.canMove:
+		# hiders cant freeze other hiders
+		if character.isHider && taggeeCharacter.isHider and taggeeCharacter.NONE:
+			return
+
+		# hiders cant freeze taggers
+		if character.isHider && taggeeCharacter.isTagger:
 			return
 		
 		if multiplayer.is_server():
