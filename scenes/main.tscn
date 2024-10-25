@@ -46,11 +46,13 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Host" type="Button" parent="LobbyUI"]
+layout_mode = 0
 offset_right = 134.0
 offset_bottom = 102.0
 text = "Host"
 
 [node name="JoinByLobbIdButton" type="Button" parent="LobbyUI"]
+layout_mode = 0
 offset_left = 46.0
 offset_top = 371.0
 offset_right = 180.0
@@ -58,12 +60,14 @@ offset_bottom = 414.0
 text = "Join"
 
 [node name="Refresh" type="Button" parent="LobbyUI"]
+layout_mode = 0
 offset_top = 104.0
 offset_right = 134.0
 offset_bottom = 206.0
 text = "Refresh"
 
 [node name="LobbyIdInput" type="LineEdit" parent="LobbyUI"]
+layout_mode = 0
 offset_top = 326.0
 offset_right = 221.0
 offset_bottom = 364.0
@@ -88,6 +92,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LobbyContainer" type="ScrollContainer" parent="LobbyUI"]
+layout_mode = 0
 offset_left = 136.0
 offset_right = 736.0
 offset_bottom = 300.0

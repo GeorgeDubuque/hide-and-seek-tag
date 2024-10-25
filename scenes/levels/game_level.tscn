@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://bgi70slkbl27f"]
+[gd_scene load_steps=5 format=3 uid="uid://bgi70slkbl27f"]
+
+[ext_resource type="Script" path="res://scripts/game_level.gd" id="1_u4dgn"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_wqxlr"]
 ground_color = Color(0.160784, 0.815686, 0.905882, 1)
@@ -12,26 +14,31 @@ sky = SubResource("Sky_2iust")
 tonemap_mode = 1
 ssao_enabled = true
 
-[node name="GameLevel" type="Node3D"]
+[node name="GameLevel" type="Node3D" node_paths=PackedStringArray("hiderSpawns", "taggerSpawn")]
+script = ExtResource("1_u4dgn")
+hiderSpawns = [NodePath("HiderSpawns/Spawn1"), NodePath("HiderSpawns/Spawn2"), NodePath("HiderSpawns/Spawn3"), NodePath("HiderSpawns/Spawn4")]
+taggerSpawn = NodePath("TaggerSpawn")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
+[node name="TaggerSpawn" type="Node3D" parent="."]
+
+[node name="HiderSpawns" type="Node" parent="."]
+
+[node name="Spawn1" type="Node3D" parent="HiderSpawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85585, 1.90735e-06, 6.93132)
+
+[node name="Spawn2" type="Node3D" parent="HiderSpawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7497, 3.8147e-06, 8.98033)
+
+[node name="Spawn3" type="Node3D" parent="HiderSpawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.6589, 1.90735e-06, -13.0949)
+
+[node name="Spawn4" type="Node3D" parent="HiderSpawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3919, 1.90735e-06, -12.3068)
+
+[node name="Floor" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.18053, -3, -2.9464)
 use_collision = true
 size = Vector3(45.4373, 1, 40.014)
-
-[node name="Spawns" type="Node" parent="."]
-
-[node name="Spawn1" type="Node3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85585, 1.90735e-06, 6.93132)
-
-[node name="Spawn2" type="Node3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7497, 3.8147e-06, 8.98033)
-
-[node name="Spawn3" type="Node3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.6589, 1.90735e-06, -13.0949)
-
-[node name="Spawn4" type="Node3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3919, 1.90735e-06, -12.3068)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_m2dir")
@@ -40,5 +47,3 @@ environment = SubResource("Environment_m2dir")
 transform = Transform3D(0.87959, -0.436605, 0.188936, 0, 0.397148, 0.917755, -0.475732, -0.807248, 0.349328, 0, 0, 0)
 light_energy = 2.0
 shadow_enabled = true
-
-[node name="Players" type="Node" parent="."]

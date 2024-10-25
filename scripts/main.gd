@@ -93,20 +93,21 @@ func _on_multiplayer_spawner_spawned(node: Node) -> void:
 func change_level(level_scene):
 	ms.add_spawnable_scene(level_scene)
 	if multiplayer.is_server():
-		# print("START LEVEL: ", level_scene.resource_name)
-		# Remove old level if any.
+
+		# Spawn New Level
 		var level = $Level
 		var newLevel = load(level_scene).instantiate()
 		level.add_child(newLevel)
+
 		GameManager.assignPlayerTypes()
 
-		# await get_tree().create_timer(4).timeout
-
+		# Remove everthing BUT new level
 		for c in level.get_children():
 			if c != newLevel:
 				level.remove_child(c)
 				c.queue_free()
-		# Add new level.
+
+		GameManager.placePlayers(newLevel as GameLevel)
 
 func _on_join_by_lobb_id_button_pressed() -> void:
 	join_lobby(int(lobbyIdInput.text))
