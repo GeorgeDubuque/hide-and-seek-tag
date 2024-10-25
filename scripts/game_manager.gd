@@ -1,8 +1,8 @@
 extends Node
 
 var id_to_characters = {}
-var taggers: Array[Character]
-var hiders: Array[Character]
+var taggers = []
+var hiders = []
 var frozenHiders = {}
 var numTaggers = 1
 var id_to_status = {}
@@ -33,7 +33,7 @@ func assignPlayerTypes():
 	var available_characters = id_to_characters.values()
 
 	# choose taggers, store in array and remove from characters list
-	var chosenTaggers: Array[Character]
+	var chosenTaggers = []
 	while chosenTaggers.size() < numTaggers:
 		var randomTaggerIndex = randi_range(0, available_characters.size() - 1)
 		if available_characters[randomTaggerIndex] not in chosenTaggers:
@@ -84,8 +84,7 @@ func placePlayers(level: GameLevel):
 	#place taggers
 	var lastTaggerSpawnPos: Vector3 = level.taggerSpawn.position
 	for tagger in taggers:
-		tagger.set_player_position.rpc(lastTaggerSpawnPos)
-		print("setting player " + tagger.name + " as tagger at position: " + str(lastTaggerSpawnPos))
+		(tagger as Character).set_player_position.rpc(lastTaggerSpawnPos)
 		lastTaggerSpawnPos += Vector3(1, 0, 0)
 
 	# place hiders
@@ -93,8 +92,8 @@ func placePlayers(level: GameLevel):
 	for hider in hiders:
 		var randomHiderSpawnIndex = randi_range(0, available_hider_spawns.size() - 1)
 		var randomSpawnPosition: Vector3 = available_hider_spawns[randomHiderSpawnIndex].position
-		print("setting player " + hider.name + " as hider at position: " + str(randomSpawnPosition))
-		hider.set_player_position.rpc(randomSpawnPosition)
+		print("setting player " + hider + " as hider at position: " + randomSpawnPosition)
+		(hider as Character).set_player_position.rpc(randomSpawnPosition)
 		available_hider_spawns.remove_at(randomHiderSpawnIndex)
 
 
