@@ -7,8 +7,10 @@ var frozenHiders = {}
 var numTaggers = 1
 var id_to_status = {}
 var levelNode
+var gameStatus = globals.GameStatus.LOBBY
 
 const lobbyLevelPath = "res://scenes/levels/lobby_level.tscn"
+const lobbySpawnOffset = Vector3(2, 0, 0) # how far apart players should spawn from one another
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -53,9 +55,14 @@ func placePlayersInLobby():
 	var lastSpawnPos = Vector3(0, 0, 0)
 	for player in id_to_characters.values():
 		print("placing player ", player, " at position in lobby: ", lastSpawnPos)
+
 		player.set_player_position.rpc(lastSpawnPos)
+
+		# remove all status on player
+		player.set_player_status.rpc(globals.PlayerStatus.NONE)
+
 		#player.position = lastSpawnPos
-		lastSpawnPos += Vector3(0, 100, 0)
+		lastSpawnPos += lobbySpawnOffset
 
 func load_lobby():
 	if multiplayer.is_server():
@@ -77,18 +84,18 @@ func placePlayers(level: GameLevel):
 	#place taggers
 	var lastTaggerSpawnPos = level.taggerSpawn.position
 	for tagger in taggers:
-		tagger.position = lastTaggerSpawnPos
+		tagger.set_player_position.rpc(lastTaggerSpawnPos)
 		lastTaggerSpawnPos += Vector3(1, 0, 0)
 
 	# place hiders
 	var available_hider_spawns = level.hiderSpawns
 	for hider in hiders:
 		var randomHiderSpawnIndex = randi_range(0, available_hider_spawns.size() - 1)
-		hider.position = available_hider_spawns[randomHiderSpawnIndex].position
+		hider.set_player_position.rpc(available_hider_spawns[randomHiderSpawnIndex].position)
 		available_hider_spawns.remove_at(randomHiderSpawnIndex)
 
 
-func change_level(level_scene):
+func change_level(level_scene, shouldStartGame = false):
 	if multiplayer.is_server():
 
 		# Spawn New Level
@@ -104,6 +111,9 @@ func change_level(level_scene):
 				c.queue_free()
 
 		placePlayers(newLevel as GameLevel)
+
+		if shouldStartGame:
+			gameStatus = globals.GameStatus.IN_GAME
 
 @rpc("reliable", "any_peer", "call_local")
 func setPlayerStatus(peer_id, status: globals.PlayerStatus):

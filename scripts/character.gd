@@ -178,6 +178,10 @@ func check_controls(): # If you add a control, you might want to add a check for
 		sprint_enabled = false
 
 @rpc("any_peer", "call_local", "reliable")
+func set_player_status(newStatus: globals.PlayerStatus):
+	playerStatus = newStatus
+
+@rpc("any_peer", "call_local", "reliable")
 func set_player_position(newPos: Vector3):
 	position = newPos
 

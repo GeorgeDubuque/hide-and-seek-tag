@@ -51,6 +51,10 @@ func _on_body_entered(body: Node3D) -> void:
 		var taggeeCharacter = (body as Character)
 		GameManager.id_to_characters[taggee_id] = taggeeCharacter
 
+		# cant tag in lobby
+		if GameManager.gameStatus == globals.GameStatus.LOBBY:
+			return
+
 		# hiders cant freeze other hiders
 		if character.isHider && taggeeCharacter.isHider and taggeeCharacter.NONE:
 			return
