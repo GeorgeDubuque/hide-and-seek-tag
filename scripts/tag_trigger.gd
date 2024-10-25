@@ -3,7 +3,6 @@ extends Area3D
 
 @export var my_body: Node3D
 var potential_tags = {}
-var peer_id_to_character = {}
 var tags = {}
 @export var INTERACT: String = "interact"
 @export var character: Character
@@ -37,7 +36,7 @@ func try_tag_player(taggee_id):
 		print("tagger ", tagger_id, " tried to tag ", taggee_id)
 		if potential_tags.has(tagger_id) and potential_tags[tagger_id] == taggee_id:
 			print("tagger ", tagger_id, " TAGGED ", taggee_id)
-			peer_id_to_character[taggee_id].freeze_player.rpc_id(taggee_id)
+			GameManager.id_to_characters[taggee_id].tag_player.rpc_id(taggee_id)
 
 
 # sets potential tag for this game object 
@@ -50,7 +49,7 @@ func _on_body_entered(body: Node3D) -> void:
 		#		consider storing a list of taggees and getting the closest one
 		last_taggee = taggee_id
 		var taggeeCharacter = (body as Character)
-		peer_id_to_character[taggee_id] = taggeeCharacter
+		GameManager.id_to_characters[taggee_id] = taggeeCharacter
 
 		if character.isHider && taggeeCharacter.isHider and taggeeCharacter.canMove:
 			return

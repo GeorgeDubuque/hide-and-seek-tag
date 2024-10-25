@@ -114,6 +114,7 @@ var state: String = "normal"
 var low_ceiling: bool = false # This is for when the cieling is too low and the player needs to crouch.
 var was_on_floor: bool = true # Was the player on the floor last frame (for landing animation)
 var is_frozen: bool = false
+var playerStatus: globals.PlayerStatus = globals.PlayerStatus.NONE
 
 # The reticle should always have a Control node as the root
 var RETICLE: Control
@@ -177,9 +178,15 @@ func check_controls(): # If you add a control, you might want to add a check for
 		sprint_enabled = false
 
 @rpc("any_peer", "call_local", "reliable")
-func freeze_player():
-	canMove = !canMove
-	print("is_frozen: ", is_frozen)
+func tag_player():
+	match playerStatus:
+		globals.PlayerStatus.NONE:
+			playerStatus = globals.PlayerStatus.FROZEN
+		globals.PlayerStatus.FROZEN:
+			playerStatus = globals.PlayerStatus.NONE
+	
+	GameManager.setPlayerStatus.rpc_id(1, get_multiplayer_authority(), playerStatus)
+
 
 @rpc("any_peer", "reliable", "call_local")
 func set_player_type(type: globals.PlayerType):
@@ -218,7 +225,7 @@ func _physics_process(delta):
 	handle_jumping()
 	
 	var input_dir = Vector2.ZERO
-	if canMove: # Immobility works by interrupting user input, so other forces can still be applied to the player
+	if canMove && playerStatus != globals.PlayerStatus.FROZEN: # Immobility works by interrupting user input, so other forces can still be applied to the player
 		input_dir = Input.get_vector(LEFT, RIGHT, FORWARD, BACKWARD)
 
 	handle_movement(delta, input_dir)

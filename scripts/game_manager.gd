@@ -3,8 +3,9 @@ extends Node
 var id_to_characters = {}
 var taggers = []
 var hiders = []
-
+var frozenHiders = {}
 var numTaggers = 1
+var id_to_status = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -19,6 +20,7 @@ func _process(delta: float) -> void:
 func addPlayer(playerId, character: Character):
 	if !id_to_characters.has(playerId):
 		id_to_characters[playerId] = character
+		id_to_status[playerId] = globals.PlayerStatus.NONE
 
 func assignPlayerTypes():
 	var available_characters = id_to_characters.values()
@@ -42,7 +44,6 @@ func assignPlayerTypes():
 		character.set_player_type.rpc(globals.PlayerType.HIDER)
 
 func placePlayers(level: GameLevel):
-
 	#place taggers
 	var lastTaggerSpawnPos = level.taggerSpawn.position
 	for tagger in taggers:
@@ -55,3 +56,16 @@ func placePlayers(level: GameLevel):
 		var randomHiderSpawnIndex = randi_range(0, available_hider_spawns.size() - 1)
 		hider.position = available_hider_spawns[randomHiderSpawnIndex].position
 		available_hider_spawns.remove_at(randomHiderSpawnIndex)
+
+
+@rpc("reliable", "any_peer", "call_local")
+func setPlayerStatus(peer_id, status: globals.PlayerStatus):
+	id_to_status[peer_id] = status
+
+	var frozenCount = 0
+	for currStatus in id_to_status.values():
+		if currStatus == globals.PlayerStatus.FROZEN:
+			frozenCount += 1
+
+	if frozenCount == hiders.size():
+		print("taggers win!")
