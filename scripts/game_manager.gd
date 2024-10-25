@@ -8,6 +8,8 @@ var numTaggers = 1
 var id_to_status = {}
 var levelNode
 
+const lobbyLevelPath = "res://scenes/levels/lobby_level.tscn"
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	levelNode = get_tree().root.get_node("Main/Level")
@@ -87,4 +89,5 @@ func setPlayerStatus(peer_id, status: globals.PlayerStatus):
 			frozenCount += 1
 
 	if frozenCount == hiders.size():
-		print("taggers win!")
+		print("taggers win!!!")
+		change_level(lobbyLevelPath)
