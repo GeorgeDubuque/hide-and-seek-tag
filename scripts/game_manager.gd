@@ -48,6 +48,28 @@ func assignPlayerTypes():
 	for character in available_characters:
 		character.set_player_type.rpc(globals.PlayerType.HIDER)
 
+func placePlayersInLobby():
+	#place taggers
+	var lastSpawnPos = Vector3(0, 0, 0)
+	for player in id_to_characters.values():
+		player.position = lastSpawnPos
+		lastSpawnPos += Vector3(1, 0, 0)
+
+func load_lobby():
+	if multiplayer.is_server():
+
+		# Spawn Lobby Level
+		var newLevel = load(lobbyLevelPath).instantiate()
+		levelNode.add_child(newLevel)
+
+		placePlayersInLobby()
+
+		# Remove everthing BUT new level
+		for c in levelNode.get_children():
+			if c != newLevel:
+				levelNode.remove_child(c)
+				c.queue_free()
+
 func placePlayers(level: GameLevel):
 	#place taggers
 	var lastTaggerSpawnPos = level.taggerSpawn.position
@@ -62,18 +84,6 @@ func placePlayers(level: GameLevel):
 		hider.position = available_hider_spawns[randomHiderSpawnIndex].position
 		available_hider_spawns.remove_at(randomHiderSpawnIndex)
 
-func load_lobby():
-	if multiplayer.is_server():
-
-		# Spawn Lobby Level
-		var newLevel = load(lobbyLevelPath).instantiate()
-		levelNode.add_child(newLevel)
-
-		# Remove everthing BUT new level
-		for c in levelNode.get_children():
-			if c != newLevel:
-				levelNode.remove_child(c)
-				c.queue_free()
 
 func change_level(level_scene):
 	if multiplayer.is_server():
