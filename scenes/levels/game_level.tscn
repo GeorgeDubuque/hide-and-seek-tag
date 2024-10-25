@@ -1,6 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://bgi70slkbl27f"]
+[gd_scene load_steps=9 format=3 uid="uid://bgi70slkbl27f"]
 
 [ext_resource type="Script" path="res://scripts/game_level.gd" id="1_u4dgn"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_5prae"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_impbr"]
+albedo_color = Color(0.99924, 0, 0.185131, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_k1xf4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gal86"]
+albedo_color = Color(0.185699, 0.4979, 1, 1)
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_wqxlr"]
 ground_color = Color(0.160784, 0.815686, 0.905882, 1)
@@ -20,20 +30,41 @@ hiderSpawns = [NodePath("HiderSpawns/Spawn1"), NodePath("HiderSpawns/Spawn2"), N
 taggerSpawn = NodePath("TaggerSpawn")
 
 [node name="TaggerSpawn" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TaggerSpawn"]
+mesh = SubResource("SphereMesh_5prae")
+surface_material_override/0 = SubResource("StandardMaterial3D_impbr")
 
 [node name="HiderSpawns" type="Node" parent="."]
 
 [node name="Spawn1" type="Node3D" parent="HiderSpawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85585, 1.90735e-06, 6.93132)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85585, -2, 6.93132)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="HiderSpawns/Spawn1"]
+mesh = SubResource("SphereMesh_k1xf4")
+surface_material_override/0 = SubResource("StandardMaterial3D_gal86")
 
 [node name="Spawn2" type="Node3D" parent="HiderSpawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7497, 3.8147e-06, 8.98033)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.68789, -2, -15.3409)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="HiderSpawns/Spawn2"]
+mesh = SubResource("SphereMesh_k1xf4")
+surface_material_override/0 = SubResource("StandardMaterial3D_gal86")
 
 [node name="Spawn3" type="Node3D" parent="HiderSpawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.6589, 1.90735e-06, -13.0949)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5662, -2, -12.8186)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="HiderSpawns/Spawn3"]
+mesh = SubResource("SphereMesh_k1xf4")
+surface_material_override/0 = SubResource("StandardMaterial3D_gal86")
 
 [node name="Spawn4" type="Node3D" parent="HiderSpawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3919, 1.90735e-06, -12.3068)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.763, -2, 7.14909)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="HiderSpawns/Spawn4"]
+mesh = SubResource("SphereMesh_k1xf4")
+surface_material_override/0 = SubResource("StandardMaterial3D_gal86")
 
 [node name="Floor" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.18053, -3, -2.9464)

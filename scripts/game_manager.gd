@@ -32,13 +32,26 @@ func assignPlayerTypes():
 			available_characters.remove_at(randomTaggerIndex)
 
 	# set taggers
+	taggers = chosenTaggers
 	for character in chosenTaggers:
 		character.set_player_type.rpc(globals.PlayerType.TAGGER)
 	
 	# set hiders
+	hiders = available_characters
 	for character in available_characters:
 		character.set_player_type.rpc(globals.PlayerType.HIDER)
 
 func placePlayers(level: GameLevel):
-	level.hiderSpawns
-	level.taggerSpawn
+
+	#place taggers
+	var lastTaggerSpawnPos = level.taggerSpawn.position
+	for tagger in taggers:
+		tagger.position = lastTaggerSpawnPos
+		lastTaggerSpawnPos += Vector3(1, 0, 0)
+
+	# place hiders
+	var available_hider_spawns = level.hiderSpawns
+	for hider in hiders:
+		var randomHiderSpawnIndex = randi_range(0, available_hider_spawns.size() - 1)
+		hider.position = available_hider_spawns[randomHiderSpawnIndex].position
+		available_hider_spawns.remove_at(randomHiderSpawnIndex)
