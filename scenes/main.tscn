@@ -8,63 +8,15 @@
 [node name="Main" type="Node3D" node_paths=PackedStringArray("playerSpawner")]
 script = ExtResource("1_1p8wj")
 lobbyLevelPath = "res://scenes/levels/lobby_level.tscn"
-testLevelPath = "res://scenes/levels/test_level.tscn"
+testLevelPath = "res://scenes/levels/game_level.tscn"
 playerSpawner = NodePath("PlayerSpawner")
 
 [node name="Steam" type="Node3D" parent="."]
 script = ExtResource("2_woepv")
 
-[node name="Host" type="Button" parent="."]
-offset_right = 134.0
-offset_bottom = 102.0
-text = "Host"
-
-[node name="JoinByLobbIdButton" type="Button" parent="."]
-offset_left = 46.0
-offset_top = 371.0
-offset_right = 180.0
-offset_bottom = 414.0
-text = "Join"
-
-[node name="Refresh" type="Button" parent="."]
-offset_top = 104.0
-offset_right = 134.0
-offset_bottom = 206.0
-text = "Refresh"
-
-[node name="LobbyIdInput" type="LineEdit" parent="."]
-offset_top = 326.0
-offset_right = 221.0
-offset_bottom = 364.0
-placeholder_text = "Enter Lobby Id"
-
-[node name="Label_LobbyId" type="Label" parent="."]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -41.5
-offset_top = -23.0
-offset_right = 41.5
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_horizontal = 4
-text = "Lobby ID: 123141122"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/levels/lobby_level.tscn", "res://scenes/levels/test_level.tscn")
+_spawnable_scenes = PackedStringArray("res://scenes/levels/lobby_level.tscn", "res://scenes/levels/game_level.tscn")
 spawn_path = NodePath("../Level")
-
-[node name="LobbyContainer" type="ScrollContainer" parent="."]
-offset_left = 136.0
-offset_right = 736.0
-offset_bottom = 300.0
-
-[node name="Lobbies" type="VBoxContainer" parent="LobbyContainer"]
-layout_mode = 2
 
 [node name="Level" type="Node" parent="."]
 
@@ -77,7 +29,7 @@ script = ExtResource("3_8ccg2")
 playerScene = ExtResource("4_uk1g5")
 spawns = [null, null, null, null, null]
 startGameButton = NodePath("../StartGameButton")
-testLevelPath = "res://scenes/levels/test_level.tscn"
+testLevelPath = "res://scenes/levels/game_level.tscn"
 
 [node name="StartGameButton" type="Button" parent="."]
 visible = false
@@ -87,7 +39,63 @@ offset_right = 648.0
 offset_bottom = 624.0
 text = "START GAME"
 
-[connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
-[connection signal="pressed" from="JoinByLobbIdButton" to="." method="_on_join_by_lobb_id_button_pressed"]
-[connection signal="pressed" from="Refresh" to="." method="_on_refresh_pressed"]
+[node name="LobbyUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Host" type="Button" parent="LobbyUI"]
+offset_right = 134.0
+offset_bottom = 102.0
+text = "Host"
+
+[node name="JoinByLobbIdButton" type="Button" parent="LobbyUI"]
+offset_left = 46.0
+offset_top = 371.0
+offset_right = 180.0
+offset_bottom = 414.0
+text = "Join"
+
+[node name="Refresh" type="Button" parent="LobbyUI"]
+offset_top = 104.0
+offset_right = 134.0
+offset_bottom = 206.0
+text = "Refresh"
+
+[node name="LobbyIdInput" type="LineEdit" parent="LobbyUI"]
+offset_top = 326.0
+offset_right = 221.0
+offset_bottom = 364.0
+placeholder_text = "Enter Lobby Id"
+
+[node name="Label_LobbyId" type="Label" parent="LobbyUI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 476.5
+offset_top = 585.0
+offset_right = 635.5
+offset_bottom = 608.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+text = "Lobby ID: 123141122"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LobbyContainer" type="ScrollContainer" parent="LobbyUI"]
+offset_left = 136.0
+offset_right = 736.0
+offset_bottom = 300.0
+
+[node name="Lobbies" type="VBoxContainer" parent="LobbyUI/LobbyContainer"]
+layout_mode = 2
+
 [connection signal="pressed" from="StartGameButton" to="PlayerSpawner" method="_on_start_game_button_pressed"]
+[connection signal="pressed" from="LobbyUI/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="LobbyUI/JoinByLobbIdButton" to="." method="_on_join_by_lobb_id_button_pressed"]
+[connection signal="pressed" from="LobbyUI/Refresh" to="." method="_on_refresh_pressed"]

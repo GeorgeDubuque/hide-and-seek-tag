@@ -10,8 +10,8 @@ var peer = SteamMultiplayerPeer.new()
 @export var playerSpawner: PlayerSpawner
 
 @onready var ms = $MultiplayerSpawner
-@onready var lobbyIdInput: LineEdit = $LobbyIdInput
-@onready var labelLobbyId: Label = $Label_LobbyId
+@onready var lobbyIdInput: LineEdit = $LobbyUI/LobbyIdInput
+@onready var labelLobbyId: Label = $LobbyUI/Label_LobbyId
 
 var lobbyLevel: Node
 
@@ -74,19 +74,17 @@ func _on_lobby_match_list(lobbies):
 		but.set_text(str(lobby_name, "| Player Count: ", mem_count))
 		but.set_size(Vector2(100, 5))
 		but.connect("pressed", Callable(self, "join_lobby").bind(lobby))
-		$LobbyContainer/Lobbies.add_child(but)
+		$LobbyUI/LobbyContainer/Lobbies.add_child(but)
 
 func _on_refresh_pressed() -> void:
-	if $LobbyContainer/Lobbies.get_child_count() > 0:
-		for n in $LobbyContainer/Lobbies.get_children():
+	if $LobbyUI/LobbyContainer/Lobbies.get_child_count() > 0:
+		for n in $LobbyUI/LobbyContainer/Lobbies.get_children():
 			n.queue_free()
 	open_lobby_list()
 
 
 func hide_lobby_buttons():
-	$Host.hide()
-	$LobbyContainer/Lobbies.hide()
-	$Refresh.hide()
+	$LobbyUI.hide()
 
 
 func _on_multiplayer_spawner_spawned(node: Node) -> void:
