@@ -13,17 +13,20 @@ func _ready() -> void:
 	print(player)
 
 func _input(event):
-	if event.is_action_pressed("interact") and can_interact:
+	if event.is_action_pressed("interact") and can_interact: # TODO also needs check for authority
+		# TODO: needs to send rpc to server to check this info before calling interact for that player
 		if active_areas.size() > 0:
 			can_interact = false
 			label.hide()
 
+			# TODO: does this call need to happen on local or server
 			await active_areas[0].interact.call()
 
 			can_interact = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	#TODO: needs check for authority
 	if active_areas.size() > 0 and can_interact:
 		active_areas.sort_custom(_sort_by_distance_to_player)
 		label.text = base_text + active_areas[0].actionName
@@ -31,13 +34,14 @@ func _process(delta: float) -> void:
 	else:
 		label.hide()
 
-func _sort_by_distance_to_player(area1, area2):
+func _sort_by_distance_to_player(area1, area2): # TODO: this also need player_id for sorting based on correct player
 	var area1_to_player = player.global_position.distance_to(area1.global_position)
 	var area2_to_player = player.global_position.distance_to(area2.global_position)
 	return area1_to_player < area2_to_player
 
 
-func register_area(area: InteractionArea):
+func register_area(area: InteractionArea): # TODO: this should accept player id
+	# TODO: instead active_areas should be a dict with player_id to array
 	active_areas.push_back(area)
 
 func unregister_area(area: InteractionArea):
