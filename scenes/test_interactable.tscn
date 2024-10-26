@@ -6,8 +6,8 @@
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_oco31"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bg0pw"]
-radius = 3.0
-height = 6.0
+radius = 0.512343
+height = 2.15324
 
 [node name="TestInteractable" type="Node3D"]
 script = ExtResource("1_3nltq")

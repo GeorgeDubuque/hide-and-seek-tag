@@ -3,7 +3,11 @@
 [ext_resource type="Script" path="res://scripts/interaction_area.gd" id="1_ax0qm"]
 
 [node name="InteractionArea" type="Area3D"]
+collision_layer = 16
+collision_mask = 8
 script = ExtResource("1_ax0qm")
 
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

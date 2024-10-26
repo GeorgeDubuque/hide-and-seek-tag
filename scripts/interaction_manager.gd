@@ -24,7 +24,6 @@ func _input(event):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	print("number of interactable: ", active_areas.size())
 	if active_areas.size() > 0 and can_interact:
 		active_areas.sort_custom(_sort_by_distance_to_player)
 		label.text = base_text + active_areas[0].actionName

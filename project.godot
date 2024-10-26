@@ -101,3 +101,5 @@ interact={
 3d_physics/layer_1="Player"
 3d_physics/layer_2="World"
 3d_physics/layer_3="TagTrigger"
+3d_physics/layer_4="Interactor"
+3d_physics/layer_5="Interactable"

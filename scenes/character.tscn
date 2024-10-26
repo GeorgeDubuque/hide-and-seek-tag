@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=27 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_uajkv"]
 [ext_resource type="Script" path="res://scripts/tag_trigger.gd" id="2_urax8"]
@@ -21,6 +21,9 @@ height = 0.5
 size = Vector3(0.5, 0.3, 0.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pnvx4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s85qk"]
+size = Vector3(1, 2, 1)
 
 [sub_resource type="Animation" id="Animation_gh776"]
 resource_name = "RESET"
@@ -419,18 +422,28 @@ skeleton = NodePath("../../Head")
 
 [node name="TagTrigger" type="Area3D" parent="Graphics" node_paths=PackedStringArray("my_body", "character")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
+visible = false
 collision_layer = 4
 script = ExtResource("2_urax8")
 my_body = NodePath("../..")
 character = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Graphics/TagTrigger"]
+visible = false
 shape = SubResource("BoxShape3D_pnvx4")
 
 [node name="Label_Username" type="Label3D" parent="Graphics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.41273, 0)
 billboard = 1
 text = "test"
+
+[node name="PlayerInteractor" type="Area3D" parent="Graphics"]
+collision_layer = 8
+collision_mask = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Graphics/PlayerInteractor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1.0021)
+shape = SubResource("BoxShape3D_s85qk")
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
