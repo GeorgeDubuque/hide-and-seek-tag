@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://du5d4wq5dbo4w"]
+
+[ext_resource type="Script" path="res://scripts/test_interactable.gd" id="1_3nltq"]
+[ext_resource type="PackedScene" uid="uid://dhedkm6pu187l" path="res://scenes/interaction_area.tscn" id="2_aum2t"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_oco31"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bg0pw"]
+radius = 3.0
+height = 6.0
+
+[node name="TestInteractable" type="Node3D"]
+script = ExtResource("1_3nltq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_oco31")
+
+[node name="InteractionArea" parent="." instance=ExtResource("2_aum2t")]
+actionName = "swag"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_bg0pw")

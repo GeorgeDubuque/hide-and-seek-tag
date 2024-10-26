@@ -1,10 +1,8 @@
-[gd_scene load_steps=28 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=26 format=3 uid="uid://cc1m2a1obsyn4"]
 
-[ext_resource type="Script" path="res://scripts/character.gd" id="1_ifg6f"]
+[ext_resource type="Script" path="res://scripts/character.gd" id="1_uajkv"]
 [ext_resource type="Script" path="res://scripts/tag_trigger.gd" id="2_urax8"]
-[ext_resource type="Material" uid="uid://c832cg6yrl8wm" path="res://materials/material_tagger.tres" id="2_vi7ko"]
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/debug.gd" id="3_fepvu"]
-[ext_resource type="Material" uid="uid://33bvkkcsxf6x" path="res://materials/material_hider.tres" id="3_w3k5j"]
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/EditorModule.gd" id="4_mwxu7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
@@ -386,10 +384,9 @@ properties/6/path = NodePath("Graphics/Label_Username:text")
 properties/6/spawn = true
 properties/6/replication_mode = 2
 
-[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH", "tagManager", "playerBodyMesh")]
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH") groups=["player"]]
 collision_mask = 7
-script = ExtResource("1_ifg6f")
-default_reticle = "res://FirstPersonController/addons/fpc/reticles/reticle_1.tscn"
+script = ExtResource("1_uajkv")
 HEAD = NodePath("Head")
 GRAPHICS = NodePath("Graphics")
 CAMERA = NodePath("Head/Camera")
@@ -397,10 +394,6 @@ HEADBOB_ANIMATION = NodePath("Head/HeadbobAnimation")
 JUMP_ANIMATION = NodePath("Head/JumpAnimation")
 CROUCH_ANIMATION = NodePath("CrouchAnimation")
 COLLISION_MESH = NodePath("Collision")
-tagManager = NodePath("Graphics/TagTrigger")
-playerBodyMesh = NodePath("Graphics/Mesh")
-taggerMaterial = ExtResource("2_vi7ko")
-hiderMaterial = ExtResource("3_w3k5j")
 
 [node name="Graphics" type="Node3D" parent="."]
 

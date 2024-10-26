@@ -19,11 +19,16 @@ config/icon="res://icon.svg"
 
 globals="*res://scripts/globals.gd"
 GameManager="*res://scripts/game_manager.gd"
+InteractionManager="*res://scenes/interaction_manager.tscn"
 
 [editor]
 
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
+
+[global_group]
+
+player=""
 
 [input]
 
