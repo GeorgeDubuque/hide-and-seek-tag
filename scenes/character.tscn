@@ -389,6 +389,9 @@ properties/6/replication_mode = 2
 properties/7/path = NodePath(".:playerStatus")
 properties/7/spawn = true
 properties/7/replication_mode = 1
+properties/8/path = NodePath("Head:rotation")
+properties/8/spawn = true
+properties/8/replication_mode = 1
 
 [node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH", "tagManager", "playerBodyMesh") groups=["player"]]
 collision_mask = 7
