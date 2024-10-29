@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://c1sij0wttkudx"]
+
+[ext_resource type="PackedScene" uid="uid://dhedkm6pu187l" path="res://scenes/interaction_area.tscn" id="1_7q3un"]
+[ext_resource type="Script" path="res://scenes/light_post.gd" id="1_eo4hy"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kln4n"]
+radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0o16w"]
+albedo_color = Color(0.255659, 0.255659, 0.255659, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_iwgu3"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 4.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wk2wh"]
+transparency = 1
+
+[sub_resource type="SphereMesh" id="SphereMesh_el38j"]
+material = SubResource("StandardMaterial3D_wk2wh")
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2yx5i"]
+properties/0/path = NodePath("OmniLight3D:visible")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="LightPost" type="Node3D"]
+script = ExtResource("1_eo4hy")
+
+[node name="InteractionArea" parent="." instance=ExtResource("1_7q3un")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+shape = SubResource("SphereShape3D_kln4n")
+
+[node name="Graphics" type="Node3D" parent="."]
+
+[node name="Post" type="MeshInstance3D" parent="Graphics"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+material_override = SubResource("StandardMaterial3D_0o16w")
+mesh = SubResource("CylinderMesh_iwgu3")
+
+[node name="Bulb" type="MeshInstance3D" parent="Graphics"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+mesh = SubResource("SphereMesh_el38j")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.02835, 0)
+shadow_enabled = true
+omni_range = 11.809
+omni_attenuation = 0.92
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_2yx5i")
