@@ -28,6 +28,7 @@ extends CharacterBody3D
 @export var canMove: bool = true
 
 @onready var tagInteractionArea: InteractionArea = $IA_PlayerTag
+@onready var unfreezeInteractionArea: InteractionArea = $IA_PlayerUnfreeze
 # Whether the player is tagger or taggee
 @export var playerType: globals.PlayerType:
 	set(value):
@@ -155,7 +156,8 @@ func _ready():
 	CROUCH_ANIMATION.play("RESET")
 	
 	check_controls()
-	tagInteractionArea.interact = Callable(self, "tag_player")
+	tagInteractionArea.interact = Callable(self, "freeze_player")
+	unfreezeInteractionArea.interact = Callable(self, "unfreeze_player")
 
 func check_controls(): # If you add a control, you might want to add a check for it here.
 	# The actions are being disabled so the engine doesn't halt the entire project in debug mode
@@ -192,16 +194,21 @@ func set_player_status(newStatus: globals.PlayerStatus):
 func set_player_position(newPos: Vector3):
 	position = newPos
 
-func tag_player():
-	match playerStatus:
-		globals.PlayerStatus.NONE:
-			playerStatus = globals.PlayerStatus.FROZEN
-			tagInteractionArea.collider.disabled = true
-		globals.PlayerStatus.FROZEN:
-			playerStatus = globals.PlayerStatus.NONE
-	
+func unfreeze_player():
+	if isFrozen:
+		playerStatus = globals.PlayerStatus.NONE
+		tagInteractionArea.collider.disabled = false
+		unfreezeInteractionArea.collider.disabled = true
+
 	GameManager.setPlayerStatus.rpc_id(1, get_multiplayer_authority(), playerStatus)
 
+func freeze_player():
+	if !isFrozen:
+		playerStatus = globals.PlayerStatus.FROZEN
+		tagInteractionArea.collider.disabled = true
+		unfreezeInteractionArea.collider.disabled = false
+	
+	GameManager.setPlayerStatus.rpc_id(1, get_multiplayer_authority(), playerStatus)
 
 @rpc("any_peer", "reliable", "call_local")
 func set_player_type(type: globals.PlayerType):

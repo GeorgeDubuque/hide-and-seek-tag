@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=31 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_uajkv"]
 [ext_resource type="Material" uid="uid://c832cg6yrl8wm" path="res://materials/material_tagger.tres" id="2_h22dh"]
@@ -390,6 +390,17 @@ properties/7/replication_mode = 1
 properties/8/path = NodePath("IA_PlayerTag/CollisionShape3D:disabled")
 properties/8/spawn = true
 properties/8/replication_mode = 1
+properties/9/path = NodePath("IA_PlayerUnfreeze/CollisionShape3D:disabled")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_raby1"]
+transparency = 1
+albedo_color = Color(0.502141, 0.441715, 0.991982, 0.407843)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dhnk8"]
+radius = 0.6
+height = 2.1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ufnxo"]
 
@@ -504,9 +515,24 @@ script = ExtResource("4_mwxu7")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_56ji0")
 
+[node name="FrozenIndicator" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01492, 0)
+visible = false
+material_override = SubResource("StandardMaterial3D_raby1")
+mesh = SubResource("CapsuleMesh_dhnk8")
+skeleton = NodePath("../IA_PlayerUnfreeze")
+
 [node name="IA_PlayerTag" parent="." instance=ExtResource("7_yd3o4")]
 actionName = "tag."
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="IA_PlayerTag"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0135, 0)
 shape = SubResource("CapsuleShape3D_ufnxo")
+
+[node name="IA_PlayerUnfreeze" parent="." instance=ExtResource("7_yd3o4")]
+actionName = "unfreeze"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="IA_PlayerUnfreeze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0135, 0)
+shape = SubResource("CapsuleShape3D_ufnxo")
+disabled = true
