@@ -43,7 +43,6 @@ func _process(_delta: float) -> void:
 		# print(player, " looking at ", active_area)
 
 		if multiplayer.is_server():
-			print("registering interaction area ", active_area, " for player ", player)
 			InteractionManager.register_area(active_area, player)
 
 	else:
