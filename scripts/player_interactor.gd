@@ -36,9 +36,8 @@ func _process(_delta: float) -> void:
 	# 	print(player, "status can_interact=", can_interact, " and is_colliding()=", is_colliding())
 	if is_colliding():
 
-		if is_multiplayer_authority() and InteractionManager.label.hidden:
+		if is_multiplayer_authority():
 			activeInteractable = get_collider()
-			print(player, " should be showing the text ", activeInteractable.actionName)
 			InteractionManager.set_interaction_label_text(activeInteractable.actionName)
 			InteractionManager.label.show()
 		# print(player, " looking at ", activeInteractable)
@@ -47,7 +46,7 @@ func _process(_delta: float) -> void:
 			InteractionManager.register_area(activeInteractable, player)
 
 	else:
-		if is_multiplayer_authority() and !InteractionManager.label.hidden:
+		if is_multiplayer_authority():
 			activeInteractable = null
 			InteractionManager.label.hide()
 		# print(player, " looking at nothing")
