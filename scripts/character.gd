@@ -461,21 +461,21 @@ func _process(delta):
 	# if multiplayer.is_server():
 	# 	print(player, "status can_interact=", can_interact, " and is_colliding()=", is_colliding())
 	if interactorRayCast.is_colliding():
-		activeInteractable = interactorRayCast.get_collider()
 
 		if is_multiplayer_authority() and InteractionManager.label.hidden:
+			activeInteractable = interactorRayCast.get_collider()
 			print(self, " should be showing the text ", activeInteractable.actionName)
 			InteractionManager.set_interaction_label_text(activeInteractable.actionName)
 			InteractionManager.label.show()
 		# print(player, " looking at ", active_area)
 
 		if multiplayer.is_server():
-			InteractionManager.register_area(activeInteractable, self)
+			InteractionManager.register_area(interactorRayCast.get_collider(), self)
 
 	else:
-		activeInteractable = null
 
-		if !InteractionManager.label.hidden:
+		if is_multiplayer_authority() and !InteractionManager.label.hidden:
+			activeInteractable = null
 			InteractionManager.label.hide()
 		# print(player, " looking at nothing")
 
