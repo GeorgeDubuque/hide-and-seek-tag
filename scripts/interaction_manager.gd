@@ -10,6 +10,7 @@ var can_interact = true
 @rpc("call_local", "any_peer", "reliable")
 func is_valid_interact(area_path: NodePath):
 	var player_id = multiplayer.get_remote_sender_id()
+	print("interaction manager recieved rpc from ", player_id)
 	if !active_areas.has(player_id):
 		print("server doesnt have the player requested on is_valid_interact")
 		return
