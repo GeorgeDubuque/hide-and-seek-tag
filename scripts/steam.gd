@@ -15,9 +15,9 @@ func _ready() -> void:
 	print("Steam is running")
 
 	var id = Steam.getSteamID()
-	var name = Steam.getPersonaName()
+	var steamName = Steam.getPersonaName()
 
-	print("Id: ", id, " Username: ", name)
+	print("Id: ", id, " Username: ", steamName)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
