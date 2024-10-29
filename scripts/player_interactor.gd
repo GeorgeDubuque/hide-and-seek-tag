@@ -32,6 +32,7 @@ func _input(event):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	print(player, " authority is ", get_multiplayer_authority())
 	if is_multiplayer_authority():
 		if is_colliding():
 			activeInteractable = get_collider()
