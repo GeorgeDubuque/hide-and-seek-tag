@@ -387,6 +387,9 @@ properties/6/replication_mode = 1
 properties/7/path = NodePath("Head:rotation")
 properties/7/spawn = true
 properties/7/replication_mode = 1
+properties/8/path = NodePath("IA_PlayerTag/CollisionShape3D:disabled")
+properties/8/spawn = true
+properties/8/replication_mode = 1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ufnxo"]
 
