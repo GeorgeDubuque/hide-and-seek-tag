@@ -132,6 +132,8 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity") #
 # Stores mouse input for rotating the camera in the phyhsics process
 var mouseInput: Vector2 = Vector2(0, 0)
 
+@onready var frozenIndicator = $FrozenIndicator
+
 func _ready():
 	CAMERA.current = is_multiplayer_authority()
 
@@ -199,6 +201,7 @@ func unfreeze_player():
 		playerStatus = globals.PlayerStatus.NONE
 		tagInteractionArea.collider.disabled = false
 		unfreezeInteractionArea.collider.disabled = true
+		frozenIndicator.hide()
 
 	GameManager.setPlayerStatus.rpc_id(1, get_multiplayer_authority(), playerStatus)
 
@@ -207,6 +210,7 @@ func freeze_player():
 		playerStatus = globals.PlayerStatus.FROZEN
 		tagInteractionArea.collider.disabled = true
 		unfreezeInteractionArea.collider.disabled = false
+		frozenIndicator.show()
 	
 	GameManager.setPlayerStatus.rpc_id(1, get_multiplayer_authority(), playerStatus)
 
