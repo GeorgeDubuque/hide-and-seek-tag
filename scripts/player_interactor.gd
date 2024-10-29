@@ -19,6 +19,7 @@ func _input(event):
 		if active_area != null:
 			print(player.get_multiplayer_authority(), " sent rpc to server")
 			InteractionManager.rpc_id(1, "is_valid_interact", active_area.get_path())
+			InteractionManager.label.hide()
 
 		# if active_area != null:
 		# 	can_interact = false

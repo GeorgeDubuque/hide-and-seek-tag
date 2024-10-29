@@ -196,6 +196,7 @@ func tag_player():
 	match playerStatus:
 		globals.PlayerStatus.NONE:
 			playerStatus = globals.PlayerStatus.FROZEN
+			tagInteractionArea.collider.disabled = true
 		globals.PlayerStatus.FROZEN:
 			playerStatus = globals.PlayerStatus.NONE
 	
