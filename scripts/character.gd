@@ -206,7 +206,10 @@ func tag_player():
 func set_player_type(type: globals.PlayerType):
 	playerType = type
 	if isTagger:
-		tagInteractionArea.set_process(false)
+		tagInteractionArea.collider.disabled = true
+	else:
+		tagInteractionArea.collider.disabled = false
+
 
 func change_reticle(reticle): # Yup, this function is kinda strange
 	if RETICLE:
