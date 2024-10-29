@@ -205,6 +205,17 @@ func _input(event):
 @rpc("any_peer", "call_local", "reliable")
 func set_player_status(newStatus: globals.PlayerStatus):
 	playerStatus = newStatus
+	if isFrozen:
+		playerStatus = globals.PlayerStatus.NONE
+		tagInteractionArea.collider.disabled = false
+		unfreezeInteractionArea.collider.disabled = true
+		frozenIndicator.hide()
+	else:
+		playerStatus = globals.PlayerStatus.FROZEN
+		tagInteractionArea.collider.disabled = true
+		unfreezeInteractionArea.collider.disabled = false
+		frozenIndicator.show()
+
 
 @rpc("any_peer", "call_local", "reliable")
 func set_player_position(newPos: Vector3):
@@ -212,21 +223,11 @@ func set_player_position(newPos: Vector3):
 
 func unfreeze_player():
 	if isFrozen:
-		playerStatus = globals.PlayerStatus.NONE
-		tagInteractionArea.collider.disabled = false
-		unfreezeInteractionArea.collider.disabled = true
-		frozenIndicator.hide()
-
-	GameManager.setPlayerStatus.rpc_id(1, get_multiplayer_authority(), playerStatus)
+		GameManager.setPlayerStatus.rpc_id(1, get_multiplayer_authority(), playerStatus)
 
 func freeze_player():
 	if !isFrozen:
-		playerStatus = globals.PlayerStatus.FROZEN
-		tagInteractionArea.collider.disabled = true
-		unfreezeInteractionArea.collider.disabled = false
-		frozenIndicator.show()
-	
-	GameManager.setPlayerStatus.rpc_id(1, get_multiplayer_authority(), playerStatus)
+		GameManager.setPlayerStatus.rpc_id(1, get_multiplayer_authority(), playerStatus)
 
 @rpc("any_peer", "reliable", "call_local")
 func set_player_type(type: globals.PlayerType):
