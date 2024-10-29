@@ -39,6 +39,7 @@ func _process(_delta: float) -> void:
 		active_area = get_collider()
 
 		if InteractionManager.label.hidden:
+			print(player, " is colliding")
 			InteractionManager.set_interaction_label_text(active_area.actionName)
 			InteractionManager.label.show()
 		# print(player, " looking at ", active_area)
