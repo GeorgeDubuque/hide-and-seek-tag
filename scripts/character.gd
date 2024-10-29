@@ -26,6 +26,8 @@ extends CharacterBody3D
 @export var invert_mouse_y: bool = false # Possibly add an invert mouse X in the future
 ## Wether the player can use movement inputs. Does not stop outside forces or jumping. See Jumping Enabled.
 @export var canMove: bool = true
+
+@onready var tagInteractionArea: InteractionArea = $IA_PlayerTag
 # Whether the player is tagger or taggee
 @export var playerType: globals.PlayerType:
 	set(value):
@@ -149,6 +151,7 @@ func _ready():
 	CROUCH_ANIMATION.play("RESET")
 	
 	check_controls()
+	tagInteractionArea.interact = Callable(self, "tag_player")
 
 func check_controls(): # If you add a control, you might want to add a check for it here.
 	# The actions are being disabled so the engine doesn't halt the entire project in debug mode
@@ -185,7 +188,6 @@ func set_player_status(newStatus: globals.PlayerStatus):
 func set_player_position(newPos: Vector3):
 	position = newPos
 
-@rpc("any_peer", "call_local", "reliable")
 func tag_player():
 	match playerStatus:
 		globals.PlayerStatus.NONE:

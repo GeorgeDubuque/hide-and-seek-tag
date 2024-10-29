@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_uajkv"]
 [ext_resource type="Material" uid="uid://c832cg6yrl8wm" path="res://materials/material_tagger.tres" id="2_h22dh"]
-[ext_resource type="Script" path="res://scripts/tag_trigger.gd" id="2_urax8"]
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/debug.gd" id="3_fepvu"]
 [ext_resource type="Script" path="res://scenes/player_interactor.gd" id="3_glr05"]
 [ext_resource type="Material" uid="uid://33bvkkcsxf6x" path="res://materials/material_hider.tres" id="3_gqwcm"]
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/EditorModule.gd" id="4_mwxu7"]
+[ext_resource type="PackedScene" uid="uid://dhedkm6pu187l" path="res://scenes/interaction_area.tscn" id="7_yd3o4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
@@ -22,8 +22,6 @@ height = 0.5
 
 [sub_resource type="BoxMesh" id="BoxMesh_3uy6v"]
 size = Vector3(0.5, 0.3, 0.2)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_pnvx4"]
 
 [sub_resource type="Animation" id="Animation_gh776"]
 resource_name = "RESET"
@@ -393,6 +391,8 @@ properties/8/path = NodePath("Head:rotation")
 properties/8/spawn = true
 properties/8/replication_mode = 1
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ufnxo"]
+
 [node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH", "tagManager", "playerBodyMesh") groups=["player"]]
 collision_mask = 7
 script = ExtResource("1_uajkv")
@@ -403,7 +403,7 @@ HEADBOB_ANIMATION = NodePath("Head/HeadbobAnimation")
 JUMP_ANIMATION = NodePath("Head/JumpAnimation")
 CROUCH_ANIMATION = NodePath("CrouchAnimation")
 COLLISION_MESH = NodePath("Collision")
-tagManager = NodePath("Graphics/TagTrigger")
+tagManager = NodePath("")
 playerBodyMesh = NodePath("Graphics/Mesh")
 taggerMaterial = ExtResource("2_h22dh")
 hiderMaterial = ExtResource("3_gqwcm")
@@ -429,18 +429,6 @@ skeleton = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.4098)
 mesh = SubResource("BoxMesh_3uy6v")
 skeleton = NodePath("../../Head")
-
-[node name="TagTrigger" type="Area3D" parent="Graphics" node_paths=PackedStringArray("my_body", "character")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
-visible = false
-collision_layer = 4
-script = ExtResource("2_urax8")
-my_body = NodePath("../..")
-character = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Graphics/TagTrigger"]
-visible = false
-shape = SubResource("BoxShape3D_pnvx4")
 
 [node name="Label_Username" type="Label3D" parent="Graphics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.41273, 0)
@@ -517,5 +505,9 @@ script = ExtResource("4_mwxu7")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_56ji0")
 
-[connection signal="body_entered" from="Graphics/TagTrigger" to="Graphics/TagTrigger" method="_on_body_entered"]
-[connection signal="body_exited" from="Graphics/TagTrigger" to="Graphics/TagTrigger" method="_on_body_exited"]
+[node name="IA_PlayerTag" parent="." instance=ExtResource("7_yd3o4")]
+actionName = "tag."
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="IA_PlayerTag"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0135, 0)
+shape = SubResource("CapsuleShape3D_ufnxo")
