@@ -36,20 +36,20 @@ func _process(_delta: float) -> void:
 	# 	print(player, "status can_interact=", can_interact, " and is_colliding()=", is_colliding())
 	if is_colliding():
 
-		if is_multiplayer_authority():
-			activeInteractable = get_collider()
-			InteractionManager.set_interaction_label_text(activeInteractable.actionName)
-			InteractionManager.label.show()
+		activeInteractable = get_collider()
 		# print(player, " looking at ", activeInteractable)
 
 		if multiplayer.is_server():
 			InteractionManager.register_area(get_collider(), player)
-
 	else:
-		if is_multiplayer_authority():
-			activeInteractable = null
-			InteractionManager.label.hide()
+		activeInteractable = null
 		# print(player, " looking at nothing")
 
 		if multiplayer.is_server():
 			InteractionManager.unregister_area(player)
+
+	if activeInteractable != null:
+		InteractionManager.set_interaction_label_text(activeInteractable.actionName)
+		InteractionManager.label.show()
+	else:
+		InteractionManager.label.hide()
