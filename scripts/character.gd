@@ -190,18 +190,6 @@ func check_controls(): # If you add a control, you might want to add a check for
 		push_error("No control mapped for sprint. Please add an input map control. Disabling sprinting.")
 		sprint_enabled = false
 
-func _input(event):
-	pass
-	# if !is_multiplayer_authority():
-	# 	return false
-
-	# if event.is_action_pressed("interact"):
-	# 	# TODO: needs to send rpc to server to check this info before calling interact for that player
-	# 	if activeInteractable != null:
-	# 		print(get_multiplayer_authority(), " sent rpc to server")
-	# 		InteractionManager.rpc_id(1, "is_valid_interact", activeInteractable.get_path())
-	# 		InteractionManager.label.hide()
-
 @rpc("any_peer", "call_local", "reliable")
 func set_player_status(newStatus: globals.PlayerStatus):
 	playerStatus = newStatus
@@ -462,31 +450,6 @@ func headbob_animation(moving):
 
 
 func _process(delta):
-	# if multiplayer.is_server():
-	# 	print(player, "status can_interact=", can_interact, " and is_colliding()=", is_colliding())
-	# if interactorRayCast.is_colliding():
-
-	# 	if InteractionManager.label.hidden:
-	# 		activeInteractable = interactorRayCast.get_collider()
-	# 		print(self, " should be showing the text ", activeInteractable.actionName)
-	# 		InteractionManager.set_interaction_label_text(activeInteractable.actionName)
-	# 		InteractionManager.label.show()
-	# 	# print(player, " looking at ", active_area)
-
-	# 	if multiplayer.is_server():
-	# 		InteractionManager.register_area(interactorRayCast.get_collider(), self)
-
-	# else:
-
-	# 	if !InteractionManager.label.hidden:
-	# 		activeInteractable = null
-	# 		InteractionManager.label.hide()
-	# 	# print(player, " looking at nothing")
-
-	# 	if multiplayer.is_server():
-	# 		InteractionManager.unregister_area(self)
-
-
 	# $Graphics/Label_Username.look_at(get_viewport().get_camera_3d().global_position)
 	if !is_multiplayer_authority():
 		return

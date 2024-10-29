@@ -20,19 +20,8 @@ func _input(event):
 			InteractionManager.rpc_id(1, "is_valid_interact", activeInteractable.get_path())
 			InteractionManager.label.hide()
 
-		# if activeInteractable != null:
-		# 	can_interact = false
-		# 	InteractionManager.label.hide()
-
-		# 	# TODO: does this call need to happen on local or server
-		# 	await activeInteractable.interact.call()
-
-		# 	can_interact = true
-
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	print(player, " authority is ", get_multiplayer_authority(), " and do we have auth ", is_multiplayer_authority())
 	if is_multiplayer_authority():
 		if is_colliding():
 			activeInteractable = get_collider()
