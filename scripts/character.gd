@@ -108,7 +108,6 @@ var isFrozen: bool:
 @export var gravity_enabled: bool = true
 
 @export_group("References")
-@export var tagManager: TagManager
 @export var playerBodyMesh: MeshInstance3D
 @export var taggerMaterial: StandardMaterial3D
 @export var hiderMaterial: StandardMaterial3D
@@ -261,7 +260,6 @@ func _physics_process(delta):
 	handle_jumping()
 	
 	var input_dir = Vector2.ZERO
-	# TODO: keep track of playerStatus in the multiplayerSynchronizer
 	if canMove && !isFrozen: # Immobility works by interrupting user input, so other forces can still be applied to the player
 		input_dir = Input.get_vector(LEFT, RIGHT, FORWARD, BACKWARD)
 

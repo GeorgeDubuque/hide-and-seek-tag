@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://scripts/player_interactor.gd" id="3_glr05"]
 [ext_resource type="Material" uid="uid://33bvkkcsxf6x" path="res://materials/material_hider.tres" id="3_gqwcm"]
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/EditorModule.gd" id="4_mwxu7"]
-[ext_resource type="PackedScene" uid="uid://dhedkm6pu187l" path="res://scenes/interaction_area.tscn" id="7_yd3o4"]
+[ext_resource type="PackedScene" path="res://scenes/interaction_area.tscn" id="7_yd3o4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
@@ -410,6 +410,15 @@ height = 2.1
 [node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH", "playerBodyMesh") groups=["player"]]
 collision_mask = 7
 script = ExtResource("1_uajkv")
+base_speed = null
+sprint_speed = null
+crouch_speed = null
+acceleration = null
+jump_velocity = null
+mouse_sensitivity = null
+invert_mouse_y = null
+canMove = null
+playerType = null
 HEAD = NodePath("Head")
 GRAPHICS = NodePath("Graphics")
 CAMERA = NodePath("Head/Camera")
@@ -417,9 +426,31 @@ HEADBOB_ANIMATION = NodePath("Head/HeadbobAnimation")
 JUMP_ANIMATION = NodePath("Head/JumpAnimation")
 CROUCH_ANIMATION = NodePath("CrouchAnimation")
 COLLISION_MESH = NodePath("Collision")
+JUMP = null
+LEFT = null
+RIGHT = null
+FORWARD = null
+BACKWARD = null
+PAUSE = null
+CROUCH = null
+SPRINT = null
+jumping_enabled = null
+in_air_momentum = null
+motion_smoothing = null
+sprint_enabled = null
+crouch_enabled = null
+crouch_mode = null
+sprint_mode = null
+dynamic_fov = null
+continuous_jumping = null
+view_bobbing = null
+jump_animation = null
+pausing_enabled = null
+gravity_enabled = null
 playerBodyMesh = NodePath("Graphics/Mesh")
 taggerMaterial = ExtResource("2_h22dh")
 hiderMaterial = ExtResource("3_gqwcm")
+playerStatus = null
 
 [node name="Graphics" type="Node3D" parent="."]
 
