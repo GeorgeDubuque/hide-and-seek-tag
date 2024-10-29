@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_uajkv"]
 [ext_resource type="Script" path="res://scripts/tag_trigger.gd" id="2_urax8"]
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/debug.gd" id="3_fepvu"]
+[ext_resource type="Script" path="res://scenes/player_interactor.gd" id="3_glr05"]
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/EditorModule.gd" id="4_mwxu7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
@@ -21,9 +22,6 @@ height = 0.5
 size = Vector3(0.5, 0.3, 0.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pnvx4"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_s85qk"]
-size = Vector3(1, 2, 1)
 
 [sub_resource type="Animation" id="Animation_gh776"]
 resource_name = "RESET"
@@ -386,6 +384,9 @@ properties/5/replication_mode = 1
 properties/6/path = NodePath("Graphics/Label_Username:text")
 properties/6/spawn = true
 properties/6/replication_mode = 2
+properties/7/path = NodePath(".:playerStatus")
+properties/7/spawn = true
+properties/7/replication_mode = 1
 
 [node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH") groups=["player"]]
 collision_mask = 7
@@ -437,14 +438,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.41273, 0)
 billboard = 1
 text = "test"
 
-[node name="PlayerInteractor" type="Area3D" parent="Graphics"]
-collision_layer = 8
-collision_mask = 16
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Graphics/PlayerInteractor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1.0021)
-shape = SubResource("BoxShape3D_s85qk")
-
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
@@ -462,6 +455,13 @@ libraries = {
 "": SubResource("AnimationLibrary_qeg5r")
 }
 speed_scale = 4.0
+
+[node name="PlayerInteractor" type="RayCast3D" parent="Head" node_paths=PackedStringArray("player")]
+target_position = Vector3(0, 0, -3.5)
+collision_mask = 16
+collide_with_areas = true
+script = ExtResource("3_glr05")
+player = NodePath("../..")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

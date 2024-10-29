@@ -114,7 +114,7 @@ var state: String = "normal"
 var low_ceiling: bool = false # This is for when the cieling is too low and the player needs to crouch.
 var was_on_floor: bool = true # Was the player on the floor last frame (for landing animation)
 var is_frozen: bool = false
-var playerStatus: globals.PlayerStatus = globals.PlayerStatus.NONE
+@export var playerStatus: globals.PlayerStatus = globals.PlayerStatus.NONE
 
 # The reticle should always have a Control node as the root
 var RETICLE: Control
@@ -233,6 +233,7 @@ func _physics_process(delta):
 	handle_jumping()
 	
 	var input_dir = Vector2.ZERO
+	# TODO: keep track of playerStatus in the multiplayerSynchronizer
 	if canMove && playerStatus != globals.PlayerStatus.FROZEN: # Immobility works by interrupting user input, so other forces can still be applied to the player
 		input_dir = Input.get_vector(LEFT, RIGHT, FORWARD, BACKWARD)
 

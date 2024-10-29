@@ -1,50 +1,33 @@
 extends Node3D
 
-@onready var player = get_tree().get_first_node_in_group("player") # TODO: change this to handle multiple players
-@onready var label = $Label_Interact
+@onready var label: Label = $Label_Interact
 
 const base_text = "[E] to "
 
-var active_areas = []
+var active_areas = {}
 var can_interact = true
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	print(player)
+@rpc("call_local", "any_peer", "reliable")
+func is_valid_interact(area_path: NodePath):
+	var player_id = multiplayer.get_remote_sender_id()
+	if !active_areas.has(player_id):
+		print("server doesnt have the player requested on is_valid_interact")
+		return
 
-func _input(event):
-	if event.is_action_pressed("interact") and can_interact: # TODO also needs check for authority
-		# TODO: needs to send rpc to server to check this info before calling interact for that player
-		if active_areas.size() > 0:
-			can_interact = false
-			label.hide()
-
-			# TODO: does this call need to happen on local or server
-			await active_areas[0].interact.call()
-
-			can_interact = true
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	#TODO: needs check for authority
-	if active_areas.size() > 0 and can_interact:
-		active_areas.sort_custom(_sort_by_distance_to_player)
-		label.text = base_text + active_areas[0].actionName
-		label.show()
+	var playerArea = active_areas[player_id]
+	if area_path == playerArea.get_path():
+		playerArea.interact.call()
 	else:
-		label.hide()
-
-func _sort_by_distance_to_player(area1, area2): # TODO: this also need player_id for sorting based on correct player
-	var area1_to_player = player.global_position.distance_to(area1.global_position)
-	var area2_to_player = player.global_position.distance_to(area2.global_position)
-	return area1_to_player < area2_to_player
+		print("player ", player_id, " tried to interact with ", area_path, " but server had ", playerArea)
 
 
-func register_area(area: InteractionArea): # TODO: this should accept player id
-	# TODO: instead active_areas should be a dict with player_id to array
-	active_areas.push_back(area)
+func register_area(area: InteractionArea, player: Character): # TODO: this should accept player id
+	var playerId = player.get_multiplayer_authority() # TODO: this assumes all players own themselves
+	active_areas[playerId] = area
 
-func unregister_area(area: InteractionArea):
-	var index = active_areas.find(area)
-	if index != -1:
-		active_areas.remove_at(index)
+func unregister_area(player: Character):
+	var playerId = player.get_multiplayer_authority() # TODO: this assumes all players own themselves
+	active_areas[playerId] = null
+
+func set_interaction_label_text(text: String):
+	label.text = base_text + text

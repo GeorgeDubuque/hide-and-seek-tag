@@ -4,7 +4,7 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	interactionArea.interact = Callable(self, "onInteract")
+	interactionArea.interact = Callable(self, "on_interact")
 
-func onInteract():
+func on_interact():
 	print("interacted with test interactable")

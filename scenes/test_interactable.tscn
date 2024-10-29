@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://du5d4wq5dbo4w"]
+[gd_scene load_steps=6 format=3 uid="uid://du5d4wq5dbo4w"]
 
 [ext_resource type="Script" path="res://scripts/test_interactable.gd" id="1_3nltq"]
 [ext_resource type="PackedScene" uid="uid://dhedkm6pu187l" path="res://scenes/interaction_area.tscn" id="2_aum2t"]
@@ -9,6 +9,8 @@
 radius = 0.512343
 height = 2.15324
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_mq2bk"]
+
 [node name="TestInteractable" type="Node3D"]
 script = ExtResource("1_3nltq")
 
@@ -17,8 +19,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_oco31")
 
 [node name="InteractionArea" parent="." instance=ExtResource("2_aum2t")]
-actionName = "swag"
+actionName = "print \"interacted with test interactable\""
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_bg0pw")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_mq2bk")
