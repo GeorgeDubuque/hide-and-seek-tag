@@ -39,6 +39,7 @@ func _process(_delta: float) -> void:
 		active_area = get_collider()
 
 		if is_multiplayer_authority() and InteractionManager.label.hidden:
+			print(player, " should be showing the text ", active_area.actionName)
 			InteractionManager.set_interaction_label_text(active_area.actionName)
 			InteractionManager.label.show()
 		# print(player, " looking at ", active_area)
