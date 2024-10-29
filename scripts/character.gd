@@ -240,7 +240,7 @@ func _physics_process(delta):
 	
 	var input_dir = Vector2.ZERO
 	# TODO: keep track of playerStatus in the multiplayerSynchronizer
-	if canMove && playerStatus != globals.PlayerStatus.FROZEN: # Immobility works by interrupting user input, so other forces can still be applied to the player
+	if canMove && !isFrozen: # Immobility works by interrupting user input, so other forces can still be applied to the player
 		input_dir = Input.get_vector(LEFT, RIGHT, FORWARD, BACKWARD)
 
 	handle_movement(delta, input_dir)
