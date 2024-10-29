@@ -15,7 +15,7 @@ func is_valid_interact(area_path: NodePath):
 		return
 
 	var playerArea = active_areas[player_id]
-	if area_path == playerArea.get_path():
+	if playerArea != null and area_path == playerArea.get_path():
 		print("player ", player_id, " interacted with ", area_path)
 		playerArea.interact.call()
 	else:
