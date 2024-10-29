@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bgi70slkbl27f"]
+[gd_scene load_steps=10 format=3 uid="uid://bgi70slkbl27f"]
 
 [ext_resource type="Script" path="res://scripts/game_level.gd" id="1_u4dgn"]
 
@@ -11,6 +11,9 @@ albedo_color = Color(0.99924, 0, 0.185131, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gal86"]
 albedo_color = Color(0.185699, 0.4979, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vknxa"]
+albedo_color = Color(0.250396, 0.408143, 0.182951, 1)
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_wqxlr"]
 ground_color = Color(0.160784, 0.815686, 0.905882, 1)
@@ -68,6 +71,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_gal86")
 
 [node name="Floor" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.18053, -3, -2.9464)
+material_override = SubResource("StandardMaterial3D_vknxa")
 use_collision = true
 size = Vector3(45.4373, 1, 40.014)
 
