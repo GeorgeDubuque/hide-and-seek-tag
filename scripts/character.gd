@@ -232,11 +232,11 @@ func freeze_player():
 func set_player_type(type: globals.PlayerType):
 	playerType = type
 	if isTagger:
-		tagInteractionArea.collider.disabled = false
+		tagInteractionArea.collider.disabled = true
 		unfreezeInteractionArea.collider.disabled = true
 	else:
-		tagInteractionArea.collider.disabled = true
-		unfreezeInteractionArea.collider.disabled = false
+		tagInteractionArea.collider.disabled = false
+		unfreezeInteractionArea.collider.disabled = true
 
 
 func change_reticle(reticle): # Yup, this function is kinda strange
