@@ -462,7 +462,7 @@ func _process(delta):
 	# 	print(player, "status can_interact=", can_interact, " and is_colliding()=", is_colliding())
 	if interactorRayCast.is_colliding():
 
-		if is_multiplayer_authority() and InteractionManager.label.hidden:
+		if InteractionManager.label.hidden:
 			activeInteractable = interactorRayCast.get_collider()
 			print(self, " should be showing the text ", activeInteractable.actionName)
 			InteractionManager.set_interaction_label_text(activeInteractable.actionName)
@@ -474,7 +474,7 @@ func _process(delta):
 
 	else:
 
-		if is_multiplayer_authority() and !InteractionManager.label.hidden:
+		if !InteractionManager.label.hidden:
 			activeInteractable = null
 			InteractionManager.label.hide()
 		# print(player, " looking at nothing")
