@@ -32,7 +32,8 @@ func _input(event):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	print("process for ", player)
+	if multiplayer.is_server():
+		print("process for ", player)
 	if is_colliding() && can_interact:
 		active_area = get_collider()
 
