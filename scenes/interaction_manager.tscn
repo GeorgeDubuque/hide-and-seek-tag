@@ -6,6 +6,7 @@
 script = ExtResource("1_d5sx1")
 
 [node name="Label_Interact" type="Label" parent="."]
+visible = false
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
