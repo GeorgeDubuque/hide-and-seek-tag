@@ -531,6 +531,7 @@ actionName = "tag."
 [node name="CollisionShape3D" type="CollisionShape3D" parent="IA_PlayerTag"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0135, 0)
 shape = SubResource("CapsuleShape3D_ufnxo")
+disabled = true
 
 [node name="IA_PlayerUnfreeze" parent="." instance=ExtResource("7_yd3o4")]
 actionName = "unfreeze"

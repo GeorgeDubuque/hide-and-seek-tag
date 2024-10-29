@@ -47,7 +47,7 @@ func _process(_delta: float) -> void:
 			InteractionManager.register_area(activeInteractable, player)
 
 	else:
-		if !InteractionManager.label.hidden:
+		if is_multiplayer_authority() and !InteractionManager.label.hidden:
 			activeInteractable = null
 			InteractionManager.label.hide()
 		# print(player, " looking at nothing")
