@@ -61,7 +61,9 @@ func placePlayersInLobby():
 		# remove all status on player
 		player.set_player_status.rpc(globals.PlayerStatus.NONE)
 
-		#player.position = lastSpawnPos
+		# TODO: need to remove all types from players and also disable all interaction
+		#		areas on the players so no one can be tagged
+
 		lastSpawnPos += lobbySpawnOffset
 
 func load_lobby():
@@ -79,6 +81,7 @@ func load_lobby():
 				c.queue_free()
 
 		placePlayersInLobby()
+		gameStatus = globals.GameStatus.LOBBY
 
 func placePlayers(level: GameLevel):
 	#place taggers
@@ -130,4 +133,4 @@ func setPlayerStatus(peer_id, status: globals.PlayerStatus):
 
 	if frozenCount == hiders.size():
 		print("taggers win!!!")
-		# load_lobby.call_deferred()
+		load_lobby.call_deferred()

@@ -14,7 +14,6 @@ func _input(event):
 		return false
 
 	if event.is_action_pressed("interact"):
-		# TODO: needs to send rpc to server to check this info before calling interact for that player
 		if activeInteractable != null:
 			print(player.get_multiplayer_authority(), " sent rpc to server")
 			InteractionManager.rpc_id(1, "is_valid_interact", activeInteractable.get_path())
