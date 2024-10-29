@@ -205,6 +205,8 @@ func tag_player():
 @rpc("any_peer", "reliable", "call_local")
 func set_player_type(type: globals.PlayerType):
 	playerType = type
+	if isTagger:
+		tagInteractionArea.hide()
 
 func change_reticle(reticle): # Yup, this function is kinda strange
 	if RETICLE:
