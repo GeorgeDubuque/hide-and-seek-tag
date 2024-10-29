@@ -4,7 +4,6 @@ class_name PlayerInteractor
 
 @export var player: Character
 var active_area: InteractionArea
-var can_interact = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -14,7 +13,7 @@ func _input(event):
 	if !is_multiplayer_authority():
 		return false
 
-	if event.is_action_pressed("interact") and can_interact:
+	if event.is_action_pressed("interact"):
 		# TODO: needs to send rpc to server to check this info before calling interact for that player
 		if active_area != null:
 			print(player.get_multiplayer_authority(), " sent rpc to server")
@@ -35,10 +34,10 @@ func _input(event):
 func _process(_delta: float) -> void:
 	# if multiplayer.is_server():
 	# 	print(player, "status can_interact=", can_interact, " and is_colliding()=", is_colliding())
-	if is_colliding() && can_interact:
+	if is_colliding():
 		active_area = get_collider()
 
-		if is_multiplayer_authority() and InteractionManager.label.hidden:
+		if InteractionManager.label.hidden:
 			print(player, " should be showing the text ", active_area.actionName)
 			InteractionManager.set_interaction_label_text(active_area.actionName)
 			InteractionManager.label.show()
@@ -50,7 +49,7 @@ func _process(_delta: float) -> void:
 	else:
 		active_area = null
 
-		if is_multiplayer_authority() and !InteractionManager.label.hidden:
+		if !InteractionManager.label.hidden:
 			InteractionManager.label.hide()
 		# print(player, " looking at nothing")
 
