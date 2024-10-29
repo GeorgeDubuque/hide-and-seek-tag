@@ -206,7 +206,7 @@ func tag_player():
 func set_player_type(type: globals.PlayerType):
 	playerType = type
 	if isTagger:
-		tagInteractionArea.hide()
+		tagInteractionArea.set_process(false)
 
 func change_reticle(reticle): # Yup, this function is kinda strange
 	if RETICLE:
