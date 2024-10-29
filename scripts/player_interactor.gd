@@ -55,9 +55,10 @@ func _process(_delta: float) -> void:
 		# 		InteractionManager.label.show()
 		# if we are not looking at a player
 		# else:
-		if InteractionManager.label.hidden:
-			InteractionManager.set_interaction_label_text(active_area.actionName)
-			InteractionManager.label.show()
+		if is_multiplayer_authority():
+			if InteractionManager.label.hidden:
+				InteractionManager.set_interaction_label_text(active_area.actionName)
+				InteractionManager.label.show()
 		# print(player, " looking at ", active_area)
 
 		if multiplayer.is_server():
