@@ -45,6 +45,11 @@ var isHider: bool:
 var isTagger: bool:
 	get:
 		return playerType == globals.PlayerType.TAGGER
+
+var isFrozen: bool:
+	get:
+		return playerStatus == globals.PlayerStatus.FROZEN
+
 ## The reticle file to import at runtime. By default are in res://addons/fpc/reticles/. Set to an empty string to remove.
 @export_file var default_reticle
 
@@ -115,7 +120,6 @@ var current_speed: float = 0.0
 var state: String = "normal"
 var low_ceiling: bool = false # This is for when the cieling is too low and the player needs to crouch.
 var was_on_floor: bool = true # Was the player on the floor last frame (for landing animation)
-var is_frozen: bool = false
 @export var playerStatus: globals.PlayerStatus = globals.PlayerStatus.NONE
 
 # The reticle should always have a Control node as the root
