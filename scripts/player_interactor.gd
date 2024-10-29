@@ -48,7 +48,6 @@ func _process(_delta: float) -> void:
 			InteractionManager.register_area(active_area, player)
 
 	else:
-		InteractionManager.label.hide()
 		active_area = null
 
 		if is_multiplayer_authority() and !InteractionManager.label.hidden:
