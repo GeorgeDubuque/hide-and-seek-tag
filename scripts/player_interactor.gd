@@ -43,7 +43,7 @@ func _process(_delta: float) -> void:
 		# print(player, " looking at ", activeInteractable)
 
 		if multiplayer.is_server():
-			InteractionManager.register_area(activeInteractable, player)
+			InteractionManager.register_area(get_collider(), player)
 
 	else:
 		if is_multiplayer_authority():
