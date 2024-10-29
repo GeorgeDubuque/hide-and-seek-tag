@@ -38,28 +38,9 @@ func _process(_delta: float) -> void:
 	if is_colliding() && can_interact:
 		active_area = get_collider()
 
-		# var actionName = active_area.actionName
-		# # if we are looking at a player
-		# var potentialPlayer = (active_area as Node3D).get_parent()
-		# if potentialPlayer is Character:
-		# 	var otherPlayer = potentialPlayer as Character
-
-		# 	if player.playerType == globals.PlayerType.HIDER:
-		# 		if otherPlayer.isHider && otherPlayer.isFrozen:
-		# 			actionName = "unfreeze"
-		# 	elif player.playerType == globals.PlayerType.TAGGER:
-		# 		if otherPlayer.isHider && !otherPlayer.isFrozen:
-		# 			actionName = "freeze"
-
-		# 	if InteractionManager.label.hidden:
-		# 		InteractionManager.set_interaction_label_text(actionName)
-		# 		InteractionManager.label.show()
-		# if we are not looking at a player
-		# else:
-		if is_multiplayer_authority():
-			if InteractionManager.label.hidden:
-				InteractionManager.set_interaction_label_text(active_area.actionName)
-				InteractionManager.label.show()
+		if is_multiplayer_authority() and InteractionManager.label.hidden:
+			InteractionManager.set_interaction_label_text(active_area.actionName)
+			InteractionManager.label.show()
 		# print(player, " looking at ", active_area)
 
 		if multiplayer.is_server():
