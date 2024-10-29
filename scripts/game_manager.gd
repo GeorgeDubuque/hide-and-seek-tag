@@ -121,6 +121,7 @@ func change_level(level_scene, shouldStartGame = false):
 @rpc("reliable", "any_peer", "call_local")
 func setPlayerStatus(peer_id, status: globals.PlayerStatus):
 	id_to_status[peer_id] = status
+	id_to_characters[peer_id].set_player_status.rpc(status)
 
 	var frozenCount = 0
 	for currStatus in id_to_status.values():
