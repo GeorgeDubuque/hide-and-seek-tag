@@ -193,17 +193,24 @@ func check_controls(): # If you add a control, you might want to add a check for
 func set_player_status(newStatus: globals.PlayerStatus):
 	# playerStatus = newStatus
 	print("client ", get_multiplayer_authority(), " recieved set_player_status to ", newStatus, " isFrozen=", isFrozen)
-	if isFrozen:
-		playerStatus = globals.PlayerStatus.NONE
-		tagInteractionArea.collider.disabled = false
-		unfreezeInteractionArea.collider.disabled = true
-		frozenIndicator.hide()
-	else:
-		playerStatus = globals.PlayerStatus.FROZEN
-		tagInteractionArea.collider.disabled = true
-		unfreezeInteractionArea.collider.disabled = false
-		frozenIndicator.show()
+	match newStatus:
+		globals.PlayerStatus.NONE:
+			playerStatus = globals.PlayerStatus.NONE
+			tagInteractionArea.collider.disabled = true # enable freezing
+			unfreezeInteractionArea.collider.disabled = true # disable unfreezing
+			frozenIndicator.hide()
 
+		globals.PlayerStatus.UNFROZEN:
+			playerStatus = globals.PlayerStatus.UNFROZEN
+			tagInteractionArea.collider.disabled = false # enable freezing
+			unfreezeInteractionArea.collider.disabled = true # disable unfreezing
+			frozenIndicator.hide()
+		
+		globals.PlayerStatus.FROZEN:
+			playerStatus = globals.PlayerStatus.FROZEN
+			tagInteractionArea.collider.disabled = true # disable tagging
+			unfreezeInteractionArea.collider.disabled = false # enable unfreezing
+			frozenIndicator.show()
 
 @rpc("any_peer", "call_local", "reliable")
 func set_player_position(newPos: Vector3):
@@ -211,7 +218,7 @@ func set_player_position(newPos: Vector3):
 
 func unfreeze_player():
 	if isFrozen:
-		GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.NONE)
+		GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.UNFROZEN)
 
 func freeze_player():
 	if !isFrozen:
