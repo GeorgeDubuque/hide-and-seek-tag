@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://scripts/player_interactor.gd" id="3_glr05"]
 [ext_resource type="Material" uid="uid://33bvkkcsxf6x" path="res://materials/material_hider.tres" id="3_gqwcm"]
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/EditorModule.gd" id="4_mwxu7"]
-[ext_resource type="PackedScene" path="res://scenes/interaction_area.tscn" id="7_yd3o4"]
+[ext_resource type="PackedScene" uid="uid://dhedkm6pu187l" path="res://scenes/interaction_area.tscn" id="7_yd3o4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)

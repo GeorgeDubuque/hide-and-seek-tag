@@ -3,8 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://pe7a4weirj2g" path="res://FirstPersonController/textures/dark.png" id="1_l6lx6"]
 [ext_resource type="Texture2D" uid="uid://cxjxvqmf4boxq" path="res://FirstPersonController/textures/green.png" id="2_q6pct"]
 [ext_resource type="Texture2D" uid="uid://dsv4jm4vydflb" path="res://FirstPersonController/textures/orange.png" id="3_2307o"]
-[ext_resource type="PackedScene" path="res://scenes/test_interactable.tscn" id="5_i0pou"]
-[ext_resource type="PackedScene" path="res://scenes/light.tscn" id="6_164y8"]
+[ext_resource type="PackedScene" uid="uid://du5d4wq5dbo4w" path="res://scenes/test_interactable.tscn" id="5_i0pou"]
+[ext_resource type="PackedScene" uid="uid://c1sij0wttkudx" path="res://scenes/light.tscn" id="6_164y8"]
 [ext_resource type="Script" path="res://FirstPersonController/lobby_manager.gd" id="6_grrxg"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_edcox"]
@@ -69,7 +69,7 @@ environment = SubResource("Environment_20rw3")
 
 [node name="sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.87959, -0.436605, 0.188936, 0, 0.397148, 0.917755, -0.475732, -0.807248, 0.349328, 0, 0, 0)
-light_energy = 2.0
+light_energy = 0.01
 shadow_enabled = true
 
 [node name="terrain" type="Node3D" parent="."]
