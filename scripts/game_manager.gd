@@ -124,6 +124,7 @@ func change_level(level_scene, shouldStartGame = false):
 func unfreeze_all_players():
 	var players = id_to_characters.values()
 	for player in players:
+		print("setting ", player, " status to: NONE")
 		player.set_player_status.rpc(globals.PlayerStatus.NONE)
 		
 

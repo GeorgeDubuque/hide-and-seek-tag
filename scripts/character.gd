@@ -192,7 +192,7 @@ func check_controls(): # If you add a control, you might want to add a check for
 @rpc("any_peer", "call_local", "reliable")
 func set_player_status(newStatus: globals.PlayerStatus):
 	playerStatus = newStatus
-	print("client ", get_multiplayer_authority(), " recieved set_player_status to ", newStatus)
+	print("client ", get_multiplayer_authority(), " recieved set_player_status to ", newStatus, " isFrozen=", isFrozen)
 	if isFrozen:
 		playerStatus = globals.PlayerStatus.NONE
 		tagInteractionArea.collider.disabled = false
