@@ -145,4 +145,4 @@ func setPlayerStatus(status: globals.PlayerStatus):
 	if frozenCount == hiders.size():
 		print("taggers win!!!")
 		unfreeze_all_players()
-		load_lobby()
+		# load_lobby()
