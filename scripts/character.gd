@@ -137,6 +137,7 @@ var mouseInput: Vector2 = Vector2(0, 0)
 
 @onready var frozenIndicator = $FrozenIndicator
 @onready var interactorRayCast = $Head/PlayerInteractor
+@onready var graphics = $Graphics
 var activeInteractable: InteractionArea
 
 func _ready():
@@ -145,7 +146,8 @@ func _ready():
 	#It is safe to comment this line if your game doesn't start with the mouse captured
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if is_multiplayer_authority():
-		$Graphics/Label_Username.text = Steam.getPersonaName()
+		$Label_Username.text = Steam.getPersonaName()
+		$Graphics.visible = false
 
 
 	# If the controller is rotated in a certain direction for game design purposes, redirect this rotation into the head.

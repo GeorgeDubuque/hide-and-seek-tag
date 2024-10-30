@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bpa13ytep687q"]
+
+[ext_resource type="PackedScene" uid="uid://dupeiudfwkmps" path="res://models/Floor.glb" id="1_ykv1s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nbcse"]
+albedo_color = Color(0.311925, 0.20442, 0.0889024, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_gvl16"]
+data = PackedVector3Array(-1, -0.1, 1, -1, 0, -1, -1, 0, 1, -1, -0.1, 1, -1, -0.1, -1, -1, 0, -1, -1, -0.1, -1, 1, 0, -1, -1, 0, -1, -1, -0.1, -1, 1, -0.1, -1, 1, 0, -1, 1, -0.1, -1, 1, 0, 1, 1, 0, -1, 1, -0.1, -1, 1, -0.1, 1, 1, 0, 1, 1, -0.1, 1, -1, 0, 1, 1, 0, 1, 1, -0.1, 1, -1, -0.1, 1, -1, 0, 1, -1, -0.1, -1, 1, -0.1, 1, 1, -0.1, -1, -1, -0.1, -1, -1, -0.1, 1, 1, -0.1, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1, 1, 0, 1, -1, 0, 1)
+
+[node name="Floor2" instance=ExtResource("1_ykv1s")]
+
+[node name="Floor" parent="." index="0"]
+material_override = SubResource("StandardMaterial3D_nbcse")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D" index="0"]
+shape = SubResource("ConcavePolygonShape3D_gvl16")

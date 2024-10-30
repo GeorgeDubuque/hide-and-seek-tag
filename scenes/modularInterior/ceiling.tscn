@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://vfsbl6hbraln"]
+
+[ext_resource type="PackedScene" uid="uid://dphufrxmblfyu" path="res://models/Ceiling.glb" id="1_tmxhp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o4mkm"]
+albedo_color = Color(0.455481, 0.324138, 0.209107, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_lqmhv"]
+data = PackedVector3Array(-1, 2.5, 1, -1, 2.6, -1, -1, 2.5, -1, -1, 2.5, 1, -1, 2.6, 1, -1, 2.6, -1, -1, 2.5, -1, 1, 2.6, -1, 1, 2.5, -1, -1, 2.5, -1, -1, 2.6, -1, 1, 2.6, -1, 1, 2.5, -1, 1, 2.6, 1, 1, 2.5, 1, 1, 2.5, -1, 1, 2.6, -1, 1, 2.6, 1, 1, 2.5, 1, -1, 2.6, 1, -1, 2.5, 1, 1, 2.5, 1, 1, 2.6, 1, -1, 2.6, 1, -1, 2.5, -1, 1, 2.5, 1, 1, 2.5, -1, -1, 2.5, -1, -1, 2.5, 1, 1, 2.5, 1, 1, 2.6, -1, -1, 2.6, 1, 1, 2.6, 1, 1, 2.6, -1, -1, 2.6, -1, -1, 2.6, 1)
+
+[node name="Ceiling2" instance=ExtResource("1_tmxhp")]
+
+[node name="Ceiling" parent="." index="0"]
+material_override = SubResource("StandardMaterial3D_o4mkm")
+cast_shadow = 2
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ceiling" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceiling/StaticBody3D" index="0"]
+shape = SubResource("ConcavePolygonShape3D_lqmhv")

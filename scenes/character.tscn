@@ -18,10 +18,12 @@ clearcoat_roughness = 0.2
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_jw1de"]
 material = SubResource("StandardMaterial3D_o4lo6")
+radius = 0.3
+height = 1.829
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_vthlf"]
 radius = 0.1
-height = 0.5
+height = 0.8
 
 [sub_resource type="BoxMesh" id="BoxMesh_3uy6v"]
 size = Vector3(0.5, 0.3, 0.2)
@@ -222,6 +224,8 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uy03j"]
+radius = 0.3
+height = 1.829
 
 [sub_resource type="Animation" id="Animation_j8cx7"]
 resource_name = "RESET"
@@ -425,6 +429,11 @@ noneMaterial = SubResource("StandardMaterial3D_j60o4")
 taggerMaterial = ExtResource("2_h22dh")
 hiderMaterial = ExtResource("3_gqwcm")
 
+[node name="Label_Username" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.41273, 0)
+billboard = 1
+text = "test"
+
 [node name="Graphics" type="Node3D" parent="."]
 
 [node name="Mesh" type="MeshInstance3D" parent="Graphics"]
@@ -432,31 +441,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_jw1de")
 skeleton = NodePath("../..")
 
-[node name="LeftArm" type="MeshInstance3D" parent="Graphics"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.58629, 0.913064, 0)
+[node name="LeftArm2" type="MeshInstance3D" parent="Graphics"]
+transform = Transform3D(0.912663, -0.408713, 0, 0.408713, 0.912663, 0, 0, 0, 1, 0.394647, 1.0509, 0)
 mesh = SubResource("CapsuleMesh_vthlf")
 skeleton = NodePath("../..")
 
-[node name="LeftArm2" type="MeshInstance3D" parent="Graphics"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.577323, 0.913064, 0)
+[node name="LeftArm3" type="MeshInstance3D" parent="Graphics"]
+transform = Transform3D(0.940686, 0.33928, 0, -0.33928, 0.940686, 0, 0, 0, 1, -0.383155, 1.0509, 0)
 mesh = SubResource("CapsuleMesh_vthlf")
 skeleton = NodePath("../..")
 
 [node name="Glasses" type="MeshInstance3D" parent="Graphics"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.4098)
+transform = Transform3D(0.8, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 1.62939, -0.2098)
 mesh = SubResource("BoxMesh_3uy6v")
 skeleton = NodePath("../../Head")
-
-[node name="Label_Username" type="Label3D" parent="Graphics"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.41273, 0)
-billboard = 1
-text = "test"
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="Camera" type="Camera3D" parent="Head"]
-near = 0.5
 
 [node name="HeadbobAnimation" type="AnimationPlayer" parent="Head"]
 libraries = {
