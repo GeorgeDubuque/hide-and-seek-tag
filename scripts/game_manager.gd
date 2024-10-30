@@ -133,4 +133,4 @@ func setPlayerStatus(peer_id, status: globals.PlayerStatus):
 
 	if frozenCount == hiders.size():
 		print("taggers win!!!")
-		# load_lobby.call_deferred()
+		load_lobby.call_deferred()
