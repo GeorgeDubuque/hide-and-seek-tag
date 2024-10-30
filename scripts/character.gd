@@ -210,11 +210,11 @@ func set_player_position(newPos: Vector3):
 
 func unfreeze_player():
 	if isFrozen:
-		GameManager.setPlayerStatus.rpc_id(1, get_multiplayer_authority(), globals.PlayerStatus.NONE)
+		GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.NONE)
 
 func freeze_player():
 	if !isFrozen:
-		GameManager.setPlayerStatus.rpc_id(1, get_multiplayer_authority(), globals.PlayerStatus.FROZEN)
+		GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.FROZEN)
 
 @rpc("any_peer", "reliable", "call_local")
 func set_player_type(type: globals.PlayerType):

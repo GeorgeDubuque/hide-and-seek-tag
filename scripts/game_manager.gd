@@ -121,8 +121,16 @@ func change_level(level_scene, shouldStartGame = false):
 		if shouldStartGame:
 			gameStatus = globals.GameStatus.IN_GAME
 
+func unfreeze_all_players():
+	var players = id_to_characters.values()
+	for player in players:
+		player.set_player_status.rpc(globals.PlayerStatus.NONE)
+		
+
 @rpc("reliable", "any_peer", "call_local")
-func setPlayerStatus(peer_id, status: globals.PlayerStatus):
+func setPlayerStatus(status: globals.PlayerStatus):
+	var peer_id = multiplayer.get_remote_sender_id()
+
 	id_to_status[peer_id] = status
 	id_to_characters[peer_id].set_player_status.rpc(status)
 
@@ -135,4 +143,5 @@ func setPlayerStatus(peer_id, status: globals.PlayerStatus):
 
 	if frozenCount == hiders.size():
 		print("taggers win!!!")
+		unfreeze_all_players()
 		load_lobby.call_deferred()

@@ -410,15 +410,6 @@ height = 2.1
 [node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH", "playerBodyMesh") groups=["player"]]
 collision_mask = 7
 script = ExtResource("1_uajkv")
-base_speed = null
-sprint_speed = null
-crouch_speed = null
-acceleration = null
-jump_velocity = null
-mouse_sensitivity = null
-invert_mouse_y = null
-canMove = null
-playerType = null
 HEAD = NodePath("Head")
 GRAPHICS = NodePath("Graphics")
 CAMERA = NodePath("Head/Camera")
@@ -426,31 +417,9 @@ HEADBOB_ANIMATION = NodePath("Head/HeadbobAnimation")
 JUMP_ANIMATION = NodePath("Head/JumpAnimation")
 CROUCH_ANIMATION = NodePath("CrouchAnimation")
 COLLISION_MESH = NodePath("Collision")
-JUMP = null
-LEFT = null
-RIGHT = null
-FORWARD = null
-BACKWARD = null
-PAUSE = null
-CROUCH = null
-SPRINT = null
-jumping_enabled = null
-in_air_momentum = null
-motion_smoothing = null
-sprint_enabled = null
-crouch_enabled = null
-crouch_mode = null
-sprint_mode = null
-dynamic_fov = null
-continuous_jumping = null
-view_bobbing = null
-jump_animation = null
-pausing_enabled = null
-gravity_enabled = null
 playerBodyMesh = NodePath("Graphics/Mesh")
 taggerMaterial = ExtResource("2_h22dh")
 hiderMaterial = ExtResource("3_gqwcm")
-playerStatus = null
 
 [node name="Graphics" type="Node3D" parent="."]
 
