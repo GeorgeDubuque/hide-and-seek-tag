@@ -126,7 +126,7 @@ func setPlayerStatus(peer_id, status: globals.PlayerStatus):
 	id_to_status[peer_id] = status
 	id_to_characters[peer_id].set_player_status.rpc(status)
 
-	print("setting player ", peer_id, " to status ", status)
+	print("setting player ", peer_id, " to status ", str(status))
 
 	var frozenCount = 0
 	for currStatus in id_to_status.values():
