@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=32 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_uajkv"]
 [ext_resource type="Material" uid="uid://c832cg6yrl8wm" path="res://materials/material_tagger.tres" id="2_h22dh"]
@@ -8,13 +8,16 @@
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/EditorModule.gd" id="4_mwxu7"]
 [ext_resource type="PackedScene" uid="uid://dhedkm6pu187l" path="res://scenes/interaction_area.tscn" id="7_yd3o4"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j60o4"]
+albedo_color = Color(0.629847, 0.479353, 0.14129, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o4lo6"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
 clearcoat_enabled = true
 clearcoat_roughness = 0.2
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_jw1de"]
-material = SubResource("StandardMaterial3D_kp17n")
+material = SubResource("StandardMaterial3D_o4lo6")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_vthlf"]
 radius = 0.1
@@ -418,6 +421,7 @@ JUMP_ANIMATION = NodePath("Head/JumpAnimation")
 CROUCH_ANIMATION = NodePath("CrouchAnimation")
 COLLISION_MESH = NodePath("Collision")
 playerBodyMesh = NodePath("Graphics/Mesh")
+noneMaterial = SubResource("StandardMaterial3D_j60o4")
 taggerMaterial = ExtResource("2_h22dh")
 hiderMaterial = ExtResource("3_gqwcm")
 

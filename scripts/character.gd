@@ -33,10 +33,13 @@ extends CharacterBody3D
 @export var playerType: globals.PlayerType:
 	set(value):
 		playerType = value
-		if value == globals.PlayerType.HIDER:
-			playerBodyMesh.material_override = hiderMaterial
-		else:
-			playerBodyMesh.material_override = taggerMaterial
+		match value:
+			globals.PlayerType.NONE:
+				playerBodyMesh.material_override = noneMaterial
+			globals.PlayerType.HIDER:
+				playerBodyMesh.material_override = hiderMaterial
+			globals.PlayerType.TAGGER:
+				playerBodyMesh.material_override = taggerMaterial
 
 # Whether the player is tagger or taggee
 var isHider: bool:
@@ -109,6 +112,7 @@ var isFrozen: bool:
 
 @export_group("References")
 @export var playerBodyMesh: MeshInstance3D
+@export var noneMaterial: StandardMaterial3D
 @export var taggerMaterial: StandardMaterial3D
 @export var hiderMaterial: StandardMaterial3D
 
@@ -227,12 +231,16 @@ func freeze_player():
 @rpc("any_peer", "reliable", "call_local")
 func set_player_type(type: globals.PlayerType):
 	playerType = type
-	if isTagger:
-		tagInteractionArea.collider.disabled = true
-		unfreezeInteractionArea.collider.disabled = true
-	else:
-		tagInteractionArea.collider.disabled = false
-		unfreezeInteractionArea.collider.disabled = true
+	match type:
+		globals.PlayerType.NONE:
+			tagInteractionArea.collider.disabled = true
+			unfreezeInteractionArea.collider.disabled = true
+		globals.PlayerType.TAGGER:
+			tagInteractionArea.collider.disabled = true
+			unfreezeInteractionArea.collider.disabled = true
+		globals.PlayerType.HIDER:
+			tagInteractionArea.collider.disabled = false
+			unfreezeInteractionArea.collider.disabled = true
 
 
 func change_reticle(reticle): # Yup, this function is kinda strange
