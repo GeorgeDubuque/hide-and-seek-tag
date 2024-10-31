@@ -304,7 +304,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(1, 1, 1), Vector3(1, 0.75, 1)]
+"values": [Vector3(1, 1, 1), Vector3(1, 0.25, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -316,7 +316,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(1, 1, 1), Vector3(1, 0.75, 1)]
+"values": [Vector3(1, 1, 1), Vector3(1, 0.25, 1)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -328,7 +328,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 1, 0), Vector3(0, 0.75, 0)]
+"values": [Vector3(0, 1, 0), Vector3(0, 0.25, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -340,7 +340,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 1, 0), Vector3(0, 0.75, 0)]
+"values": [Vector3(0, 1, 0), Vector3(0, 0.25, 0)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -352,7 +352,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 1.5, 0), Vector3(0, 1.12508, 0)]
+"values": [Vector3(0, 1.5, 0), Vector3(0, 0.5, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5e5t5"]
@@ -368,6 +368,7 @@ MarginContainer/constants/margin_right = 10
 MarginContainer/constants/margin_top = 10
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_k4wwl"]
+radius = 0.25
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_56ji0"]
 properties/0/path = NodePath(".:position")
@@ -414,7 +415,7 @@ height = 2.1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ufnxo"]
 
-[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH", "playerBodyMesh") groups=["player"]]
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "PRONE_ANIMATION", "COLLISION_MESH", "playerBodyMesh") groups=["player"]]
 collision_mask = 7
 script = ExtResource("1_uajkv")
 HEAD = NodePath("Head")
@@ -423,6 +424,7 @@ CAMERA = NodePath("Head/Camera")
 HEADBOB_ANIMATION = NodePath("Head/HeadbobAnimation")
 JUMP_ANIMATION = NodePath("Head/JumpAnimation")
 CROUCH_ANIMATION = NodePath("CrouchAnimation")
+PRONE_ANIMATION = NodePath("ProneAnimation")
 COLLISION_MESH = NodePath("Collision")
 playerBodyMesh = NodePath("Graphics/Mesh")
 noneMaterial = SubResource("StandardMaterial3D_j60o4")
@@ -489,6 +491,11 @@ libraries = {
 "": SubResource("AnimationLibrary_5e5t5")
 }
 
+[node name="ProneAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5e5t5")
+}
+
 [node name="UserInterface" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
@@ -518,6 +525,12 @@ layout_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("SphereShape3D_k4wwl")
 target_position = Vector3(0, 0.5, 0)
+
+[node name="ProneCeilingDetection" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14964, 0)
+shape = SubResource("SphereShape3D_k4wwl")
+target_position = Vector3(0, 0.5, 0)
+collision_mask = 9
 
 [node name="EditorModule" type="Node" parent="."]
 script = ExtResource("4_mwxu7")

@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://bgi70slkbl27f"]
+[gd_scene load_steps=15 format=3 uid="uid://bgi70slkbl27f"]
 
 [ext_resource type="Script" path="res://scripts/game_level.gd" id="1_u4dgn"]
 [ext_resource type="PackedScene" uid="uid://bpa13ytep687q" path="res://scenes/modularInterior/floor.tscn" id="2_yxugu"]
 [ext_resource type="PackedScene" uid="uid://c1jx6mu7tuk50" path="res://scenes/modularInterior/door.tscn" id="3_515bp"]
 [ext_resource type="PackedScene" uid="uid://ckjvorxpeq6te" path="res://scenes/modularInterior/wall.tscn" id="4_bklc0"]
 [ext_resource type="PackedScene" uid="uid://vfsbl6hbraln" path="res://scenes/modularInterior/ceiling.tscn" id="5_mv0o8"]
+[ext_resource type="PackedScene" uid="uid://bwwgstglui3pg" path="res://scenes/modularInterior/tunnel_straight.tscn" id="6_0jy2m"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_5prae"]
 radius = 0.2
@@ -159,9 +160,6 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 0, 
 [node name="Wall4" parent="Level/Room" instance=ExtResource("4_bklc0")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, 0, -2)
 
-[node name="Wall5" parent="Level/Room" instance=ExtResource("4_bklc0")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -2)
-
 [node name="Wall6" parent="Level/Room" instance=ExtResource("4_bklc0")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2, 0, -2)
 
@@ -264,7 +262,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0)
 
 [node name="Dresser" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -2.85)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.5, -2.85)
 size = Vector3(1, 1, 0.3)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Dresser"]
@@ -278,3 +276,6 @@ size = Vector3(1, 1, 0.3)
 [node name="OmniLight3D" type="OmniLight3D" parent="Dresser2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 light_energy = 0.1
+
+[node name="Tunnel_Straight" parent="." instance=ExtResource("6_0jy2m")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -4)

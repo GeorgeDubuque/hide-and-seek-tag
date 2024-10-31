@@ -15,6 +15,8 @@ extends CharacterBody3D
 @export var sprint_speed: float = 6.0
 ## The speed that the character moves at when crouching.
 @export var crouch_speed: float = 1.0
+## The speed that the character moves at when proning.
+@export var prone_speed: float = 1.0
 
 ## How fast the character speeds up and slows down when Motion Smoothing is on.
 @export var acceleration: float = 10.0
@@ -65,6 +67,7 @@ var isFrozen: bool:
 @export var HEADBOB_ANIMATION: AnimationPlayer
 @export var JUMP_ANIMATION: AnimationPlayer
 @export var CROUCH_ANIMATION: AnimationPlayer
+@export var PRONE_ANIMATION: AnimationPlayer
 @export var COLLISION_MESH: CollisionShape3D
 
 @export_group("Controls")
@@ -77,6 +80,7 @@ var isFrozen: bool:
 ## By default this does not pause the game, but that can be changed in _process.
 @export var PAUSE: String = "ui_cancel"
 @export var CROUCH: String = "crouch"
+@export var PRONE: String = "prone"
 @export var SPRINT: String = "sprint"
 
 # Uncomment if you want controller support
@@ -95,7 +99,9 @@ var isFrozen: bool:
 @export var motion_smoothing: bool = true
 @export var sprint_enabled: bool = true
 @export var crouch_enabled: bool = true
+@export var prone_enabled: bool = true
 @export_enum("Hold to Crouch", "Toggle Crouch") var crouch_mode: int = 0
+@export_enum("Hold to Prone", "Toggle Prone") var prone_mode: int = 0
 @export_enum("Hold to Sprint", "Toggle Sprint") var sprint_mode: int = 0
 ## Wether sprinting should effect FOV.
 @export var dynamic_fov: bool = true
@@ -163,6 +169,7 @@ func _ready():
 	HEADBOB_ANIMATION.play("RESET")
 	JUMP_ANIMATION.play("RESET")
 	CROUCH_ANIMATION.play("RESET")
+	PRONE_ANIMATION.play("RESET")
 	
 	check_controls()
 	tagInteractionArea.interact = Callable(self, "freeze_player")
@@ -191,6 +198,9 @@ func check_controls(): # If you add a control, you might want to add a check for
 	if !InputMap.has_action(CROUCH):
 		push_error("No control mapped for crouch. Please add an input map control. Disabling crouching.")
 		crouch_enabled = false
+	if !InputMap.has_action(PRONE):
+		push_error("No control mapped for prone. Please add an input map control. Disabling proning.")
+		prone_enabled = false
 	if !InputMap.has_action(SPRINT):
 		push_error("No control mapped for sprint. Please add an input map control. Disabling sprinting.")
 		sprint_enabled = false
@@ -286,7 +296,7 @@ func _physics_process(delta):
 	handle_head_rotation()
 	
 	# The player is not able to stand up if the ceiling is too low
-	low_ceiling = $CrouchCeilingDetection.is_colliding()
+	low_ceiling = $CrouchCeilingDetection.is_colliding() or $ProneCeilingDetection.is_colliding()
 	
 	handle_state(input_dir)
 	if dynamic_fov: # This may be changed to an AnimationPlayer
@@ -365,7 +375,7 @@ func handle_head_rotation():
 func handle_state(moving):
 	if sprint_enabled:
 		if sprint_mode == 0:
-			if Input.is_action_pressed(SPRINT) and state != "crouching":
+			if Input.is_action_pressed(SPRINT) and state != "crouching" and state != "proning":
 				if moving:
 					if state != "sprinting":
 						enter_sprint_state()
@@ -404,6 +414,22 @@ func handle_state(moving):
 						if !$CrouchCeilingDetection.is_colliding():
 							enter_normal_state()
 
+	if prone_enabled:
+		if prone_mode == 0:
+			if Input.is_action_pressed(PRONE) and state != "sprinting":
+				if state != "proning":
+					enter_prone_state()
+			elif state == "proning" and !$ProneCeilingDetection.is_colliding():
+				enter_normal_state()
+		elif prone_mode == 1:
+			if Input.is_action_just_pressed(PRONE):
+				match state:
+					"normal":
+						enter_prone_state()
+					"proning":
+						if !$ProneCeilingDetection.is_colliding():
+							enter_normal_state()
+
 
 # Any enter state function should only be called once when you want to enter that state, not every frame.
 
@@ -412,8 +438,17 @@ func enter_normal_state():
 	var prev_state = state
 	if prev_state == "crouching":
 		CROUCH_ANIMATION.play_backwards("crouch")
+	if prev_state == "proning":
+		PRONE_ANIMATION.play_backwards("crouch")
 	state = "normal"
 	speed = base_speed
+
+func enter_prone_state():
+	#print("entering crouch state")
+	var prev_state = state
+	state = "proning"
+	speed = prone_speed
+	PRONE_ANIMATION.play("crouch") # TODO: maybe need to add seperate prone anim
 
 func enter_crouch_state():
 	#print("entering crouch state")
@@ -427,6 +462,10 @@ func enter_sprint_state():
 	var prev_state = state
 	if prev_state == "crouching":
 		CROUCH_ANIMATION.play_backwards("crouch")
+
+	if prev_state == "proning":
+		PRONE_ANIMATION.play_backwards("crouch")
+
 	state = "sprinting"
 	speed = sprint_speed
 
@@ -441,7 +480,7 @@ func headbob_animation(moving):
 	if moving and is_on_floor():
 		var use_headbob_animation: String
 		match state:
-			"normal", "crouching":
+			"normal", "crouching", "proning":
 				use_headbob_animation = "walk"
 			"sprinting":
 				use_headbob_animation = "sprint"
