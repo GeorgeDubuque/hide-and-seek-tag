@@ -28,8 +28,8 @@ spawn_path = NodePath(".")
 script = ExtResource("3_8ccg2")
 playerScene = ExtResource("4_uk1g5")
 minNumPlayers = 1
-testLevelPath = "res://scenes/levels/game_level.tscn"
 startGameButton = NodePath("../StartGameButton")
+testLevelPath = "res://scenes/levels/game_level.tscn"
 
 [node name="StartGameButton" type="Button" parent="."]
 visible = false
