@@ -153,6 +153,7 @@ func _ready():
 		CAMERA.current = true
 		$Graphics.visible = false
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		$UserInterface.show()
 
 	#It is safe to comment this line if your game doesn't start with the mouse captured
 
