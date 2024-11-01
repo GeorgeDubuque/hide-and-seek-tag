@@ -140,9 +140,22 @@ func unfreeze_all_players():
 	for player_id in id_to_players:
 		var player = id_to_players[player_id]
 		# print("setting ", player, " status to: NONE")
-		player.set_player_status.rpc(globals.PlayerStatus.NONE)
+		player.unfreeze_player()
 		id_to_status[player_id] = globals.PlayerStatus.NONE
 		
+func update_player_status(player_id, newStatus: globals.PlayerStatus):
+	id_to_status[player_id] = newStatus
+
+	var frozenCount = 0
+	for currStatus in id_to_status.values():
+		if currStatus == globals.PlayerStatus.FROZEN:
+			frozenCount += 1
+
+	if frozenCount == hiders.size():
+		print("taggers win!!!")
+		unfreeze_all_players.call_deferred()
+		load_lobby.call_deferred()
+
 
 @rpc("reliable", "any_peer", "call_local")
 func setPlayerStatus(status: globals.PlayerStatus, peer_id):
