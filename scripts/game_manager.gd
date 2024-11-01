@@ -151,10 +151,11 @@ func update_player_status(player_id, newStatus: globals.PlayerStatus):
 		if currStatus == globals.PlayerStatus.FROZEN:
 			frozenCount += 1
 
-	if frozenCount == hiders.size():
+	if frozenCount == hiders.size() && gameStatus == globals.GameStatus.IN_GAME:
 		print("taggers win!!!")
 		unfreeze_all_players.call_deferred()
 		load_lobby.call_deferred()
+		gameStatus = globals.GameStatus.LOBBY
 
 
 @rpc("reliable", "any_peer", "call_local")
