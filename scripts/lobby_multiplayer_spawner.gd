@@ -29,8 +29,9 @@ func _process(delta: float) -> void:
 		_on_start_game_button_pressed()
 
 func spawnPlayer(data):
-	var p: Node3D = playerScene.instantiate()
-	GameManager.addPlayer(data, p as Player)
+	var p: Player = playerScene.instantiate()
+	GameManager.addPlayer(data, p)
+	p.player = data
 	# var nextSpawn = spawns.pop_front()
 	# p.position = nextSpawn.position
 	# spawns.push_back(nextSpawn)
