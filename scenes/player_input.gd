@@ -16,6 +16,7 @@ extends MultiplayerSynchronizer
 @export var sprinting_pressed := false
 @export var crouch_just_pressed := false
 @export var crouch_pressed := false
+@export var pause_button_just_pressed := false
 @export var mouse_input := Vector2()
 
 # Called when the node enters the scene tree for the first time.
@@ -35,6 +36,7 @@ func _process(delta: float) -> void:
 	sprinting_pressed = Input.is_action_pressed(SPRINT)
 	crouch_just_pressed = Input.is_action_just_pressed(CROUCH)
 	crouch_pressed = Input.is_action_pressed(CROUCH)
+	pause_button_just_pressed = Input.is_action_pressed(PAUSE)
 
 	if Input.is_action_pressed(JUMP) or Input.is_action_just_pressed(JUMP):
 		jump.rpc()

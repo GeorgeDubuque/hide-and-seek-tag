@@ -479,8 +479,6 @@ func headbob_animation(moving):
 
 func _process(delta):
 	# $Graphics/Label_Username.look_at(get_viewport().get_camera_3d().global_position)
-	if !is_multiplayer_authority():
-		return
 	$UserInterface/DebugPanel.add_property("FPS", Performance.get_monitor(Performance.TIME_FPS), 0)
 	var status: String = state
 	if !is_on_floor():
@@ -488,7 +486,7 @@ func _process(delta):
 	$UserInterface/DebugPanel.add_property("State", status, 4)
 	
 	if pausing_enabled:
-		if Input.is_action_just_pressed(PAUSE):
+		if input.pause_button_just_pressed:
 			# You may want another node to handle pausing, because this player may get paused too.
 			match Input.mouse_mode:
 				Input.MOUSE_MODE_CAPTURED:
