@@ -1,6 +1,6 @@
 extends Node
 
-var id_to_characters = {}
+var id_to_players = {}
 var taggers = []
 var hiders = []
 var frozenHiders = {}
@@ -28,38 +28,38 @@ func _process(delta: float) -> void:
 	pass
 
 
-func addPlayer(playerId, character: Character):
-	if !id_to_characters.has(playerId):
-		id_to_characters[playerId] = character
+func addPlayer(playerId, player: Player):
+	if !id_to_players.has(playerId):
+		id_to_players[playerId] = player
 		id_to_status[playerId] = globals.PlayerStatus.NONE
-		if id_to_characters.size() >= minNumPlayersToStartGame:
+		if id_to_players.size() >= minNumPlayersToStartGame:
 			startGameButton.show()
 
 func assignPlayerTypes():
-	var available_characters = id_to_characters.values()
+	var available_players = id_to_players.values()
 
 	# choose taggers, store in array and remove from characters list
 	var chosenTaggers = []
 	while chosenTaggers.size() < numTaggers:
-		var randomTaggerIndex = randi_range(0, available_characters.size() - 1)
-		if available_characters[randomTaggerIndex] not in chosenTaggers:
-			chosenTaggers.append(available_characters[randomTaggerIndex])
-			available_characters.remove_at(randomTaggerIndex)
+		var randomTaggerIndex = randi_range(0, available_players.size() - 1)
+		if available_players[randomTaggerIndex] not in chosenTaggers:
+			chosenTaggers.append(available_players[randomTaggerIndex])
+			available_players.remove_at(randomTaggerIndex)
 
 	# set taggers
 	taggers = chosenTaggers
-	for character in chosenTaggers:
-		character.set_player_type.rpc(globals.PlayerType.TAGGER)
+	for player in chosenTaggers:
+		player.set_player_type.rpc(globals.PlayerType.TAGGER)
 	
 	# set hiders
-	hiders = available_characters
-	for character in available_characters:
-		character.set_player_type.rpc(globals.PlayerType.HIDER)
+	hiders = available_players
+	for player in available_players:
+		player.set_player_type.rpc(globals.PlayerType.HIDER)
 
 func placePlayersInLobby():
 	#place taggers
 	var lastSpawnPos = Vector3(0, 0, 0)
-	for player in id_to_characters.values():
+	for player in id_to_players.values():
 		# print("placing player ", player, " at position in lobby: ", lastSpawnPos)
 
 		player.set_player_position.rpc(lastSpawnPos)
@@ -94,7 +94,7 @@ func placePlayers(level: GameLevel):
 	#place taggers
 	var lastTaggerSpawnPos: Vector3 = level.taggerSpawn.position
 	for tagger in taggers:
-		(tagger as Character).set_player_position.rpc(lastTaggerSpawnPos)
+		(tagger as Player).set_player_position.rpc(lastTaggerSpawnPos)
 		# print("setting player ", tagger, " as tagger at position: ", lastTaggerSpawnPos)
 		lastTaggerSpawnPos += Vector3(1, 0, 0)
 
@@ -104,7 +104,7 @@ func placePlayers(level: GameLevel):
 		var randomHiderSpawnIndex = randi_range(0, available_hider_spawns.size() - 1)
 		var randomSpawnPosition: Vector3 = available_hider_spawns[randomHiderSpawnIndex].position
 		# print("setting player ", hider, " as hider at position: ", randomSpawnPosition)
-		(hider as Character).set_player_position.rpc(randomSpawnPosition)
+		(hider as Player).set_player_position.rpc(randomSpawnPosition)
 		available_hider_spawns.remove_at(randomHiderSpawnIndex)
 
 
@@ -129,8 +129,8 @@ func change_level(level_scene: PackedScene, shouldStartGame = false):
 			gameStatus = globals.GameStatus.IN_GAME
 
 func unfreeze_all_players():
-	for player_id in id_to_characters:
-		var player = id_to_characters[player_id]
+	for player_id in id_to_players:
+		var player = id_to_players[player_id]
 		# print("setting ", player, " status to: NONE")
 		player.set_player_status.rpc(globals.PlayerStatus.NONE)
 		id_to_status[player_id] = globals.PlayerStatus.NONE
@@ -139,11 +139,11 @@ func unfreeze_all_players():
 @rpc("reliable", "any_peer", "call_local")
 func setPlayerStatus(status: globals.PlayerStatus, peer_id):
 	# var peer_id = multiplayer.get_remote_sender_id()
-	print("server recieved setPlayerStatus rpc from ", id_to_characters[peer_id])
+	print("server recieved setPlayerStatus rpc from ", id_to_players[peer_id])
 
 	id_to_status[peer_id] = status
-	print("server sending rpc on player ", id_to_characters[peer_id], " with status ", status)
-	id_to_characters[peer_id].set_player_status.rpc(status)
+	print("server sending rpc on player ", id_to_players[peer_id], " with status ", status)
+	id_to_players[peer_id].set_player_status.rpc(status)
 
 	# print("setting player ", peer_id, " to status ", str(status))
 

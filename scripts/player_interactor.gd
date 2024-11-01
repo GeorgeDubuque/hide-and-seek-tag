@@ -2,7 +2,7 @@ extends RayCast3D
 
 class_name PlayerInteractor
 
-@export var player: Character
+@export var player: Player
 var activeInteractable: InteractionArea
 
 # Called when the node enters the scene tree for the first time.

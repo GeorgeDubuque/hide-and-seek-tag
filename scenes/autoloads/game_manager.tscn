@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cowsi6knonjju"]
 
-[ext_resource type="Script" path="res://scenes/game_manager.gd" id="1_ynrm1"]
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_ynrm1"]
 
 [node name="GameManager" type="Node3D"]
 script = ExtResource("1_ynrm1")
@@ -18,6 +18,7 @@ mouse_filter = 2
 visible = false
 z_index = 4096
 z_as_relative = false
+layout_mode = 0
 offset_left = 475.0
 offset_top = 563.0
 offset_right = 648.0

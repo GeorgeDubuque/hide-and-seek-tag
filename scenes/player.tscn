@@ -1,6 +1,6 @@
 [gd_scene load_steps=32 format=3 uid="uid://cc1m2a1obsyn4"]
 
-[ext_resource type="Script" path="res://scripts/character.gd" id="1_uajkv"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_uajkv"]
 [ext_resource type="Material" uid="uid://c832cg6yrl8wm" path="res://materials/material_tagger.tres" id="2_h22dh"]
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/debug.gd" id="3_fepvu"]
 [ext_resource type="Script" path="res://scripts/player_interactor.gd" id="3_glr05"]
@@ -415,7 +415,7 @@ height = 2.1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ufnxo"]
 
-[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH", "playerBodyMesh", "tagInteractionArea", "unfreezeInteractionArea") groups=["player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH", "playerBodyMesh", "tagInteractionArea", "unfreezeInteractionArea") groups=["player"]]
 collision_mask = 7
 script = ExtResource("1_uajkv")
 HEAD = NodePath("Head")

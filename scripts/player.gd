@@ -1,14 +1,14 @@
 # COPYRIGHT Colormatic Studios
 # MIT licence
 # Quality Godot First Person Controller v2
-class_name Character
+class_name Player
 
 
 extends CharacterBody3D
 
 
 ## The settings for the character's movement and feel.
-@export_category("Character")
+@export_category("Player")
 ## The speed that the character moves at without crouching or sprinting.
 @export var base_speed: float = 3.0
 ## The speed that the character moves at when sprinting.
@@ -228,8 +228,8 @@ func unfreeze_player():
 
 func freeze_player():
 	if !isFrozen:
-		print("freeze player being called on ", GameManager.id_to_characters[get_multiplayer_authority()])
-		print(GameManager.id_to_characters[get_multiplayer_authority()], " calling setPlayerStatus on server with status FROZEN")
+		print("freeze player being called on ", GameManager.id_to_players[get_multiplayer_authority()])
+		print(GameManager.id_to_players[get_multiplayer_authority()], " calling setPlayerStatus on server with status FROZEN")
 		GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.FROZEN, get_multiplayer_authority())
 
 @rpc("any_peer", "reliable", "call_local")
