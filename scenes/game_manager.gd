@@ -119,7 +119,7 @@ func change_level(level_scene, shouldStartGame = false):
 
 		# Spawn New Level
 		var newLevel = load(level_scene).instantiate()
-		levelNode.add_child(newLevel)
+		levelNode.add_child(newLevel, true)
 
 		assignPlayerTypes()
 
