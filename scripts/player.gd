@@ -149,6 +149,7 @@ var activeInteractable: InteractionArea
 
 func _ready():
 
+	call_deferred("set_username")
 	if player == multiplayer.get_unique_id():
 		CAMERA.current = true
 		$Graphics.visible = false
@@ -173,6 +174,9 @@ func _ready():
 	check_controls()
 	tagInteractionArea.interact = Callable(self, "freeze_player")
 	unfreezeInteractionArea.interact = Callable(self, "unfreeze_player")
+
+func set_username():
+	$Label_Username.text = input.username
 
 func check_controls(): # If you add a control, you might want to add a check for it here.
 	# The actions are being disabled so the engine doesn't halt the entire project in debug mode
@@ -479,7 +483,7 @@ func headbob_animation(moving):
 func _process(delta):
 	if !multiplayer.is_server():
 		return
-	$Label_Username.text = input.username
+	# $Label_Username.text = input.username
 	# $Graphics/Label_Username.look_at(get_viewport().get_camera_3d().global_position)
 	$UserInterface/DebugPanel.add_property("FPS", Performance.get_monitor(Performance.TIME_FPS), 0)
 	var status: String = state
