@@ -25,6 +25,8 @@ func _ready():
 	# Only process for the local player.
 	if get_multiplayer_authority() == multiplayer.get_unique_id():
 		username = Steam.getPersonaName()
+		print("setting username to: ", username)
+
 	set_process(get_multiplayer_authority() == multiplayer.get_unique_id())
 	set_process_unhandled_input(get_multiplayer_authority() == multiplayer.get_unique_id())
 
