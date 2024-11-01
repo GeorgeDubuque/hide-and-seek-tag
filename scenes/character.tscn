@@ -392,24 +392,18 @@ properties/5/replication_mode = 1
 properties/6/path = NodePath("Head:rotation")
 properties/6/spawn = true
 properties/6/replication_mode = 1
-properties/7/path = NodePath("IA_PlayerTag/CollisionShape3D:disabled")
+properties/7/path = NodePath("FrozenIndicator:visible")
 properties/7/spawn = true
 properties/7/replication_mode = 1
-properties/8/path = NodePath("IA_PlayerUnfreeze/CollisionShape3D:disabled")
+properties/8/path = NodePath("Label_Username:text")
 properties/8/spawn = true
 properties/8/replication_mode = 1
-properties/9/path = NodePath("FrozenIndicator:visible")
+properties/9/path = NodePath("IA_PlayerTag/PlayerTag_CollisionShape:disabled")
 properties/9/spawn = true
 properties/9/replication_mode = 1
-properties/10/path = NodePath("Label_Username:text")
+properties/10/path = NodePath("IA_PlayerUnfreeze/PlayerUnfreeze_CollisionShape:disabled")
 properties/10/spawn = true
 properties/10/replication_mode = 1
-properties/11/path = NodePath("IA_PlayerTag:disable_mode")
-properties/11/spawn = true
-properties/11/replication_mode = 1
-properties/12/path = NodePath("IA_PlayerUnfreeze:disable_mode")
-properties/12/spawn = true
-properties/12/replication_mode = 1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_raby1"]
 transparency = 1
@@ -542,7 +536,7 @@ skeleton = NodePath("../IA_PlayerUnfreeze")
 [node name="IA_PlayerTag" parent="." instance=ExtResource("7_yd3o4")]
 actionName = "tag."
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="IA_PlayerTag"]
+[node name="PlayerTag_CollisionShape" type="CollisionShape3D" parent="IA_PlayerTag"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0135, 0)
 shape = SubResource("CapsuleShape3D_ufnxo")
 disabled = true
@@ -550,7 +544,7 @@ disabled = true
 [node name="IA_PlayerUnfreeze" parent="." instance=ExtResource("7_yd3o4")]
 actionName = "unfreeze"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="IA_PlayerUnfreeze"]
+[node name="PlayerUnfreeze_CollisionShape" type="CollisionShape3D" parent="IA_PlayerUnfreeze"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0135, 0)
 shape = SubResource("CapsuleShape3D_ufnxo")
 disabled = true
