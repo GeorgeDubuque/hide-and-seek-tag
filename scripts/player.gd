@@ -153,9 +153,9 @@ func _ready():
 		CAMERA.current = true
 		$Label_Username.text = Steam.getPersonaName()
 		$Graphics.visible = false
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 	#It is safe to comment this line if your game doesn't start with the mouse captured
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 	# If the controller is rotated in a certain direction for game design purposes, redirect this rotation into the head.
 	HEAD.rotation.y = rotation.y
