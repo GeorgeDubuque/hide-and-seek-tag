@@ -149,8 +149,8 @@ var activeInteractable: InteractionArea
 
 func _ready():
 
+	$Label_Username.text = input.username
 	if player == multiplayer.get_unique_id():
-		$Label_Username.text = input.username
 		CAMERA.current = true
 		$Graphics.visible = false
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
