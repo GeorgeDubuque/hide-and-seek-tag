@@ -122,12 +122,13 @@ func change_level(level_scene: PackedScene, shouldStartGame = false):
 		var newLevel = level_scene.instantiate()
 		levelNode.add_child(newLevel, true)
 
-		assignPlayerTypes()
 
 		placePlayers(newLevel as GameLevel)
 
 		if shouldStartGame:
 			gameStatus = globals.GameStatus.IN_GAME
+
+	assignPlayerTypes()
 
 func unfreeze_all_players():
 	for player_id in id_to_players:
