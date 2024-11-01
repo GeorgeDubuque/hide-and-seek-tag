@@ -149,9 +149,9 @@ var activeInteractable: InteractionArea
 
 func _ready():
 
+	$Label_Username.text = Steam.getPersonaName()
 	if player == multiplayer.get_unique_id():
 		CAMERA.current = true
-		$Label_Username.text = Steam.getPersonaName()
 		$Graphics.visible = false
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
