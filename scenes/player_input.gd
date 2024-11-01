@@ -59,15 +59,16 @@ func _process(delta: float) -> void:
 	crouch_pressed = Input.is_action_pressed(CROUCH)
 	pause_button_just_pressed = Input.is_action_just_pressed(PAUSE)
 
-	if pause_button_just_pressed:
-		# You may want another node to handle pausing, because this player may get paused too.
-		match Input.mouse_mode:
-			Input.MOUSE_MODE_CAPTURED:
-				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-				#get_tree().paused = false
-			Input.MOUSE_MODE_VISIBLE:
-				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-				#get_tree().paused = false
+	if get_multiplayer_authority() == multiplayer.get_unique_id():
+		if pause_button_just_pressed:
+			# You may want another node to handle pausing, because this player may get paused too.
+			match Input.mouse_mode:
+				Input.MOUSE_MODE_CAPTURED:
+					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+					#get_tree().paused = false
+				Input.MOUSE_MODE_VISIBLE:
+					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+					#get_tree().paused = false
 
 	if Input.is_action_just_pressed(INTERACT):
 		interact.rpc()
