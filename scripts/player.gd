@@ -313,6 +313,7 @@ func _physics_process(delta):
 					JUMP_ANIMATION.play("land_right", 0.25)
 	
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
+	input.mouse_input = Vector2.ZERO
 
 func handle_jumping():
 	if jumping_enabled:
