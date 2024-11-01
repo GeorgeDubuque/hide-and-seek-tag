@@ -67,7 +67,7 @@ func placePlayersInLobby():
 	for player in id_to_players.values():
 		# print("placing player ", player, " at position in lobby: ", lastSpawnPos)
 
-		player.set_player_position.rpc(lastSpawnPos)
+		player.position = lastSpawnPos
 
 		# remove all status on player
 		# player.set_player_status.rpc(globals.PlayerStatus.NONE)
