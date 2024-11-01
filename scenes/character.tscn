@@ -404,6 +404,12 @@ properties/9/replication_mode = 1
 properties/10/path = NodePath("Label_Username:text")
 properties/10/spawn = true
 properties/10/replication_mode = 1
+properties/11/path = NodePath("IA_PlayerTag:disable_mode")
+properties/11/spawn = true
+properties/11/replication_mode = 1
+properties/12/path = NodePath("IA_PlayerUnfreeze:disable_mode")
+properties/12/spawn = true
+properties/12/replication_mode = 1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_raby1"]
 transparency = 1

@@ -27,8 +27,6 @@ extends CharacterBody3D
 ## Wether the player can use movement inputs. Does not stop outside forces or jumping. See Jumping Enabled.
 @export var canMove: bool = true
 
-@onready var tagInteractionArea: InteractionArea = $IA_PlayerTag
-@onready var unfreezeInteractionArea: InteractionArea = $IA_PlayerUnfreeze
 # Whether the player is tagger or taggee
 @export var playerType: globals.PlayerType:
 	set(value):
@@ -138,6 +136,8 @@ var mouseInput: Vector2 = Vector2(0, 0)
 @onready var frozenIndicator = $FrozenIndicator
 @onready var interactorRayCast = $Head/PlayerInteractor
 @onready var graphics = $Graphics
+@onready var tagInteractionArea: InteractionArea = $IA_PlayerTag
+@onready var unfreezeInteractionArea: InteractionArea = $IA_PlayerUnfreeze
 var activeInteractable: InteractionArea
 
 func _ready():
