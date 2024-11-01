@@ -66,13 +66,13 @@ properties/9/replication_mode = 1
 properties/10/path = NodePath("IA_PlayerUnfreeze/PlayerUnfreeze_CollisionShape:disabled")
 properties/10/spawn = true
 properties/10/replication_mode = 1
-properties/11/path = NodePath(".:player")
+properties/11/path = NodePath("UserInterface/InteractText:text")
 properties/11/spawn = true
-properties/11/replication_mode = 0
-properties/12/path = NodePath("UserInterface/InteractText:text")
+properties/11/replication_mode = 1
+properties/12/path = NodePath("UserInterface/InteractText:visible")
 properties/12/spawn = true
 properties/12/replication_mode = 1
-properties/13/path = NodePath("UserInterface/InteractText:visible")
+properties/13/path = NodePath(".:player_id")
 properties/13/spawn = true
 properties/13/replication_mode = 1
 
