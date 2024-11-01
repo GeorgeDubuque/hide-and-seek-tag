@@ -154,6 +154,8 @@ func _ready():
 		$Graphics.visible = false
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		$UserInterface.show()
+	else:
+		$UserInterface.hide()
 
 	#It is safe to comment this line if your game doesn't start with the mouse captured
 
