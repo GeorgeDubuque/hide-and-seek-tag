@@ -15,7 +15,7 @@ playerSpawner = NodePath("PlayerSpawner")
 script = ExtResource("2_woepv")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/levels/lobby_level.tscn", "res://scenes/levels/game_level.tscn")
+_spawnable_scenes = PackedStringArray("res://scenes/levels/lobby_level.tscn", "res://scenes/levels/game_level.tscn", "res://scenes/character.tscn")
 spawn_path = NodePath("../Level")
 
 [node name="Level" type="Node" parent="."]
