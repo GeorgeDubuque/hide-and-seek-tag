@@ -38,6 +38,10 @@ func jump():
 	jumping = true
 
 @rpc("call_local")
+func interact():
+	interact_button_just_pressed = true
+
+@rpc("call_local")
 func move_head(mouse_movement: Vector2):
 	mouse_input.x += mouse_movement.x
 	mouse_input.y += mouse_movement.y
@@ -51,6 +55,10 @@ func _process(delta: float) -> void:
 	crouch_pressed = Input.is_action_pressed(CROUCH)
 	pause_button_just_pressed = Input.is_action_pressed(PAUSE)
 	interact_button_just_pressed = Input.is_action_just_pressed(INTERACT)
+
+	if Input.is_action_just_pressed(INTERACT):
+		interact.rpc()
+
 
 	if Input.is_action_pressed(JUMP) or Input.is_action_just_pressed(JUMP):
 		jump.rpc()
