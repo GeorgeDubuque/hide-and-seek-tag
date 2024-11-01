@@ -41,6 +41,7 @@ func assignPlayerTypes():
 
 	# choose taggers, store in array and remove from characters list
 	var chosenTaggers = []
+	print("available players: ", available_players)
 	while chosenTaggers.size() < numTaggers:
 		var randomTaggerIndex = randi_range(0, available_players.size() - 1)
 		if available_players[randomTaggerIndex] not in chosenTaggers:
