@@ -58,6 +58,7 @@ func _process(delta: float) -> void:
 	crouch_just_pressed = Input.is_action_just_pressed(CROUCH)
 	crouch_pressed = Input.is_action_pressed(CROUCH)
 	pause_button_just_pressed = Input.is_action_just_pressed(PAUSE)
+
 	if pause_button_just_pressed:
 		# You may want another node to handle pausing, because this player may get paused too.
 		match Input.mouse_mode:

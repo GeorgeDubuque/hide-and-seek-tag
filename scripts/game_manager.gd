@@ -109,7 +109,7 @@ func placePlayers(level: GameLevel):
 		var randomHiderSpawnIndex = randi_range(0, available_hider_spawns.size() - 1)
 		var randomSpawnPosition: Vector3 = available_hider_spawns[randomHiderSpawnIndex].position
 		# print("setting player ", hider, " as hider at position: ", randomSpawnPosition)
-		(hider as Player).set_player_position.rpc(randomSpawnPosition)
+		(hider as Player).position = randomSpawnPosition
 		available_hider_spawns.remove_at(randomHiderSpawnIndex)
 
 
