@@ -7,7 +7,8 @@ var activeInteractable: InteractionArea
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print(player)
+	pass
+	# print(player)
 
 func _input(event):
 	if !is_multiplayer_authority():
@@ -15,7 +16,8 @@ func _input(event):
 
 	if event.is_action_pressed("interact"):
 		if activeInteractable != null:
-			print(player.get_multiplayer_authority(), " sent rpc to server")
+			print(player, " with id ", player.get_multiplayer_authority(), " tried to interact with ", activeInteractable)
+			print(player, " client is sending rpc to server to check if interaction was valid")
 			InteractionManager.rpc_id(1, "is_valid_interact", activeInteractable.get_path())
 			InteractionManager.label.hide()
 

@@ -198,7 +198,7 @@ func check_controls(): # If you add a control, you might want to add a check for
 @rpc("any_peer", "call_local", "reliable")
 func set_player_status(newStatus: globals.PlayerStatus):
 	# playerStatus = newStatus
-	print("client ", get_multiplayer_authority(), " recieved set_player_status to ", newStatus, " isFrozen=", isFrozen)
+	# print("client ", get_multiplayer_authority(), " recieved set_player_status to ", newStatus, " isFrozen=", isFrozen)
 	match newStatus:
 		globals.PlayerStatus.NONE:
 			playerStatus = globals.PlayerStatus.NONE
@@ -312,7 +312,7 @@ func handle_jumping():
 				if jump_animation:
 					JUMP_ANIMATION.play("jump", 0.25)
 				velocity.y += jump_velocity # Adding instead of setting so jumping on slopes works properly
-				print("is server: ", multiplayer.is_server())
+				# print("is server: ", multiplayer.is_server())
 		else:
 			if Input.is_action_just_pressed(JUMP) and is_on_floor() and !low_ceiling:
 				if jump_animation:

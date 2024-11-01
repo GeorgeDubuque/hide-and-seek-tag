@@ -15,7 +15,7 @@ const lobbySpawnOffset = Vector3(2, 0, 0) # how far apart players should spawn f
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	levelNode = get_tree().root.get_node("Main/Level")
-	print("root node: ", levelNode)
+	# print("root node: ", levelNode)
 	pass # Replace with function body.
 
 
@@ -54,7 +54,7 @@ func placePlayersInLobby():
 	#place taggers
 	var lastSpawnPos = Vector3(0, 0, 0)
 	for player in id_to_characters.values():
-		print("placing player ", player, " at position in lobby: ", lastSpawnPos)
+		# print("placing player ", player, " at position in lobby: ", lastSpawnPos)
 
 		player.set_player_position.rpc(lastSpawnPos)
 
@@ -88,7 +88,7 @@ func placePlayers(level: GameLevel):
 	var lastTaggerSpawnPos: Vector3 = level.taggerSpawn.position
 	for tagger in taggers:
 		(tagger as Character).set_player_position.rpc(lastTaggerSpawnPos)
-		print("setting player ", tagger, " as tagger at position: ", lastTaggerSpawnPos)
+		# print("setting player ", tagger, " as tagger at position: ", lastTaggerSpawnPos)
 		lastTaggerSpawnPos += Vector3(1, 0, 0)
 
 	# place hiders
@@ -96,7 +96,7 @@ func placePlayers(level: GameLevel):
 	for hider in hiders:
 		var randomHiderSpawnIndex = randi_range(0, available_hider_spawns.size() - 1)
 		var randomSpawnPosition: Vector3 = available_hider_spawns[randomHiderSpawnIndex].position
-		print("setting player ", hider, " as hider at position: ", randomSpawnPosition)
+		# print("setting player ", hider, " as hider at position: ", randomSpawnPosition)
 		(hider as Character).set_player_position.rpc(randomSpawnPosition)
 		available_hider_spawns.remove_at(randomHiderSpawnIndex)
 
@@ -124,7 +124,7 @@ func change_level(level_scene, shouldStartGame = false):
 func unfreeze_all_players():
 	var players = id_to_characters.values()
 	for player in players:
-		print("setting ", player, " status to: NONE")
+		# print("setting ", player, " status to: NONE")
 		player.set_player_status.rpc(globals.PlayerStatus.NONE)
 		
 
@@ -135,7 +135,7 @@ func setPlayerStatus(status: globals.PlayerStatus):
 	id_to_status[peer_id] = status
 	id_to_characters[peer_id].set_player_status.rpc(status)
 
-	print("setting player ", peer_id, " to status ", str(status))
+	# print("setting player ", peer_id, " to status ", str(status))
 
 	var frozenCount = 0
 	for currStatus in id_to_status.values():
@@ -143,6 +143,6 @@ func setPlayerStatus(status: globals.PlayerStatus):
 			frozenCount += 1
 
 	if frozenCount == hiders.size():
-		print("taggers win!!!")
+		# print("taggers win!!!")
 		unfreeze_all_players.call_deferred()
 		load_lobby.call_deferred()
