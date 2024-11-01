@@ -62,7 +62,7 @@ mesh = SubResource("SphereMesh_k1xf4")
 surface_material_override/0 = SubResource("StandardMaterial3D_gal86")
 
 [node name="Spawn2" type="Node3D" parent="HiderSpawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.68789, 0.240196, -3.3409)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.68789, 0.240196, -1.3409)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="HiderSpawns/Spawn2"]
 visible = false
@@ -70,7 +70,7 @@ mesh = SubResource("SphereMesh_k1xf4")
 surface_material_override/0 = SubResource("StandardMaterial3D_gal86")
 
 [node name="Spawn3" type="Node3D" parent="HiderSpawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5662, 0.240196, -3.8186)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5662, 0.240196, -1.8186)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="HiderSpawns/Spawn3"]
 visible = false
