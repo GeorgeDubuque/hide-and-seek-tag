@@ -204,7 +204,7 @@ func check_controls(): # If you add a control, you might want to add a check for
 		push_error("No control mapped for sprint. Please add an input map control. Disabling sprinting.")
 		sprint_enabled = false
 
-# @rpc("any_peer", "call_local", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func set_player_status(newStatus: globals.PlayerStatus):
 	# playerStatus = newStatus
 	print("client ", multiplayer.get_unique_id(), " recieved set_player_status to ", newStatus, " on ", get_path())
@@ -231,17 +231,17 @@ func set_player_status(newStatus: globals.PlayerStatus):
 func set_player_position(newPos: Vector3):
 	position = newPos
 
-func unfreeze_player():
-	if isFrozen:
+func unfreeze_player(playerInteractor: PlayerInteractor):
+	if isFrozen && playerInteractor.player.isHider:
 		# GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.UNFROZEN, multiplayer.get_unique_id())
-		set_player_status(globals.PlayerStatus.NONE)
+		set_player_status.rpc(globals.PlayerStatus.NONE)
 
-func freeze_player():
-	if !isFrozen:
+func freeze_player(playerInteractor: PlayerInteractor):
+	if !isFrozen && playerInteractor.player.isTagger:
 		print("freeze player being called on ", GameManager.id_to_players[multiplayer.get_unique_id()])
 		# print(GameManager.id_to_players[multiplayer.get_unique_id()], " calling setPlayerStatus on server with status FROZEN")
 		# GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.FROZEN, multiplayer.get_unique_id())
-		set_player_status(globals.PlayerStatus.FROZEN)
+		set_player_status.rpc(globals.PlayerStatus.FROZEN)
 
 # @rpc("any_peer", "reliable", "call_local")
 func set_player_type(type: globals.PlayerType):

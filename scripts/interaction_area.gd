@@ -8,5 +8,5 @@ var collider: CollisionShape3D
 func _ready() -> void:
 	collider = get_child(0)
 
-var interact: Callable = func():
+var interact: Callable = func(interactor: PlayerInteractor):
 	pass

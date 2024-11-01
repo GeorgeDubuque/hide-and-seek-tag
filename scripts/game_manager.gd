@@ -127,6 +127,7 @@ func change_level(level_scene: PackedScene, shouldStartGame = false):
 		levelNode.add_child(newLevel, true)
 
 
+		assignPlayerTypes()
 		placePlayers(newLevel as GameLevel)
 
 		if shouldStartGame:
@@ -166,5 +167,4 @@ func setPlayerStatus(status: globals.PlayerStatus, peer_id):
 
 func _on_start_game_button_pressed() -> void:
 	change_level.call_deferred(load(defaultLevelPath), true)
-	assignPlayerTypes.call_deferred()
 	startGameButton.hide()
