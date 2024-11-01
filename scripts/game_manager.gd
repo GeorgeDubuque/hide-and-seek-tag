@@ -129,8 +129,8 @@ func unfreeze_all_players():
 		
 
 @rpc("reliable", "any_peer", "call_local")
-func setPlayerStatus(status: globals.PlayerStatus):
-	var peer_id = multiplayer.get_remote_sender_id()
+func setPlayerStatus(status: globals.PlayerStatus, peer_id):
+	# var peer_id = multiplayer.get_remote_sender_id()
 	print("server recieved setPlayerStatus rpc from ", id_to_characters[peer_id])
 
 	id_to_status[peer_id] = status
