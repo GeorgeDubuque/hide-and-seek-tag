@@ -29,7 +29,7 @@ properties/4/path = NodePath("PlayerInput:crouch_pressed")
 properties/4/spawn = false
 properties/4/replication_mode = 1
 properties/5/path = NodePath("PlayerInput:mouse_input")
-properties/5/spawn = true
+properties/5/spawn = false
 properties/5/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_56ji0"]

@@ -42,6 +42,8 @@ func _process(delta: float) -> void:
 		jump.rpc()
 
 func _unhandled_input(event: InputEvent):
+	mouse_input = Vector2.ZERO
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		mouse_input.x += event.relative.x
 		mouse_input.y += event.relative.y
+		print("mouse_input: ", mouse_input)
