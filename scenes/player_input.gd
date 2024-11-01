@@ -1,3 +1,4 @@
+class_name PlayerInput
 extends MultiplayerSynchronizer
 
 @export var JUMP: String = "jump"
@@ -9,6 +10,7 @@ extends MultiplayerSynchronizer
 @export var PAUSE: String = "ui_cancel"
 @export var CROUCH: String = "crouch"
 @export var SPRINT: String = "sprint"
+@export var INTERACT: String = "interact"
 
 @export var input_direction := Vector2()
 @export var jumping := false
@@ -17,6 +19,7 @@ extends MultiplayerSynchronizer
 @export var crouch_just_pressed := false
 @export var crouch_pressed := false
 @export var pause_button_just_pressed := false
+@export var interact_button_just_pressed := false
 @export var mouse_input := Vector2()
 @export var username: String
 
@@ -47,6 +50,7 @@ func _process(delta: float) -> void:
 	crouch_just_pressed = Input.is_action_just_pressed(CROUCH)
 	crouch_pressed = Input.is_action_pressed(CROUCH)
 	pause_button_just_pressed = Input.is_action_pressed(PAUSE)
+	interact_button_just_pressed = Input.is_action_pressed(INTERACT)
 
 	if Input.is_action_pressed(JUMP) or Input.is_action_just_pressed(JUMP):
 		jump.rpc()

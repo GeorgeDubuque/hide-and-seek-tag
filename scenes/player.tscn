@@ -34,6 +34,9 @@ properties/5/replication_mode = 1
 properties/6/path = NodePath("PlayerInput:pause_button_just_pressed")
 properties/6/spawn = true
 properties/6/replication_mode = 1
+properties/7/path = NodePath("PlayerInput:interact_button_just_pressed")
+properties/7/spawn = true
+properties/7/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_56ji0"]
 properties/0/path = NodePath(".:position")
@@ -510,12 +513,14 @@ libraries = {
 }
 speed_scale = 4.0
 
-[node name="PlayerInteractor" type="RayCast3D" parent="Head" node_paths=PackedStringArray("player")]
+[node name="PlayerInteractor" type="RayCast3D" parent="Head" node_paths=PackedStringArray("player", "interactLabel", "player_input")]
 target_position = Vector3(0, 0, -3.5)
 collision_mask = 16
 collide_with_areas = true
 script = ExtResource("3_glr05")
 player = NodePath("../..")
+interactLabel = NodePath("../../UserInterface/InteractText")
+player_input = NodePath("../../PlayerInput")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -550,6 +555,22 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/DebugPanel/MarginContainer"]
 layout_mode = 2
+
+[node name="InteractText" type="Label" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -128.5
+offset_top = -55.0
+offset_right = 128.5
+grow_horizontal = 2
+grow_vertical = 0
+text = "E to Interact"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CrouchCeilingDetection" type="ShapeCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
