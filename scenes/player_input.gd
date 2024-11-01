@@ -18,7 +18,7 @@ extends MultiplayerSynchronizer
 @export var crouch_pressed := false
 @export var pause_button_just_pressed := false
 @export var mouse_input := Vector2()
-@export var label_username: Label
+@export var label_username: Label3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

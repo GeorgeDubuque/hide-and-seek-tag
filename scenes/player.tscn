@@ -453,9 +453,10 @@ hiderMaterial = ExtResource("3_gqwcm")
 tagInteractionArea = NodePath("IA_PlayerTag")
 unfreezeInteractionArea = NodePath("IA_PlayerUnfreeze")
 
-[node name="PlayerInput" type="MultiplayerSynchronizer" parent="."]
+[node name="PlayerInput" type="MultiplayerSynchronizer" parent="." node_paths=PackedStringArray("label_username")]
 replication_config = SubResource("SceneReplicationConfig_6bmlt")
 script = ExtResource("4_t3erj")
+label_username = NodePath("../Label_Username")
 
 [node name="ServerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_56ji0")
