@@ -55,6 +55,7 @@ func _process(_delta: float) -> void:
 	else:
 		interactLabel.hide()
 		# InteractionManager.label.hide()
+	player_input.interact_button_just_pressed = false
 
 	# if is_multiplayer_authority():
 	# 	if is_colliding():
