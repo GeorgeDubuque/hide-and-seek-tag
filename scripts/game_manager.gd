@@ -29,7 +29,7 @@ func _process(delta: float) -> void:
 
 
 func addPlayer(playerId, player: Player):
-	playerId = player.player
+	playerId = player.player_id
 	print("trying to add player ", playerId)
 	if !id_to_players.has(playerId):
 		id_to_players[playerId] = player

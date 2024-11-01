@@ -18,16 +18,16 @@ extends CharacterBody3D
 
 ## How fast the character speeds up and slows down when Motion Smoothing is on.
 @export var acceleration: float = 10.0
-## How high the player jumps.
+## How high the player_id jumps.
 @export var jump_velocity: float = 4.5
-## How far the player turns when the mouse is moved.
+## How far the player_id turns when the mouse is moved.
 @export var mouse_sensitivity: float = 0.1
 ## Invert the Y input for mouse and joystick
 @export var invert_mouse_y: bool = false # Possibly add an invert mouse X in the future
-## Wether the player can use movement inputs. Does not stop outside forces or jumping. See Jumping Enabled.
+## Wether the player_id can use movement inputs. Does not stop outside forces or jumping. See Jumping Enabled.
 @export var canMove: bool = true
 
-# Whether the player is tagger or taggee
+# Whether the player_id is tagger or taggee
 @export var playerType: globals.PlayerType:
 	set(value):
 		playerType = value
@@ -39,11 +39,11 @@ extends CharacterBody3D
 			globals.PlayerType.TAGGER:
 				playerBodyMesh.material_override = taggerMaterial
 
-# Whether the player is tagger or taggee
+# Whether the player_id is tagger or taggee
 var isHider: bool:
 	get:
 		return playerType == globals.PlayerType.HIDER
-# Whether the player is tagger or taggee
+# Whether the player_id is tagger or taggee
 var isTagger: bool:
 	get:
 		return playerType == globals.PlayerType.TAGGER
@@ -87,7 +87,7 @@ var isFrozen: bool:
 @export_group("Feature Settings")
 ## Enable or disable jumping. Useful for restrictive storytelling environments.
 @export var jumping_enabled: bool = true
-## Wether the player can move in the air or not.
+## Wether the player_id can move in the air or not.
 @export var in_air_momentum: bool = true
 ## Smooths the feel of walking.
 @export var motion_smoothing: bool = true
@@ -97,13 +97,13 @@ var isFrozen: bool:
 @export_enum("Hold to Sprint", "Toggle Sprint") var sprint_mode: int = 0
 ## Wether sprinting should effect FOV.
 @export var dynamic_fov: bool = true
-## If the player holds down the jump button, should the player keep hopping.
+## If the player_id holds down the jump button, should the player_id keep hopping.
 @export var continuous_jumping: bool = true
 ## Enables the view bobbing animation.
 @export var view_bobbing: bool = true
-## Enables an immersive animation when the player jumps and hits the ground.
+## Enables an immersive animation when the player_id jumps and hits the ground.
 @export var jump_animation: bool = true
-## This determines wether the player can use the pause button, not wether the game will actually pause.
+## This determines wether the player_id can use the pause button, not wether the game will actually pause.
 @export var pausing_enabled: bool = true
 ## Use with caution.
 @export var gravity_enabled: bool = true
@@ -120,8 +120,8 @@ var speed: float = base_speed
 var current_speed: float = 0.0
 # States: normal, crouching, sprinting
 var state: String = "normal"
-var low_ceiling: bool = false # This is for when the cieling is too low and the player needs to crouch.
-var was_on_floor: bool = true # Was the player on the floor last frame (for landing animation)
+var low_ceiling: bool = false # This is for when the cieling is too low and the player_id needs to crouch.
+var was_on_floor: bool = true # Was the player_id on the floor last frame (for landing animation)
 @export var playerStatus: globals.PlayerStatus = globals.PlayerStatus.NONE
 
 # The reticle should always have a Control node as the root
@@ -132,10 +132,10 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity") #
 
 
 # Set by the authority, synchronized on spawn.
-@export var player := 1:
+@export var player_id := 1:
 	set(id):
-		player = id
-		# Give authority over the player input to the appropriate peer.
+		player_id = id
+		# Give authority over the player_id input to the appropriate peer.
 		$PlayerInput.set_multiplayer_authority(id)
 
 @onready var frozenIndicator = $FrozenIndicator
@@ -149,7 +149,7 @@ var activeInteractable: InteractionArea
 
 func _ready():
 
-	if player == multiplayer.get_unique_id():
+	if player_id == multiplayer.get_unique_id():
 		CAMERA.current = true
 		$Graphics.visible = false
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -229,6 +229,8 @@ func set_player_status(newStatus: globals.PlayerStatus):
 			tagInteractionArea.collider.disabled = true # disable tagging
 			unfreezeInteractionArea.collider.disabled = false # enable unfreezing
 			frozenIndicator.show()
+	
+	GameManager.update_player_status(player_id, newStatus)
 
 @rpc("any_peer", "call_local", "reliable")
 func set_player_position(newPos: Vector3):
@@ -241,7 +243,7 @@ func unfreeze_player(playerInteractor: PlayerInteractor):
 
 func freeze_player(playerInteractor: PlayerInteractor):
 	if !isFrozen && playerInteractor.player.isTagger:
-		print("freeze player being called on ", GameManager.id_to_players[multiplayer.get_unique_id()])
+		print("freeze player_id being called on ", GameManager.id_to_players[multiplayer.get_unique_id()])
 		# print(GameManager.id_to_players[multiplayer.get_unique_id()], " calling setPlayerStatus on server with status FROZEN")
 		# GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.FROZEN, multiplayer.get_unique_id())
 		set_player_status.rpc(globals.PlayerStatus.FROZEN)
@@ -294,14 +296,14 @@ func _physics_process(delta):
 	handle_jumping()
 	
 	var input_dir = Vector2.ZERO
-	if canMove && !isFrozen: # Immobility works by interrupting user input, so other forces can still be applied to the player
+	if canMove && !isFrozen: # Immobility works by interrupting user input, so other forces can still be applied to the player_id
 		input_dir = input.input_direction
 
 	handle_movement(delta, input_dir)
 
 	handle_head_rotation()
 	
-	# The player is not able to stand up if the ceiling is too low
+	# The player_id is not able to stand up if the ceiling is too low
 	low_ceiling = $CrouchCeilingDetection.is_colliding()
 	
 	handle_state(input_dir)
@@ -312,7 +314,7 @@ func _physics_process(delta):
 		headbob_animation(input_dir)
 	
 	if jump_animation:
-		if !was_on_floor and is_on_floor(): # The player just landed
+		if !was_on_floor and is_on_floor(): # The player_id just landed
 			match randi() % 2: # TODO: Change this to detecting velocity direction
 				0:
 					JUMP_ANIMATION.play("land_left", 0.25)
@@ -395,7 +397,7 @@ func handle_state(moving):
 				enter_normal_state()
 		elif sprint_mode == 1:
 			if moving:
-				# If the player is holding sprint before moving, handle that cenerio
+				# If the player_id is holding sprint before moving, handle that cenerio
 				if input.sprinting_pressed and state == "normal":
 					enter_sprint_state()
 				if input.sprinting_just_pressed:
@@ -497,7 +499,7 @@ func _process(delta):
 	
 	# if pausing_enabled:
 	# 	if input.pause_button_just_pressed:
-	# 		# You may want another node to handle pausing, because this player may get paused too.
+	# 		# You may want another node to handle pausing, because this player_id may get paused too.
 	# 		match Input.mouse_mode:
 	# 			Input.MOUSE_MODE_CAPTURED:
 	# 				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
