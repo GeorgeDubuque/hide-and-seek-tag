@@ -415,7 +415,7 @@ height = 2.1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ufnxo"]
 
-[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH", "playerBodyMesh") groups=["player"]]
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH", "playerBodyMesh", "tagInteractionArea", "unfreezeInteractionArea") groups=["player"]]
 collision_mask = 7
 script = ExtResource("1_uajkv")
 HEAD = NodePath("Head")
@@ -429,6 +429,8 @@ playerBodyMesh = NodePath("Graphics/Mesh")
 noneMaterial = SubResource("StandardMaterial3D_j60o4")
 taggerMaterial = ExtResource("2_h22dh")
 hiderMaterial = ExtResource("3_gqwcm")
+tagInteractionArea = NodePath("IA_PlayerTag")
+unfreezeInteractionArea = NodePath("IA_PlayerUnfreeze")
 
 [node name="Label_Username" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.41273, 0)

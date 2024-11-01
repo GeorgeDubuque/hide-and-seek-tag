@@ -136,8 +136,8 @@ var mouseInput: Vector2 = Vector2(0, 0)
 @onready var frozenIndicator = $FrozenIndicator
 @onready var interactorRayCast = $Head/PlayerInteractor
 @onready var graphics = $Graphics
-@onready var tagInteractionArea: InteractionArea = $IA_PlayerTag
-@onready var unfreezeInteractionArea: InteractionArea = $IA_PlayerUnfreeze
+@export var tagInteractionArea: InteractionArea
+@export var unfreezeInteractionArea: InteractionArea
 var activeInteractable: InteractionArea
 
 func _ready():
