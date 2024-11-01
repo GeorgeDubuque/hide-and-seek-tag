@@ -149,7 +149,6 @@ var activeInteractable: InteractionArea
 
 func _ready():
 
-	call_deferred("set_username")
 	if player == multiplayer.get_unique_id():
 		CAMERA.current = true
 		$Graphics.visible = false
@@ -483,7 +482,7 @@ func headbob_animation(moving):
 func _process(delta):
 	if !multiplayer.is_server():
 		return
-	# $Label_Username.text = input.username
+	$Label_Username.text = input.username # TODO: figure out a better place to put this
 	# $Graphics/Label_Username.look_at(get_viewport().get_camera_3d().global_position)
 	$UserInterface/DebugPanel.add_property("FPS", Performance.get_monitor(Performance.TIME_FPS), 0)
 	var status: String = state
