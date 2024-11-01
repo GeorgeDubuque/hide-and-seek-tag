@@ -55,7 +55,7 @@ func _process(delta: float) -> void:
 	crouch_pressed = Input.is_action_pressed(CROUCH)
 	pause_button_just_pressed = Input.is_action_pressed(PAUSE)
 
-	if Input.is_action_pressed(INTERACT):
+	if Input.is_action_just_pressed(INTERACT):
 		interact.rpc()
 
 
