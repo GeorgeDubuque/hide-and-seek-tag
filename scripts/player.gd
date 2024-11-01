@@ -500,3 +500,4 @@ func _process(delta):
 				Input.MOUSE_MODE_VISIBLE:
 					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 					#get_tree().paused = false
+	input.pause_button_just_pressed = false
