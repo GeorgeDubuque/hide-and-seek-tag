@@ -68,7 +68,7 @@ properties/10/spawn = true
 properties/10/replication_mode = 1
 properties/11/path = NodePath(".:player")
 properties/11/spawn = true
-properties/11/replication_mode = 1
+properties/11/replication_mode = 0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o4lo6"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
