@@ -30,6 +30,7 @@ func _process(delta: float) -> void:
 
 func addPlayer(playerId, player: Player):
 	playerId = player.player
+	print("trying to add player ", playerId)
 	if !id_to_players.has(playerId):
 		id_to_players[playerId] = player
 		id_to_status[playerId] = globals.PlayerStatus.NONE
