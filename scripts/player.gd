@@ -241,7 +241,7 @@ func freeze_player():
 		print(GameManager.id_to_players[multiplayer.get_unique_id()], " calling setPlayerStatus on server with status FROZEN")
 		GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.FROZEN, multiplayer.get_unique_id())
 
-@rpc("any_peer", "reliable", "call_local")
+# @rpc("any_peer", "reliable", "call_local")
 func set_player_type(type: globals.PlayerType):
 	playerType = type
 	match type:

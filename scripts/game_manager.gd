@@ -50,12 +50,12 @@ func assignPlayerTypes():
 	# set taggers
 	taggers = chosenTaggers
 	for player in chosenTaggers:
-		player.set_player_type.rpc(globals.PlayerType.TAGGER)
+		player.set_player_type(globals.PlayerType.TAGGER)
 	
 	# set hiders
 	hiders = available_players
 	for player in available_players:
-		player.set_player_type.rpc(globals.PlayerType.HIDER)
+		player.set_player_type(globals.PlayerType.HIDER)
 
 func placePlayersInLobby():
 	#place taggers
