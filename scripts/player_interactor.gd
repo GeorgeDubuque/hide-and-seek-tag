@@ -35,6 +35,8 @@ func _physics_process(delta: float) -> void:
 			# InteractionManager.rpc_id(1, "is_valid_interact", activeInteractable.get_path())
 			# InteractionManager.label.hide()
 
+	player_input.interact_button_just_pressed = false
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if !multiplayer.is_server():
@@ -55,7 +57,6 @@ func _process(_delta: float) -> void:
 	else:
 		interactLabel.hide()
 		# InteractionManager.label.hide()
-	player_input.interact_button_just_pressed = false
 
 	# if is_multiplayer_authority():
 	# 	if is_colliding():
