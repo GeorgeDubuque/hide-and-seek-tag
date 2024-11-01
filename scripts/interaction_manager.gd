@@ -18,7 +18,7 @@ func is_valid_interact(area_path: NodePath):
 
 	var playerArea = active_areas[player_id] # what the server thinks the player is interacting with
 	if playerArea != null and area_path == playerArea.get_path():
-		print("server calling interact on ", playerArea, " for player ", GameManager.id_to_characters[player_id])
+		print("server calling interact on ", area_path, " for player ", GameManager.id_to_characters[player_id])
 		playerArea.interact.call()
 	else:
 		print("player ", player_id, " tried to interact with ", area_path, " but server had ", playerArea)
