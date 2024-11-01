@@ -36,7 +36,6 @@ func spawnPlayer(data):
 	# spawns.push_back(nextSpawn)
 	p.position = spawnPos
 	spawnPos += Vector3(2, 0, 0)
-	p.set_multiplayer_authority(data)
 	players[data] = p
 
 	# if multiplayer.is_server():

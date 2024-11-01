@@ -16,7 +16,7 @@ func _input(event):
 
 	if event.is_action_pressed("interact"):
 		if activeInteractable != null:
-			print(player, " with id ", player.get_multiplayer_authority(), " tried to interact with ", activeInteractable)
+			print(player, " with id ", player.multiplayer.get_unique_id(), " tried to interact with ", activeInteractable)
 			print(player, " client is sending rpc to server to check if interaction was valid")
 			InteractionManager.rpc_id(1, "is_valid_interact", activeInteractable.get_path())
 			InteractionManager.label.hide()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=34 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_uajkv"]
 [ext_resource type="Material" uid="uid://c832cg6yrl8wm" path="res://materials/material_tagger.tres" id="2_h22dh"]
@@ -6,10 +6,69 @@
 [ext_resource type="Script" path="res://scripts/player_interactor.gd" id="3_glr05"]
 [ext_resource type="Material" uid="uid://33bvkkcsxf6x" path="res://materials/material_hider.tres" id="3_gqwcm"]
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/EditorModule.gd" id="4_mwxu7"]
+[ext_resource type="Script" path="res://scenes/player_input.gd" id="4_t3erj"]
 [ext_resource type="PackedScene" uid="uid://dhedkm6pu187l" path="res://scenes/interaction_area.tscn" id="7_yd3o4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j60o4"]
 albedo_color = Color(0.629847, 0.479353, 0.14129, 1)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_6bmlt"]
+properties/0/path = NodePath("PlayerInput:input_direction")
+properties/0/spawn = false
+properties/0/replication_mode = 1
+properties/1/path = NodePath("PlayerInput:sprinting_just_pressed")
+properties/1/spawn = false
+properties/1/replication_mode = 1
+properties/2/path = NodePath("PlayerInput:sprinting_pressed")
+properties/2/spawn = false
+properties/2/replication_mode = 1
+properties/3/path = NodePath("PlayerInput:crouch_just_pressed")
+properties/3/spawn = false
+properties/3/replication_mode = 1
+properties/4/path = NodePath("PlayerInput:crouch_pressed")
+properties/4/spawn = false
+properties/4/replication_mode = 1
+properties/5/path = NodePath("PlayerInput:mouse_input")
+properties/5/spawn = false
+properties/5/replication_mode = 1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_56ji0"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Graphics:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:playerType")
+properties/3/spawn = true
+properties/3/replication_mode = 2
+properties/4/path = NodePath(".:canMove")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath(".:playerStatus")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("Head:rotation")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("FrozenIndicator:visible")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("Label_Username:text")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("IA_PlayerTag/PlayerTag_CollisionShape:disabled")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("IA_PlayerUnfreeze/PlayerUnfreeze_CollisionShape:disabled")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath(".:player")
+properties/11/spawn = true
+properties/11/replication_mode = 1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o4lo6"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
@@ -370,41 +429,6 @@ MarginContainer/constants/margin_top = 10
 [sub_resource type="SphereShape3D" id="SphereShape3D_k4wwl"]
 radius = 0.25
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_56ji0"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:rotation")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-properties/2/path = NodePath("Graphics:rotation")
-properties/2/spawn = true
-properties/2/replication_mode = 1
-properties/3/path = NodePath(".:playerType")
-properties/3/spawn = true
-properties/3/replication_mode = 2
-properties/4/path = NodePath(".:canMove")
-properties/4/spawn = true
-properties/4/replication_mode = 1
-properties/5/path = NodePath(".:playerStatus")
-properties/5/spawn = true
-properties/5/replication_mode = 1
-properties/6/path = NodePath("Head:rotation")
-properties/6/spawn = true
-properties/6/replication_mode = 1
-properties/7/path = NodePath("FrozenIndicator:visible")
-properties/7/spawn = true
-properties/7/replication_mode = 1
-properties/8/path = NodePath("Label_Username:text")
-properties/8/spawn = true
-properties/8/replication_mode = 1
-properties/9/path = NodePath("IA_PlayerTag/PlayerTag_CollisionShape:disabled")
-properties/9/spawn = true
-properties/9/replication_mode = 1
-properties/10/path = NodePath("IA_PlayerUnfreeze/PlayerUnfreeze_CollisionShape:disabled")
-properties/10/spawn = true
-properties/10/replication_mode = 1
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_raby1"]
 transparency = 1
 albedo_color = Color(0.502141, 0.441715, 0.991982, 0.407843)
@@ -431,6 +455,13 @@ taggerMaterial = ExtResource("2_h22dh")
 hiderMaterial = ExtResource("3_gqwcm")
 tagInteractionArea = NodePath("IA_PlayerTag")
 unfreezeInteractionArea = NodePath("IA_PlayerUnfreeze")
+
+[node name="PlayerInput" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_6bmlt")
+script = ExtResource("4_t3erj")
+
+[node name="ServerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_56ji0")
 
 [node name="Label_Username" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.41273, 0)
@@ -524,9 +555,6 @@ target_position = Vector3(0, 0.5, 0)
 
 [node name="EditorModule" type="Node" parent="."]
 script = ExtResource("4_mwxu7")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_56ji0")
 
 [node name="FrozenIndicator" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01492, 0)

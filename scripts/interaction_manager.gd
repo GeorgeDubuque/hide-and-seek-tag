@@ -25,11 +25,11 @@ func is_valid_interact(area_path: NodePath):
 
 
 func register_area(area: InteractionArea, player: Player): # TODO: this should accept player id
-	var playerId = player.get_multiplayer_authority() # TODO: this assumes all players own themselves
+	var playerId = player.multiplayer.get_unique_id() # TODO: this assumes all players own themselves
 	active_areas[playerId] = area
 
 func unregister_area(player: Player):
-	var playerId = player.get_multiplayer_authority() # TODO: this assumes all players own themselves
+	var playerId = player.multiplayer.get_unique_id() # TODO: this assumes all players own themselves
 	active_areas[playerId] = null
 
 func set_interaction_label_text(text: String):

@@ -130,25 +130,32 @@ var RETICLE: Control
 # Get the gravity from the project settings to be synced with RigidBody nodes
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity") # Don't set this as a const, see the gravity section in _physics_process
 
-# Stores mouse input for rotating the camera in the phyhsics process
-var mouseInput: Vector2 = Vector2(0, 0)
+
+# Set by the authority, synchronized on spawn.
+@export var player := 1:
+	set(id):
+		player = id
+		# Give authority over the player input to the appropriate peer.
+		$PlayerInput.set_multiplayer_authority(id)
 
 @onready var frozenIndicator = $FrozenIndicator
 @onready var interactorRayCast = $Head/PlayerInteractor
 @onready var graphics = $Graphics
+@onready var input = $PlayerInput
+
 @export var tagInteractionArea: InteractionArea
 @export var unfreezeInteractionArea: InteractionArea
 var activeInteractable: InteractionArea
 
 func _ready():
-	CAMERA.current = is_multiplayer_authority()
 
-	#It is safe to comment this line if your game doesn't start with the mouse captured
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	if is_multiplayer_authority():
+	if player == multiplayer.get_unique_id():
+		CAMERA.current = true
 		$Label_Username.text = Steam.getPersonaName()
 		$Graphics.visible = false
 
+	#It is safe to comment this line if your game doesn't start with the mouse captured
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 	# If the controller is rotated in a certain direction for game design purposes, redirect this rotation into the head.
 	HEAD.rotation.y = rotation.y
@@ -198,7 +205,7 @@ func check_controls(): # If you add a control, you might want to add a check for
 @rpc("any_peer", "call_local", "reliable")
 func set_player_status(newStatus: globals.PlayerStatus):
 	# playerStatus = newStatus
-	print("client ", get_multiplayer_authority(), " recieved set_player_status to ", newStatus, " on ", get_path())
+	print("client ", multiplayer.get_unique_id(), " recieved set_player_status to ", newStatus, " on ", get_path())
 	match newStatus:
 		globals.PlayerStatus.NONE:
 			playerStatus = globals.PlayerStatus.NONE
@@ -224,13 +231,13 @@ func set_player_position(newPos: Vector3):
 
 func unfreeze_player():
 	if isFrozen:
-		GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.UNFROZEN, get_multiplayer_authority())
+		GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.UNFROZEN, multiplayer.get_unique_id())
 
 func freeze_player():
 	if !isFrozen:
-		print("freeze player being called on ", GameManager.id_to_players[get_multiplayer_authority()])
-		print(GameManager.id_to_players[get_multiplayer_authority()], " calling setPlayerStatus on server with status FROZEN")
-		GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.FROZEN, get_multiplayer_authority())
+		print("freeze player being called on ", GameManager.id_to_players[multiplayer.get_unique_id()])
+		print(GameManager.id_to_players[multiplayer.get_unique_id()], " calling setPlayerStatus on server with status FROZEN")
+		GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.FROZEN, multiplayer.get_unique_id())
 
 @rpc("any_peer", "reliable", "call_local")
 func set_player_type(type: globals.PlayerType):
@@ -257,8 +264,6 @@ func change_reticle(reticle): # Yup, this function is kinda strange
 
 
 func _physics_process(delta):
-	if !is_multiplayer_authority():
-		return
 	# Big thanks to github.com/LorenzoAncora for the concept of the improved debug values
 	current_speed = Vector3.ZERO.distance_to(get_real_velocity())
 	$UserInterface/DebugPanel.add_property("Speed", snappedf(current_speed, 0.001), 1)
@@ -281,7 +286,7 @@ func _physics_process(delta):
 	
 	var input_dir = Vector2.ZERO
 	if canMove && !isFrozen: # Immobility works by interrupting user input, so other forces can still be applied to the player
-		input_dir = Input.get_vector(LEFT, RIGHT, FORWARD, BACKWARD)
+		input_dir = input.input_direction
 
 	handle_movement(delta, input_dir)
 
@@ -310,16 +315,18 @@ func _physics_process(delta):
 func handle_jumping():
 	if jumping_enabled:
 		if continuous_jumping: # Hold down the jump button
-			if Input.is_action_pressed(JUMP) and is_on_floor() and !low_ceiling:
+			if input.jumping and is_on_floor() and !low_ceiling:
 				if jump_animation:
 					JUMP_ANIMATION.play("jump", 0.25)
 				velocity.y += jump_velocity # Adding instead of setting so jumping on slopes works properly
 				# print("is server: ", multiplayer.is_server())
 		else:
-			if Input.is_action_just_pressed(JUMP) and is_on_floor() and !low_ceiling:
+			if input.jumping and is_on_floor() and !low_ceiling:
 				if jump_animation:
 					JUMP_ANIMATION.play("jump", 0.25)
 				velocity.y += jump_velocity
+
+		input.jumping = false
 
 
 func handle_movement(delta, input_dir):
@@ -344,12 +351,12 @@ func handle_movement(delta, input_dir):
 			velocity.z = direction.z * speed
 
 func handle_head_rotation():
-	HEAD.rotation_degrees.y -= mouseInput.x * mouse_sensitivity
-	GRAPHICS.rotation_degrees.y -= mouseInput.x * mouse_sensitivity
+	HEAD.rotation_degrees.y -= input.mouse_input.x * mouse_sensitivity
+	GRAPHICS.rotation_degrees.y -= input.mouse_input.x * mouse_sensitivity
 	if invert_mouse_y:
-		HEAD.rotation_degrees.x -= mouseInput.y * mouse_sensitivity * -1.0
+		HEAD.rotation_degrees.x -= input.mouse_input.y * mouse_sensitivity * -1.0
 	else:
-		HEAD.rotation_degrees.x -= mouseInput.y * mouse_sensitivity
+		HEAD.rotation_degrees.x -= input.mouse_input.y * mouse_sensitivity
 	
 	# Uncomment for controller support
 	#var controller_view_rotation = Input.get_vector(LOOK_DOWN, LOOK_UP, LOOK_RIGHT, LOOK_LEFT) * controller_sensitivity # These are inverted because of the nature of 3D rotation.
@@ -360,14 +367,14 @@ func handle_head_rotation():
 		#HEAD.rotation.y += controller_view_rotation.y
 	
 	
-	mouseInput = Vector2(0, 0)
+	input.mouse_input = Vector2(0, 0)
 	HEAD.rotation.x = clamp(HEAD.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 
 
 func handle_state(moving):
 	if sprint_enabled:
 		if sprint_mode == 0:
-			if Input.is_action_pressed(SPRINT) and state != "crouching":
+			if input.sprinting_pressed and state != "crouching":
 				if moving:
 					if state != "sprinting":
 						enter_sprint_state()
@@ -379,9 +386,9 @@ func handle_state(moving):
 		elif sprint_mode == 1:
 			if moving:
 				# If the player is holding sprint before moving, handle that cenerio
-				if Input.is_action_pressed(SPRINT) and state == "normal":
+				if input.sprinting_pressed and state == "normal":
 					enter_sprint_state()
-				if Input.is_action_just_pressed(SPRINT):
+				if input.sprinting_just_pressed:
 					match state:
 						"normal":
 							enter_sprint_state()
@@ -392,13 +399,13 @@ func handle_state(moving):
 	
 	if crouch_enabled:
 		if crouch_mode == 0:
-			if Input.is_action_pressed(CROUCH) and state != "sprinting":
+			if input.crouch_pressed and state != "sprinting":
 				if state != "crouching":
 					enter_crouch_state()
 			elif state == "crouching" and !$CrouchCeilingDetection.is_colliding():
 				enter_normal_state()
 		elif crouch_mode == 1:
-			if Input.is_action_just_pressed(CROUCH):
+			if input.crouch_just_pressed:
 				match state:
 					"normal":
 						enter_crouch_state()
@@ -487,15 +494,3 @@ func _process(delta):
 				Input.MOUSE_MODE_VISIBLE:
 					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 					#get_tree().paused = false
-
-
-func _unhandled_input(event: InputEvent):
-	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		mouseInput.x += event.relative.x
-		mouseInput.y += event.relative.y
-	# Toggle debug menu
-	elif event is InputEventKey:
-		if event.is_released():
-			# Where we're going, we don't need InputMap
-			if event.keycode == 4194338: # F7
-				$UserInterface/DebugPanel.visible = !$UserInterface/DebugPanel.visible
