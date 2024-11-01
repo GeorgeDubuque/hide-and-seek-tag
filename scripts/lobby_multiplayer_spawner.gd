@@ -48,6 +48,11 @@ func spawnPlayer(data):
 
 
 func removePlayer(data):
+	print("player ", data, " has left")
+	print("removing from id_to_character map")
+	GameManager.id_to_characters.erase(data)
+	print("removing from id_to_status map")
+	GameManager.id_to_status.erase(data)
 	players[data].queue_free()
 	players.erase(data)
 
