@@ -50,11 +50,13 @@ func assignPlayerTypes():
 	# set taggers
 	taggers = chosenTaggers
 	for player in chosenTaggers:
+		print("assigning player ", player, "as TAGGER")
 		player.set_player_type(globals.PlayerType.TAGGER)
 	
 	# set hiders
 	hiders = available_players
 	for player in available_players:
+		print("assigning player ", player, "as HIDER")
 		player.set_player_type(globals.PlayerType.HIDER)
 
 func placePlayersInLobby():
@@ -128,7 +130,7 @@ func change_level(level_scene: PackedScene, shouldStartGame = false):
 		if shouldStartGame:
 			gameStatus = globals.GameStatus.IN_GAME
 
-	assignPlayerTypes()
+		# assignPlayerTypes()
 
 func unfreeze_all_players():
 	for player_id in id_to_players:
@@ -162,4 +164,5 @@ func setPlayerStatus(status: globals.PlayerStatus, peer_id):
 
 func _on_start_game_button_pressed() -> void:
 	change_level.call_deferred(load(defaultLevelPath), true)
+	assignPlayerTypes.call_deferred()
 	startGameButton.hide()
