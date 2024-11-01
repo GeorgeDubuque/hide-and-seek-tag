@@ -28,6 +28,9 @@ properties/3/replication_mode = 1
 properties/4/path = NodePath("PlayerInput:crouch_pressed")
 properties/4/spawn = false
 properties/4/replication_mode = 1
+properties/5/path = NodePath("PlayerInput:username")
+properties/5/spawn = true
+properties/5/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_56ji0"]
 properties/0/path = NodePath(".:position")
@@ -453,10 +456,9 @@ hiderMaterial = ExtResource("3_gqwcm")
 tagInteractionArea = NodePath("IA_PlayerTag")
 unfreezeInteractionArea = NodePath("IA_PlayerUnfreeze")
 
-[node name="PlayerInput" type="MultiplayerSynchronizer" parent="." node_paths=PackedStringArray("label_username")]
+[node name="PlayerInput" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_6bmlt")
 script = ExtResource("4_t3erj")
-label_username = NodePath("../Label_Username")
 
 [node name="ServerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_56ji0")

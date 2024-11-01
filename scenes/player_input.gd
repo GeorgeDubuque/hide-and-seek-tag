@@ -18,13 +18,13 @@ extends MultiplayerSynchronizer
 @export var crouch_pressed := false
 @export var pause_button_just_pressed := false
 @export var mouse_input := Vector2()
-@export var label_username: Label3D
+@export var username: String
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Only process for the local player.
 	if get_multiplayer_authority() == multiplayer.get_unique_id():
-		label_username.text = Steam.getPersonaName()
+		username = Steam.getPersonaName()
 	set_process(get_multiplayer_authority() == multiplayer.get_unique_id())
 	set_process_unhandled_input(get_multiplayer_authority() == multiplayer.get_unique_id())
 
