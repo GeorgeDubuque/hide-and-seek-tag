@@ -28,22 +28,15 @@ spawn_path = NodePath(".")
 script = ExtResource("3_8ccg2")
 playerScene = ExtResource("4_uk1g5")
 minNumPlayers = 1
-startGameButton = NodePath("../StartGameButton")
+startGameButton = NodePath("")
 testLevelPath = "res://scenes/levels/game_level.tscn"
-
-[node name="StartGameButton" type="Button" parent="."]
-visible = false
-offset_left = 475.0
-offset_top = 563.0
-offset_right = 648.0
-offset_bottom = 624.0
-text = "START GAME"
 
 [node name="LobbyUI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 
 [node name="Host" type="Button" parent="LobbyUI"]
 layout_mode = 0
@@ -100,7 +93,6 @@ offset_bottom = 300.0
 [node name="Lobbies" type="VBoxContainer" parent="LobbyUI/LobbyContainer"]
 layout_mode = 2
 
-[connection signal="pressed" from="StartGameButton" to="PlayerSpawner" method="_on_start_game_button_pressed"]
 [connection signal="pressed" from="LobbyUI/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="LobbyUI/JoinByLobbIdButton" to="." method="_on_join_by_lobb_id_button_pressed"]
 [connection signal="pressed" from="LobbyUI/Refresh" to="." method="_on_refresh_pressed"]

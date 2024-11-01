@@ -39,9 +39,9 @@ func spawnPlayer(data):
 	p.set_multiplayer_authority(data)
 	players[data] = p
 
-	if multiplayer.is_server():
-		if players.size() >= minNumPlayers:
-			startGameButton.show()
+	# if multiplayer.is_server():
+	# 	if players.size() >= minNumPlayers:
+	# 		startGameButton.show()
 
 
 	return p

@@ -9,8 +9,12 @@ var id_to_status = {}
 var levelNode
 var gameStatus = globals.GameStatus.LOBBY
 
+const minNumPlayersToStartGame = 1
 const lobbyLevelPath = "res://scenes/levels/lobby_level.tscn"
+const defaultLevelPath = "res://scenes/levels/game_level.tscn"
 const lobbySpawnOffset = Vector3(2, 0, 0) # how far apart players should spawn from one another
+
+@onready var startGameButton = $LobbyUI/StartGameButton
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -28,6 +32,8 @@ func addPlayer(playerId, character: Character):
 	if !id_to_characters.has(playerId):
 		id_to_characters[playerId] = character
 		id_to_status[playerId] = globals.PlayerStatus.NONE
+		if id_to_characters.size() >= minNumPlayersToStartGame:
+			startGameButton.show()
 
 func assignPlayerTypes():
 	var available_characters = id_to_characters.values()
@@ -81,6 +87,7 @@ func load_lobby():
 				c.queue_free()
 
 		placePlayersInLobby()
+		startGameButton.show()
 		gameStatus = globals.GameStatus.LOBBY
 
 func placePlayers(level: GameLevel):
@@ -148,3 +155,8 @@ func setPlayerStatus(status: globals.PlayerStatus, peer_id):
 		# print("taggers win!!!")
 		unfreeze_all_players.call_deferred()
 		load_lobby.call_deferred()
+
+
+func _on_start_game_button_pressed() -> void:
+	change_level.call_deferred(defaultLevelPath, true)
+	startGameButton.hide()

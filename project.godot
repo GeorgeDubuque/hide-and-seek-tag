@@ -18,8 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 globals="*res://scripts/globals.gd"
-GameManager="*res://scripts/game_manager.gd"
 InteractionManager="*res://scenes/interaction_manager.tscn"
+GameManager="*res://scenes/autoloads/game_manager.tscn"
 
 [editor]
 
