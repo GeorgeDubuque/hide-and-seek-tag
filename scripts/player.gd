@@ -478,6 +478,8 @@ func headbob_animation(moving):
 
 
 func _process(delta):
+	if !multiplayer.is_server():
+		return
 	# $Graphics/Label_Username.look_at(get_viewport().get_camera_3d().global_position)
 	$UserInterface/DebugPanel.add_property("FPS", Performance.get_monitor(Performance.TIME_FPS), 0)
 	var status: String = state

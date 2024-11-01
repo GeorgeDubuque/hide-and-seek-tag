@@ -29,6 +29,11 @@ func _ready():
 func jump():
 	jumping = true
 
+@rpc("call_local")
+func move_head(mouse_movement: Vector2):
+	mouse_input.x += mouse_movement.x
+	mouse_input.y += mouse_movement.y
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	input_direction = Input.get_vector(LEFT, RIGHT, FORWARD, BACKWARD)
@@ -44,6 +49,4 @@ func _process(delta: float) -> void:
 func _unhandled_input(event: InputEvent):
 	mouse_input = Vector2.ZERO
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		mouse_input.x += event.relative.x
-		mouse_input.y += event.relative.y
-		print("mouse_input: ", mouse_input)
+		move_head.rpc(event.relative)
