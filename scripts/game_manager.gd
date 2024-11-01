@@ -104,17 +104,17 @@ func placePlayers(level: GameLevel):
 func change_level(level_scene, shouldStartGame = false):
 	if multiplayer.is_server():
 
+
+		# Remove everthing BUT new level
+		for c in levelNode.get_children():
+			levelNode.remove_child(c)
+			c.queue_free()
+
 		# Spawn New Level
 		var newLevel = load(level_scene).instantiate()
 		levelNode.add_child(newLevel)
 
 		assignPlayerTypes()
-
-		# Remove everthing BUT new level
-		for c in levelNode.get_children():
-			if c != newLevel:
-				levelNode.remove_child(c)
-				c.queue_free()
 
 		placePlayers(newLevel as GameLevel)
 
