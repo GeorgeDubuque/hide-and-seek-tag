@@ -198,7 +198,7 @@ func check_controls(): # If you add a control, you might want to add a check for
 @rpc("any_peer", "call_local", "reliable")
 func set_player_status(newStatus: globals.PlayerStatus):
 	# playerStatus = newStatus
-	# print("client ", get_multiplayer_authority(), " recieved set_player_status to ", newStatus, " isFrozen=", isFrozen)
+	print("client ", get_multiplayer_authority(), " recieved set_player_status to ", newStatus, " on ", get_path())
 	match newStatus:
 		globals.PlayerStatus.NONE:
 			playerStatus = globals.PlayerStatus.NONE
@@ -228,6 +228,8 @@ func unfreeze_player():
 
 func freeze_player():
 	if !isFrozen:
+		print("freeze player being called on ", GameManager.id_to_characters[get_multiplayer_authority()])
+		print(GameManager.id_to_characters[get_multiplayer_authority()], " calling setPlayerStatus on server with status FROZEN")
 		GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.FROZEN)
 
 @rpc("any_peer", "reliable", "call_local")
