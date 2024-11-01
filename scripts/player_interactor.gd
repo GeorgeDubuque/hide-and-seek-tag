@@ -31,7 +31,7 @@ func _physics_process(delta: float) -> void:
 		if activeInteractable != null:
 			# print(player, " with id ", player.multiplayer.get_unique_id(), " tried to interact with ", activeInteractable)
 			# print(player, " client is sending rpc to server to check if interaction was valid")
-			activeInteractable.interact.call()
+			activeInteractable.interact.call(self)
 			# InteractionManager.rpc_id(1, "is_valid_interact", activeInteractable.get_path())
 			# InteractionManager.label.hide()
 

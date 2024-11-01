@@ -7,6 +7,6 @@ var on: bool = false
 func _ready() -> void:
 	interactionArea.interact = Callable(self, "on_interact")
 
-func on_interact():
+func on_interact(playerInteractor: PlayerInteractor):
 	on = !on
 	light.visible = on
