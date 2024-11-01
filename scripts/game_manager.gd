@@ -34,8 +34,9 @@ func addPlayer(playerId, player: Player):
 	if !id_to_players.has(playerId):
 		id_to_players[playerId] = player
 		id_to_status[playerId] = globals.PlayerStatus.NONE
-		if id_to_players.size() >= minNumPlayersToStartGame:
-			startGameButton.show()
+		if multiplayer.is_server():
+			if id_to_players.size() >= minNumPlayersToStartGame:
+				startGameButton.show()
 
 func assignPlayerTypes():
 	var available_players = id_to_players.values()
