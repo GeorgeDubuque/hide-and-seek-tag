@@ -140,7 +140,7 @@ func unfreeze_all_players():
 	for player_id in id_to_players:
 		var player = id_to_players[player_id]
 		# print("setting ", player, " status to: NONE")
-		player.unfreeze_player()
+		player.set_player_status.rpc(globals.PlayerStatus.NONE)
 		id_to_status[player_id] = globals.PlayerStatus.NONE
 		
 func update_player_status(player_id, newStatus: globals.PlayerStatus):
