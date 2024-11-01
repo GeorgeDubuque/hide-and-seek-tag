@@ -31,6 +31,7 @@ func _process(delta: float) -> void:
 func spawnPlayer(data):
 	var p: Player = playerScene.instantiate()
 	GameManager.addPlayer(data, p)
+	print("adding player with name: ", Steam.getPlayerNickname(data))
 	p.player = data
 	# var nextSpawn = spawns.pop_front()
 	# p.position = nextSpawn.position
