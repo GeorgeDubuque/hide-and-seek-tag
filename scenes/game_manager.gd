@@ -108,7 +108,7 @@ func placePlayers(level: GameLevel):
 		available_hider_spawns.remove_at(randomHiderSpawnIndex)
 
 
-func change_level(level_scene, shouldStartGame = false):
+func change_level(level_scene: PackedScene, shouldStartGame = false):
 	if multiplayer.is_server():
 
 
@@ -118,7 +118,7 @@ func change_level(level_scene, shouldStartGame = false):
 			c.queue_free()
 
 		# Spawn New Level
-		var newLevel = load(level_scene).instantiate()
+		var newLevel = level_scene.instantiate()
 		levelNode.add_child(newLevel, true)
 
 		assignPlayerTypes()
@@ -159,5 +159,5 @@ func setPlayerStatus(status: globals.PlayerStatus, peer_id):
 
 
 func _on_start_game_button_pressed() -> void:
-	change_level.call_deferred(defaultLevelPath, true)
+	change_level.call_deferred(load(defaultLevelPath), true)
 	startGameButton.hide()
