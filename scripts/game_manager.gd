@@ -99,7 +99,7 @@ func placePlayers(level: GameLevel):
 	#place taggers
 	var lastTaggerSpawnPos: Vector3 = level.taggerSpawn.position
 	for tagger in taggers:
-		(tagger as Player).set_player_position.rpc(lastTaggerSpawnPos)
+		(tagger as Player).position = lastTaggerSpawnPos
 		# print("setting player ", tagger, " as tagger at position: ", lastTaggerSpawnPos)
 		lastTaggerSpawnPos += Vector3(1, 0, 0)
 
