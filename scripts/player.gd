@@ -490,14 +490,14 @@ func _process(delta):
 		status += " in the air"
 	$UserInterface/DebugPanel.add_property("State", status, 4)
 	
-	if pausing_enabled:
-		if input.pause_button_just_pressed:
-			# You may want another node to handle pausing, because this player may get paused too.
-			match Input.mouse_mode:
-				Input.MOUSE_MODE_CAPTURED:
-					Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-					#get_tree().paused = false
-				Input.MOUSE_MODE_VISIBLE:
-					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-					#get_tree().paused = false
-	input.pause_button_just_pressed = false
+	# if pausing_enabled:
+	# 	if input.pause_button_just_pressed:
+	# 		# You may want another node to handle pausing, because this player may get paused too.
+	# 		match Input.mouse_mode:
+	# 			Input.MOUSE_MODE_CAPTURED:
+	# 				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	# 				#get_tree().paused = false
+	# 			Input.MOUSE_MODE_VISIBLE:
+	# 				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	# 				#get_tree().paused = false
+	# input.pause_button_just_pressed = false

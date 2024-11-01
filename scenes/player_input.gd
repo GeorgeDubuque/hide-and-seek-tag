@@ -32,6 +32,7 @@ func _ready():
 
 	set_process(get_multiplayer_authority() == multiplayer.get_unique_id())
 	set_process_unhandled_input(get_multiplayer_authority() == multiplayer.get_unique_id())
+	set_physics_process(get_multiplayer_authority() == multiplayer.get_unique_id())
 
 @rpc("call_local")
 func jump():
@@ -41,9 +42,6 @@ func jump():
 func interact():
 	interact_button_just_pressed = true
 
-@rpc("call_local")
-func pause():
-	pause_button_just_pressed = true
 
 @rpc("call_local")
 func move_head(mouse_movement: Vector2):
@@ -51,12 +49,7 @@ func move_head(mouse_movement: Vector2):
 	mouse_input.y += mouse_movement.y
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	input_direction = Input.get_vector(LEFT, RIGHT, FORWARD, BACKWARD)
-	sprinting_just_pressed = Input.is_action_just_pressed(SPRINT)
-	sprinting_pressed = Input.is_action_pressed(SPRINT)
-	crouch_just_pressed = Input.is_action_just_pressed(CROUCH)
-	crouch_pressed = Input.is_action_pressed(CROUCH)
+func _physics_process(delta: float) -> void:
 	pause_button_just_pressed = Input.is_action_just_pressed(PAUSE)
 
 	if pause_button_just_pressed:
@@ -68,6 +61,13 @@ func _process(delta: float) -> void:
 			Input.MOUSE_MODE_VISIBLE:
 				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 				#get_tree().paused = false
+
+func _process(delta: float) -> void:
+	input_direction = Input.get_vector(LEFT, RIGHT, FORWARD, BACKWARD)
+	sprinting_just_pressed = Input.is_action_just_pressed(SPRINT)
+	sprinting_pressed = Input.is_action_pressed(SPRINT)
+	crouch_just_pressed = Input.is_action_just_pressed(CROUCH)
+	crouch_pressed = Input.is_action_pressed(CROUCH)
 
 	if Input.is_action_just_pressed(INTERACT):
 		interact.rpc()
