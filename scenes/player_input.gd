@@ -50,7 +50,7 @@ func _process(delta: float) -> void:
 	crouch_just_pressed = Input.is_action_just_pressed(CROUCH)
 	crouch_pressed = Input.is_action_pressed(CROUCH)
 	pause_button_just_pressed = Input.is_action_pressed(PAUSE)
-	interact_button_just_pressed = Input.is_action_pressed(INTERACT)
+	interact_button_just_pressed = Input.is_action_just_pressed(INTERACT)
 
 	if Input.is_action_pressed(JUMP) or Input.is_action_just_pressed(JUMP):
 		jump.rpc()
