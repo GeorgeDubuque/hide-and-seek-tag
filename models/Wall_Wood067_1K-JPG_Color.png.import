@@ -2,11 +2,10 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btalpg414txqo"
-path.s3tc="res://.godot/imported/Wall_Wood067_1K-JPG_Color.png-232640881729a469227508e0026f2138.s3tc.ctex"
+uid="uid://dyqx33joy53f4"
+path="res://.godot/imported/Wall_Wood067_1K-JPG_Color.png-232640881729a469227508e0026f2138.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 generator_parameters={
 "md5": "668f147d94662c14c61aa81869fb9068"
@@ -15,11 +14,11 @@ generator_parameters={
 [deps]
 
 source_file="res://models/Wall_Wood067_1K-JPG_Color.png"
-dest_files=["res://.godot/imported/Wall_Wood067_1K-JPG_Color.png-232640881729a469227508e0026f2138.s3tc.ctex"]
+dest_files=["res://.godot/imported/Wall_Wood067_1K-JPG_Color.png-232640881729a469227508e0026f2138.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
@@ -35,4 +34,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

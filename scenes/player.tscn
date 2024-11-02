@@ -84,7 +84,7 @@ clearcoat_roughness = 0.2
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_jw1de"]
 material = SubResource("StandardMaterial3D_o4lo6")
 radius = 0.3
-height = 1.829
+height = 1.727
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_vthlf"]
 radius = 0.1
@@ -290,7 +290,7 @@ _data = {
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uy03j"]
 radius = 0.3
-height = 1.829
+height = 1.727
 
 [sub_resource type="Animation" id="Animation_j8cx7"]
 resource_name = "RESET"
@@ -500,6 +500,7 @@ skeleton = NodePath("../../Head")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="Camera" type="Camera3D" parent="Head"]
+fov = 90.0
 
 [node name="HeadbobAnimation" type="AnimationPlayer" parent="Head"]
 libraries = {
@@ -521,6 +522,12 @@ script = ExtResource("3_glr05")
 player = NodePath("../..")
 interactLabel = NodePath("../../UserInterface/InteractText")
 player_input = NodePath("../../PlayerInput")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.646883)
+light_energy = 2.0
+spot_range = 35.0
+spot_angle = 33.5027
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
