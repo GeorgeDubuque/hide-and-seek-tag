@@ -516,7 +516,7 @@ libraries = {
 speed_scale = 4.0
 
 [node name="PlayerInteractor" type="RayCast3D" parent="Head" node_paths=PackedStringArray("player", "interactLabel", "player_input")]
-target_position = Vector3(0, 0, -3.5)
+target_position = Vector3(0, 0, -1.5)
 collision_mask = 16
 collide_with_areas = true
 script = ExtResource("3_glr05")
