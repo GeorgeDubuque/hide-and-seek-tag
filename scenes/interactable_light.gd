@@ -23,3 +23,5 @@ func _process(delta):
 
 	if !wasOn && on:
 		lightMesh.get_surface_override_material(0).emission_enabled = on
+
+	wasOn = on
