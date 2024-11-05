@@ -35,7 +35,11 @@ sky_material = SubResource("PhysicalSkyMaterial_wqxlr")
 
 [sub_resource type="Environment" id="Environment_m2dir"]
 background_mode = 2
+background_energy_multiplier = 0.0
 sky = SubResource("Sky_2iust")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.2
 tonemap_mode = 1
 ssao_enabled = true
 
@@ -95,7 +99,6 @@ environment = SubResource("Environment_m2dir")
 
 [node name="sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.87959, -0.436605, 0.188936, 0, 0.397148, 0.917755, -0.475732, -0.807248, 0.349328, 0, 0, 0)
-visible = false
 light_energy = 0.1
 shadow_enabled = true
 
