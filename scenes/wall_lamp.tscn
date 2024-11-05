@@ -26,10 +26,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
 surface_material_override/0 = ExtResource("3_0l215")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="WallLamp" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 1.7, 0)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 1.7, 0)
 light_color = Color(0.597697, 0.554648, 0.380117, 1)
 shadow_enabled = true
+omni_range = 3.0
 
 [node name="InteractionArea" parent="WallLamp" index="1" instance=ExtResource("5_vguxa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.7, 0)
