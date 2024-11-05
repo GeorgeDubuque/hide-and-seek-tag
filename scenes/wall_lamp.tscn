@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://oyg8f5qk128k"]
+
+[ext_resource type="PackedScene" uid="uid://k3w11b3os66u" path="res://models/WallLamp.glb" id="1_fulm8"]
+[ext_resource type="Script" path="res://scenes/interactable_light.gd" id="2_chmgs"]
+[ext_resource type="Material" uid="uid://dqqmv8vxcc3sf" path="res://materials/wall_lamp_material.tres" id="3_0l215"]
+[ext_resource type="PackedScene" uid="uid://dhedkm6pu187l" path="res://scenes/interaction_area.tscn" id="5_vguxa"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rjwyv"]
+size = Vector3(0.3, 0.3, 0.2)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_mv4wt"]
+properties/0/path = NodePath("WallLamp/OmniLight3D:visible")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="WallLamp" node_paths=PackedStringArray("light", "lightMesh") instance=ExtResource("1_fulm8")]
+script = ExtResource("2_chmgs")
+light = NodePath("WallLamp/OmniLight3D")
+lightMesh = NodePath("WallLamp")
+
+[node name="WallLamp" parent="." index="0"]
+surface_material_override/0 = ExtResource("3_0l215")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="WallLamp" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 1.7, 0)
+visible = false
+light_color = Color(0.597697, 0.554648, 0.380117, 1)
+
+[node name="InteractionArea" parent="WallLamp" index="1" instance=ExtResource("5_vguxa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallLamp/InteractionArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0.05, 2.98023e-08)
+shape = SubResource("BoxShape3D_rjwyv")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="1"]
+replication_config = SubResource("SceneReplicationConfig_mv4wt")

@@ -526,6 +526,7 @@ player_input = NodePath("../../PlayerInput")
 [node name="SpotLight3D" type="SpotLight3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.646883)
 light_energy = 2.0
+shadow_enabled = true
 spot_range = 35.0
 spot_angle = 33.5027
 

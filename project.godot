@@ -21,6 +21,12 @@ globals="*res://scripts/globals.gd"
 InteractionManager="*res://scenes/interaction_manager.tscn"
 GameManager="*res://scenes/autoloads/game_manager.tscn"
 
+[display]
+
+window/size/viewport_width=854
+window/size/viewport_height=480
+window/stretch/mode="viewport"
+
 [editor]
 
 version_control/plugin_name="GitPlugin"

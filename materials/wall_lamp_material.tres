@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://dqqmv8vxcc3sf"]
+
+[ext_resource type="Texture2D" uid="uid://b5axvbtnd17qh" path="res://textures/LightTexture.png" id="1_o8gek"]
+[ext_resource type="Texture2D" uid="uid://dxdq4vpbq1d3q" path="res://textures/LightTexture_Emission.png" id="2_v40bf"]
+
+[resource]
+albedo_texture = ExtResource("1_o8gek")
+emission = Color(0.683646, 0.575235, 0.335263, 1)
+emission_energy_multiplier = 4.31
+emission_operator = 1
+emission_texture = ExtResource("2_v40bf")
+texture_filter = 0
