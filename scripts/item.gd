@@ -17,3 +17,5 @@ func _process(delta: float) -> void:
 
 	if playerInput.use_item_button_just_pressed:
 		use_item.call()
+
+	playerInput.use_item_button_just_pressed = false
