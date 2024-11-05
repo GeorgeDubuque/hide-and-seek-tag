@@ -1,23 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://qpo0ov86wcs3"]
+[gd_scene load_steps=6 format=3 uid="uid://qpo0ov86wcs3"]
 
 [ext_resource type="PackedScene" uid="uid://d4ee6wg57emrq" path="res://models/Stairs.glb" id="1_qvijp"]
-[ext_resource type="Texture2D" uid="uid://yqxr6o0xdlda" path="res://textures/BedroomWall_Green_FullRes.png" id="2_rrh2u"]
+[ext_resource type="PackedScene" uid="uid://ba252e7qvkpmc" path="res://scenes/modularInterior/stairs_ramp.tscn" id="2_41gpa"]
+[ext_resource type="Texture2D" uid="uid://yqxr6o0xdlda" path="res://textures/BedroomWall_Green_FullRes.png" id="2_pwymo"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wghd7"]
-albedo_color = Color(0.627264, 0.350244, 0.316945, 1)
-albedo_texture = ExtResource("2_rrh2u")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jklof"]
+albedo_texture = ExtResource("2_pwymo")
 texture_filter = 0
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_3m3uh"]
-points = PackedVector3Array(1, 0.1, -1, 1, 0.1, 1, 3, 1.1, -1, 3, 0.1, -1, 3, 0.1, 1, 3, 1.1, 1)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ogsr0"]
+points = PackedVector3Array(-1, 0.1, -1, -1, 0.1, 1, -1, 0.242717, -1, 1, 0.1, -1, -1, 0.242717, 1, 1, 0.1, 1, -0.71437, 0.38563, -1, 1, 1.1, -1, -0.71437, 0.38563, 1, 1, 1.1, 1, 0.71437, 1.1, -1, 0.71437, 1.1, 1)
 
 [node name="Stairs" instance=ExtResource("1_qvijp")]
 
-[node name="Floor_006" parent="." index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
-surface_material_override/0 = SubResource("StandardMaterial3D_wghd7")
+[node name="Cube_002" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_jklof")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Floor_006" index="0"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Cube_002" index="0"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor_006/StaticBody3D" index="0"]
-shape = SubResource("ConvexPolygonShape3D_3m3uh")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cube_002/StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_ogsr0")
+
+[node name="Stairs_Ramp" parent="." index="1" instance=ExtResource("2_41gpa")]
+visible = false
