@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dhedkm6pu187l" path="res://scenes/interaction_area.tscn" id="5_vguxa"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rjwyv"]
-size = Vector3(0.3, 0.3, 0.2)
+size = Vector3(0.3, 0.544788, 0.519605)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_mv4wt"]
 properties/0/path = NodePath("WallLamp/OmniLight3D:visible")
@@ -22,18 +22,20 @@ light = NodePath("WallLamp/OmniLight3D")
 lightMesh = NodePath("WallLamp")
 
 [node name="WallLamp" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
 surface_material_override/0 = ExtResource("3_0l215")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="WallLamp" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 1.7, 0)
 visible = false
 light_color = Color(0.597697, 0.554648, 0.380117, 1)
+shadow_enabled = true
 
 [node name="InteractionArea" parent="WallLamp" index="1" instance=ExtResource("5_vguxa")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.7, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WallLamp/InteractionArea" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0.05, 2.98023e-08)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0.0550719, -0.00533444)
 shape = SubResource("BoxShape3D_rjwyv")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="1"]

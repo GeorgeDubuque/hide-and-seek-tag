@@ -11,6 +11,7 @@ extends MultiplayerSynchronizer
 @export var CROUCH: String = "crouch"
 @export var SPRINT: String = "sprint"
 @export var INTERACT: String = "interact"
+@export var FLASHLIGHT: String = "flashlight"
 
 @export var input_direction := Vector2()
 @export var jumping := false
@@ -20,6 +21,8 @@ extends MultiplayerSynchronizer
 @export var crouch_pressed := false
 @export var pause_button_just_pressed := false
 @export var interact_button_just_pressed := false
+@export var use_item_button_just_pressed := false
+@export var use_item_button_pressed := false
 @export var mouse_input := Vector2()
 @export var username: String
 
@@ -68,6 +71,7 @@ func _process(delta: float) -> void:
 	sprinting_pressed = Input.is_action_pressed(SPRINT)
 	crouch_just_pressed = Input.is_action_just_pressed(CROUCH)
 	crouch_pressed = Input.is_action_pressed(CROUCH)
+	use_item_button_just_pressed = Input.is_action_just_pressed(FLASHLIGHT)
 
 	if Input.is_action_just_pressed(INTERACT):
 		interact.rpc()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=35 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_uajkv"]
 [ext_resource type="Material" uid="uid://c832cg6yrl8wm" path="res://materials/material_tagger.tres" id="2_h22dh"]
@@ -7,6 +7,7 @@
 [ext_resource type="Material" uid="uid://33bvkkcsxf6x" path="res://materials/material_hider.tres" id="3_gqwcm"]
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/EditorModule.gd" id="4_mwxu7"]
 [ext_resource type="Script" path="res://scenes/player_input.gd" id="4_t3erj"]
+[ext_resource type="PackedScene" uid="uid://cme1citet8iai" path="res://scenes/items/flashlight.tscn" id="6_lvndv"]
 [ext_resource type="PackedScene" uid="uid://dhedkm6pu187l" path="res://scenes/interaction_area.tscn" id="7_yd3o4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j60o4"]
@@ -523,13 +524,13 @@ player = NodePath("../..")
 interactLabel = NodePath("../../UserInterface/InteractText")
 player_input = NodePath("../../PlayerInput")
 
-[node name="FlashLight" type="SpotLight3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.646883)
-visible = false
-light_energy = 2.0
-shadow_enabled = true
-spot_range = 35.0
-spot_angle = 33.5027
+[node name="ItemContainer" type="Node3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.778582)
+
+[node name="Flashlight" parent="Head/ItemContainer" instance=ExtResource("6_lvndv")]
+
+[node name="Item" parent="Head/ItemContainer/Flashlight" index="0" node_paths=PackedStringArray("playerInput")]
+playerInput = NodePath("../../../../PlayerInput")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -612,3 +613,5 @@ actionName = "unfreeze"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0135, 0)
 shape = SubResource("CapsuleShape3D_ufnxo")
 disabled = true
+
+[editable path="Head/ItemContainer/Flashlight"]

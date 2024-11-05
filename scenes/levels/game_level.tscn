@@ -100,6 +100,7 @@ environment = SubResource("Environment_m2dir")
 
 [node name="sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.87959, -0.436605, 0.188936, 0, 0.397148, 0.917755, -0.475732, -0.807248, 0.349328, 0, 0, 0)
+visible = false
 light_energy = 0.1
 shadow_enabled = true
 
@@ -392,6 +393,10 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2, 0, 
 
 [node name="WallLamp" parent="." instance=ExtResource("13_sa8b8")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -2)
+on = true
+
+[node name="WallLamp" parent="WallLamp" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.37114e-08)
 
 [node name="OmniLight3D" parent="WallLamp/WallLamp" index="0"]
 light_color = Color(0.702608, 0.638796, 0.45503, 1)

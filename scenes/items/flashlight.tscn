@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://cme1citet8iai"]
+
+[ext_resource type="Script" path="res://scripts/items/flashlight.gd" id="1_tjpbw"]
+[ext_resource type="PackedScene" uid="uid://hychxebf0l64" path="res://scenes/components/item.tscn" id="2_22fho"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vsh4y"]
+properties/0/path = NodePath(".:on")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("SpotLight3D:visible")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Flashlight" type="Node3D" node_paths=PackedStringArray("light")]
+script = ExtResource("1_tjpbw")
+light = NodePath("SpotLight3D")
+
+[node name="Item" parent="." instance=ExtResource("2_22fho")]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+visible = false
+spot_range = 11.0
+spot_angle = 17.69
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_vsh4y")
