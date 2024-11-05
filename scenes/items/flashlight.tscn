@@ -18,9 +18,8 @@ light = NodePath("SpotLight3D")
 [node name="Item" parent="." instance=ExtResource("2_22fho")]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
-visible = false
-spot_range = 11.0
-spot_angle = 17.69
+spot_range = 39.0
+spot_angle = 34.1091
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_vsh4y")
