@@ -32,6 +32,9 @@ properties/4/replication_mode = 1
 properties/5/path = NodePath("PlayerInput:username")
 properties/5/spawn = true
 properties/5/replication_mode = 1
+properties/6/path = NodePath("PlayerInput:use_item_button_just_pressed")
+properties/6/spawn = false
+properties/6/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_56ji0"]
 properties/0/path = NodePath(".:position")
