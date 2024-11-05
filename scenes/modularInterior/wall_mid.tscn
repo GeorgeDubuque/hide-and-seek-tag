@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://c80t215qi45o0"]
+
+[ext_resource type="PackedScene" uid="uid://d1mctf38ous50" path="res://models/Wall_Mid.glb" id="1_ost3f"]
+[ext_resource type="Texture2D" uid="uid://yqxr6o0xdlda" path="res://textures/BedroomWall_Green_FullRes.png" id="2_jocf7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nhuix"]
+albedo_texture = ExtResource("2_jocf7")
+texture_filter = 0
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_05td2"]
+data = PackedVector3Array(-1, 1.0984, 1, -1, 2.0984, -1, -1, 2.0984, 1, -1, 1.0984, 1, -1, 1.0984, -1, -1, 2.0984, -1, -1, 1.0984, -1, -0.9, 2.0984, -1, -1, 2.0984, -1, -1, 1.0984, -1, -0.9, 1.0984, -1, -0.9, 2.0984, -1, -0.9, 1.0984, -1, -0.9, 2.0984, 1, -0.9, 2.0984, -1, -0.9, 1.0984, -1, -0.9, 1.0984, 1, -0.9, 2.0984, 1, -0.9, 1.0984, 1, -1, 2.0984, 1, -0.9, 2.0984, 1, -0.9, 1.0984, 1, -1, 1.0984, 1, -1, 2.0984, 1, -1, 1.0984, -1, -0.9, 1.0984, 1, -0.9, 1.0984, -1, -1, 1.0984, -1, -1, 1.0984, 1, -0.9, 1.0984, 1, -0.9, 2.0984, -1, -1, 2.0984, 1, -1, 2.0984, -1, -0.9, 2.0984, -1, -0.9, 2.0984, 1, -1, 2.0984, 1)
+
+[node name="Wall_Mid" instance=ExtResource("1_ost3f")]
+
+[node name="Wall_Mid" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_nhuix")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Wall_Mid" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall_Mid/StaticBody3D" index="0"]
+shape = SubResource("ConcavePolygonShape3D_05td2")

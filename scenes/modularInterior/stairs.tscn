@@ -1,16 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://dj3ikiiu8uj3s"]
+[gd_scene load_steps=5 format=3 uid="uid://qpo0ov86wcs3"]
 
 [ext_resource type="PackedScene" uid="uid://d4ee6wg57emrq" path="res://models/Stairs.glb" id="1_qvijp"]
+[ext_resource type="Texture2D" uid="uid://yqxr6o0xdlda" path="res://textures/BedroomWall_Green_FullRes.png" id="2_rrh2u"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mtrub"]
-points = PackedVector3Array(-1, -0.00656168, -1, -1, -0.00656168, 1, -1, -6.69155e-07, -1, 1, -0.00656168, -1, -1, -6.69155e-07, 1, 1, -0.00656168, 1, 0.75, 0.1, -1, 1, 0.1, -1, 0.75, 0.1, 1, 1, 0.1, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wghd7"]
+albedo_color = Color(0.627264, 0.350244, 0.316945, 1)
+albedo_texture = ExtResource("2_rrh2u")
+texture_filter = 0
 
-[node name="Stairs2" instance=ExtResource("1_qvijp")]
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_3m3uh"]
+points = PackedVector3Array(1, 0.1, -1, 1, 0.1, 1, 3, 1.1, -1, 3, 0.1, -1, 3, 0.1, 1, 3, 1.1, 1)
 
-[node name="Stairs" parent="." index="0"]
-transform = Transform3D(1, 0, 0, 0, 15.24, 0, 0, 0, 1, 0, 0, 0)
+[node name="Stairs" instance=ExtResource("1_qvijp")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Stairs" index="0"]
+[node name="Floor_006" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_wghd7")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Stairs/StaticBody3D" index="0"]
-shape = SubResource("ConvexPolygonShape3D_mtrub")
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor_006" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor_006/StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_3m3uh")
