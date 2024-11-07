@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://cual8qicrhsc5"]
+
+[ext_resource type="PackedScene" uid="uid://crhu6eigrmgdx" path="res://models/Door.glb" id="1_voibr"]
+[ext_resource type="Texture2D" uid="uid://cygpvjq5iuajd" path="res://textures/Door_Texture.png" id="2_e2rmn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n6t41"]
+albedo_texture = ExtResource("2_e2rmn")
+texture_filter = 0
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_kovhe"]
+points = PackedVector3Array(0, 1.99823, 1.00027, 0, 1.99823, 0, -0.0999999, 1.99823, 1.00027, 0, 0, 1.00027, -0.0999999, 1.99823, 0, 0, 0, 0, -0.0999999, 0, 1.00027, -0.0999999, 0, 0)
+
+[node name="Door" instance=ExtResource("1_voibr")]
+
+[node name="Cube_004" parent="." index="0"]
+transform = Transform3D(0.488698, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -0.5)
+surface_material_override/0 = SubResource("StandardMaterial3D_n6t41")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Cube_004" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cube_004/StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_kovhe")
+disabled = true

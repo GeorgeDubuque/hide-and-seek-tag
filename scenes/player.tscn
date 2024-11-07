@@ -452,6 +452,8 @@ height = 2.1
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "GRAPHICS", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH", "playerBodyMesh", "tagInteractionArea", "unfreezeInteractionArea") groups=["player"]]
 collision_mask = 7
 script = ExtResource("1_uajkv")
+base_speed = 2.0
+sprint_speed = 4.0
 HEAD = NodePath("Head")
 GRAPHICS = NodePath("Graphics")
 CAMERA = NodePath("Head/Camera")
