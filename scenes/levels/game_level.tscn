@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bgi70slkbl27f"]
+[gd_scene load_steps=41 format=3 uid="uid://bgi70slkbl27f"]
 
 [ext_resource type="Script" path="res://scripts/game_level.gd" id="1_u4dgn"]
 [ext_resource type="PackedScene" uid="uid://bpa13ytep687q" path="res://scenes/modularInterior/floor.tscn" id="2_yxugu"]
@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://eh5743dhakek" path="res://scenes/modularInterior/wall_mid_basement.tscn" id="10_k16tr"]
 [ext_resource type="PackedScene" uid="uid://c80t215qi45o0" path="res://scenes/modularInterior/wall_mid.tscn" id="10_uidcg"]
 [ext_resource type="PackedScene" uid="uid://ccg7okddcadlu" path="res://scenes/modularInterior/wall_top.tscn" id="11_sion1"]
-[ext_resource type="PackedScene" uid="uid://oyg8f5qk128k" path="res://scenes/wall_lamp.tscn" id="13_sa8b8"]
+[ext_resource type="PackedScene" uid="uid://oyg8f5qk128k" path="res://scenes/decoration/wall_lamp.tscn" id="13_sa8b8"]
 [ext_resource type="PackedScene" uid="uid://cual8qicrhsc5" path="res://scenes/modularInterior/door.tscn" id="15_7ukmo"]
 [ext_resource type="PackedScene" uid="uid://dwg81yfjogkih" path="res://scenes/decoration/book_shelf.tscn" id="16_ubn1o"]
 [ext_resource type="PackedScene" uid="uid://dy68owjaar6x2" path="res://scenes/decoration/grandfather_clock.tscn" id="17_leya4"]
@@ -28,6 +28,10 @@
 [ext_resource type="PackedScene" uid="uid://juxmc2to0xnf" path="res://scenes/modularInterior/ceiling_basement.tscn" id="26_yl4yh"]
 [ext_resource type="PackedScene" uid="uid://c43ccm7le2q4b" path="res://scenes/modularInterior/door_way_basement.tscn" id="27_tn07y"]
 [ext_resource type="PackedScene" uid="uid://de85x1pwx4xxy" path="res://scenes/decoration/ceiling_rafters.tscn" id="28_himiu"]
+[ext_resource type="PackedScene" uid="uid://cmyjbnpump4ff" path="res://scenes/decoration/couch.tscn" id="29_isgbb"]
+[ext_resource type="PackedScene" uid="uid://ojdd8beuq3ib" path="res://scenes/decoration/armchair_08.tscn" id="30_6282o"]
+[ext_resource type="PackedScene" uid="uid://b0xfff10whwj2" path="res://scenes/decoration/table_41.tscn" id="31_n7ws3"]
+[ext_resource type="PackedScene" uid="uid://bv15aknf70hh8" path="res://scenes/decoration/table_lamp.tscn" id="32_1mq0k"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_5prae"]
 radius = 0.2
@@ -55,7 +59,6 @@ background_energy_multiplier = 0.0
 sky = SubResource("Sky_2iust")
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
-ambient_light_energy = 0.0
 tonemap_mode = 1
 ssao_enabled = true
 
@@ -63,10 +66,25 @@ ssao_enabled = true
 radius = 0.2
 height = 1.72
 
-[node name="GameLevel" type="Node3D" node_paths=PackedStringArray("hiderSpawns", "taggerSpawn")]
+[node name="GameLevel" type="Node3D" node_paths=PackedStringArray("hiderSpawns", "taggerSpawn", "hiderKeySpawns")]
 script = ExtResource("1_u4dgn")
 hiderSpawns = [NodePath("HiderSpawns/Spawn1"), NodePath("HiderSpawns/Spawn2"), NodePath("HiderSpawns/Spawn3"), NodePath("HiderSpawns/Spawn4")]
 taggerSpawn = NodePath("TaggerSpawn")
+hiderKeySpawns = [NodePath("KeySpawns/KeySpawn"), NodePath("KeySpawns/KeySpawn2"), NodePath("KeySpawns/KeySpawn3"), NodePath("KeySpawns/KeySpawn4")]
+
+[node name="KeySpawns" type="Node" parent="."]
+
+[node name="KeySpawn" type="Node3D" parent="KeySpawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 1, -0.5)
+
+[node name="KeySpawn2" type="Node3D" parent="KeySpawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 1, 0.6)
+
+[node name="KeySpawn3" type="Node3D" parent="KeySpawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7, 1, 0.6)
+
+[node name="KeySpawn4" type="Node3D" parent="KeySpawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7, 1, -0.2)
 
 [node name="TaggerSpawn" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.28014, 0.369613, -1.73185)
@@ -1741,8 +1759,25 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4, -3
 [node name="CeilingRafters32" parent="Level" instance=ExtResource("28_himiu")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -6, -3, 2)
 
+[node name="Couch" parent="Level" instance=ExtResource("29_isgbb")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.4, 0, -1)
+
+[node name="Armchair_08" parent="Level" instance=ExtResource("30_6282o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3, 0.4, 4.3)
+
+[node name="Table_41" parent="Level" instance=ExtResource("31_n7ws3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4, 0, -2.4)
+
+[node name="Table_Lamp" parent="Level" instance=ExtResource("32_1mq0k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.37771, 0.696699, -2.41548)
+
+[node name="OmniLight3D" parent="Level/Table_Lamp/Table_Lamp" index="1"]
+light_color = Color(0.942623, 0.916885, 0.784052, 1)
+omni_range = 1.36335
+
 [editable path="Level/Node3D/Wall10"]
 [editable path="Level/WallLamp"]
 [editable path="Level/WallLamp2"]
 [editable path="Level/WallLamp3"]
 [editable path="Level/WallLamp4"]
+[editable path="Level/Table_Lamp"]

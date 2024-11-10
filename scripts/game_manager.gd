@@ -14,6 +14,12 @@ const lobbyLevelPath = "res://scenes/levels/lobby_level.tscn"
 const defaultLevelPath = "res://scenes/levels/game_level.tscn"
 const lobbySpawnOffset = Vector3(2, 0, 0) # how far apart players should spawn from one another
 
+@export var hiderMatRed: StandardMaterial3D
+@export var hiderMatGreen: StandardMaterial3D
+@export var hiderMatBlue: StandardMaterial3D
+
+@export var hiderKey: PackedScene
+
 @onready var startGameButton = $LobbyUI/StartGameButton
 
 # Called when the node enters the scene tree for the first time.
@@ -61,6 +67,8 @@ func assignPlayerTypes():
 	for player in available_players:
 		print("assigning player ", player, "as HIDER")
 		player.set_player_type(globals.PlayerType.HIDER)
+
+	# TODO: go through hiders and assign colors
 
 func placePlayersInLobby():
 	#place taggers
@@ -113,6 +121,16 @@ func placePlayers(level: GameLevel):
 		(hider as Player).position = randomSpawnPosition
 		available_hider_spawns.remove_at(randomHiderSpawnIndex)
 
+func placeKeys(level: GameLevel):
+	# place hiders
+	var available_key_spawns = level.hiderKeySpawns
+	for hider in hiders:
+		var randomKeySpawnIndex = randi_range(0, available_key_spawns.size() - 1)
+		var randomSpawnPosition: Vector3 = available_key_spawns[randomKeySpawnIndex].position
+		var key = hiderKey.instantiate()
+		# print("setting player ", hider, " as hider at position: ", randomSpawnPosition)
+		key.position = randomSpawnPosition
+		available_key_spawns.remove_at(randomKeySpawnIndex)
 
 func change_level(level_scene: PackedScene, shouldStartGame = false):
 	if multiplayer.is_server():
@@ -130,6 +148,7 @@ func change_level(level_scene: PackedScene, shouldStartGame = false):
 
 		assignPlayerTypes()
 		placePlayers(newLevel as GameLevel)
+		placeKeys(newLevel as GameLevel)
 
 		if shouldStartGame:
 			gameStatus = globals.GameStatus.IN_GAME

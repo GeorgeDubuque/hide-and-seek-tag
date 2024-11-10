@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://bv15aknf70hh8"]
+
+[ext_resource type="PackedScene" uid="uid://cgp4rckg8jh8k" path="res://models/Model_Table_Lamp.glb" id="1_i2vke"]
+[ext_resource type="Material" uid="uid://djmesgvx70n36" path="res://materials/mat_metal05.tres" id="2_msfxv"]
+[ext_resource type="Texture2D" uid="uid://bu3hx1k6wln4s" path="res://textures/Itch.io Textures/Fabric_16.jpg" id="3_0w1ci"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vpprf"]
+albedo_texture = ExtResource("3_0w1ci")
+texture_filter = 0
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ap6pf"]
+points = PackedVector3Array(-0.237394, 0.479921, 0.0515435, -0.105683, 0.479921, 0.216789, -0.0429416, 0.747047, 0.0793639, -0.0964812, 0.746974, 0.0122144, -0.190408, 0.479921, -0.154436, -0.170795, 6.14673e-08, -0.0986141, -0.170795, 6.14673e-08, 0.0985754, 0.10564, 0.479921, 0.216789, -4.48972e-05, 6.14673e-08, 0.19717, 0.0428983, 0.747047, 0.0793639, -4.48972e-05, 0.746974, -0.108718, -0.0773798, 0.746974, -0.0714733, -4.48972e-05, 0.479921, -0.246098, -4.48972e-05, 6.14673e-08, -0.197209, 0.237397, 0.479921, 0.0515435, 0.170752, 6.14673e-08, 0.0985754, 0.0964378, 0.746974, 0.0122144, 0.0773365, 0.746974, -0.0714733, 0.190364, 0.479921, -0.154436, 0.170752, 6.14673e-08, -0.0986141)
+
+[node name="Table_Lamp" instance=ExtResource("1_i2vke")]
+
+[node name="Table_Lamp" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_msfxv")
+surface_material_override/1 = SubResource("StandardMaterial3D_vpprf")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Table_Lamp" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Table_Lamp/StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_ap6pf")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Table_Lamp" index="1"]
+transform = Transform3D(1.16636, 0, 0, 0, 1.16636, 0, 0, 0, 1.16636, 0, 0.562937, 0)
+omni_range = 3.0

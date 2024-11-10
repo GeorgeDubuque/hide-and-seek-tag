@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://oyg8f5qk128k"]
 
 [ext_resource type="PackedScene" uid="uid://k3w11b3os66u" path="res://models/WallLamp.glb" id="1_fulm8"]
-[ext_resource type="Script" path="res://scenes/interactable_light.gd" id="2_chmgs"]
+[ext_resource type="Script" path="res://scripts/interactable_light.gd" id="2_chmgs"]
 [ext_resource type="Material" uid="uid://dqqmv8vxcc3sf" path="res://materials/wall_lamp_material.tres" id="3_0l215"]
 [ext_resource type="PackedScene" uid="uid://dhedkm6pu187l" path="res://scenes/interaction_area.tscn" id="5_vguxa"]
 

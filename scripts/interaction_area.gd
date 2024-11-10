@@ -10,3 +10,9 @@ func _ready() -> void:
 
 var interact: Callable = func(interactor: PlayerInteractor):
 	pass
+
+func enable():
+	collider.disabled = false
+
+func disable():
+	collider.disabled = true

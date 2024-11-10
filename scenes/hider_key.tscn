@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://caeiyj6f7i1d0"]
+
+[ext_resource type="PackedScene" uid="uid://dhedkm6pu187l" path="res://scenes/interaction_area.tscn" id="1_4638j"]
+[ext_resource type="Script" path="res://scenes/hider_key.gd" id="1_igmxg"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_5byhk"]
+inner_radius = 0.251
+outer_radius = 0.74
+rings = 9
+ring_segments = 4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bw4dg"]
+size = Vector3(0.8, 0.8, 0.8)
+
+[node name="HiderKey" type="Node3D"]
+script = ExtResource("1_igmxg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-2.18557e-08, 0.5, 0, -0.5, -2.18557e-08, 0, 0, 0, 0.5, -2.18557e-08, 0.8, 0)
+mesh = SubResource("TorusMesh_5byhk")
+
+[node name="InteractionArea" parent="." instance=ExtResource("1_4638j")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.98023e-08, 0.8, 4.47035e-08)
+shape = SubResource("BoxShape3D_bw4dg")

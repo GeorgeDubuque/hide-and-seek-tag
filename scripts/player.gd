@@ -34,10 +34,23 @@ extends CharacterBody3D
 		match value:
 			globals.PlayerType.NONE:
 				playerBodyMesh.material_override = noneMaterial
-			globals.PlayerType.HIDER:
-				playerBodyMesh.material_override = hiderMaterial
+			# globals.PlayerType.HIDER:
+			# 	playerBodyMesh.material_override = hiderMaterial
 			globals.PlayerType.TAGGER:
 				playerBodyMesh.material_override = taggerMaterial
+
+# only applicable to hiders (which key they are looking for)
+@export var hiderColor: globals.HiderColor:
+	set(value):
+		hiderColor = value
+		match value:
+			globals.HiderColor.RED:
+				playerBodyMesh.material_override = GameManager.hiderMatRed
+			globals.HiderColor.GREEN:
+				playerBodyMesh.material_override = GameManager.hiderMatGreen
+			globals.HiderColor.BLUE:
+				playerBodyMesh.material_override = GameManager.hiderMatBlue
+
 
 # Whether the player_id is tagger or taggee
 var isHider: bool:

@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://de85x1pwx4xxy"]
 
 [ext_resource type="PackedScene" uid="uid://bue0r0m85f7sr" path="res://models/Model_CeilingRafters.glb" id="1_3rtol"]
-[ext_resource type="Material" uid="uid://dnxsof2jj2rud" path="res://materials/mat_book_shelf.tres" id="2_m5jft"]
+[ext_resource type="Material" uid="uid://dut6v16tuuke8" path="res://materials/mat_basement_rafters.tres" id="2_njsv5"]
 
 [node name="CeilingRafters" instance=ExtResource("1_3rtol")]
 
 [node name="CeilingRafters" parent="." index="0"]
-surface_material_override/0 = ExtResource("2_m5jft")
+surface_material_override/0 = ExtResource("2_njsv5")

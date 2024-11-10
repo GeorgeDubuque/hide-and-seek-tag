@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://djmesgvx70n36"]
+
+[ext_resource type="Texture2D" uid="uid://datsjmy7d1jb0" path="res://textures/Itch.io Textures/Metal_05.jpg" id="1_v8u71"]
+
+[resource]
+albedo_texture = ExtResource("1_v8u71")
+texture_filter = 0

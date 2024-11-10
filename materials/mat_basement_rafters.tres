@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dut6v16tuuke8"]
+
+[ext_resource type="Texture2D" uid="uid://dvofbf8gegjey" path="res://textures/Texture_BookShelf.png" id="1_bl30q"]
+
+[resource]
+albedo_texture = ExtResource("1_bl30q")
+texture_filter = 0
