@@ -124,6 +124,7 @@ func placePlayers(level: GameLevel):
 func placeKeys(level: GameLevel):
 	# place hiders
 	var available_key_spawns = level.hiderKeySpawns
+	# TODO: add logic to give keys colors here
 	for hider in taggers:
 		print("instantiating key")
 		var randomKeySpawnIndex = randi_range(0, available_key_spawns.size() - 1)
