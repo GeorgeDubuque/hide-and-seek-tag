@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://cb365aw8w5j7g"]
+
+[ext_resource type="PackedScene" uid="uid://derxfluge7ucc" path="res://models/Carpet.glb" id="1_bab5d"]
+[ext_resource type="Texture2D" uid="uid://qdq28j3u5g4b" path="res://textures/Texture_Carpet.png" id="2_ppp8q"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n7r2g"]
+albedo_texture = ExtResource("2_ppp8q")
+texture_filter = 0
+
+[node name="Carpet" instance=ExtResource("1_bab5d")]
+
+[node name="Carpet" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_n7r2g")

@@ -1,21 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwx00uui30krg"]
+[gd_scene load_steps=4 format=3 uid="uid://bwx00uui30krg"]
 
 [ext_resource type="PackedScene" uid="uid://dw5s5ddr4yg6e" path="res://models/Wall_Bottom.glb" id="1_ljuaw"]
-[ext_resource type="Texture2D" uid="uid://yqxr6o0xdlda" path="res://textures/BedroomWall_Green_FullRes.png" id="2_q6f5w"]
+[ext_resource type="Material" uid="uid://b3ivg8pvawol1" path="res://materials/mat_wall_green_bedroom.tres" id="2_po157"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_17e3a"]
-albedo_texture = ExtResource("2_q6f5w")
-texture_filter = 0
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_yo8fb"]
-data = PackedVector3Array(-1, 0.5984, 1, -1, 1.0984, -1, -1, 1.0984, 1, -1, 0.5984, 1, -1, 0.5984, -1, -1, 1.0984, -1, -1, 0.5984, -1, -0.9, 1.0984, -1, -1, 1.0984, -1, -1, 0.5984, -1, -0.9, 0.5984, -1, -0.9, 1.0984, -1, -0.9, 0.5984, -1, -0.9, 1.0984, 1, -0.9, 1.0984, -1, -0.9, 0.5984, -1, -0.9, 0.5984, 1, -0.9, 1.0984, 1, -0.9, 0.5984, 1, -1, 1.0984, 1, -0.9, 1.0984, 1, -0.9, 0.5984, 1, -1, 0.5984, 1, -1, 1.0984, 1, -1, 0.0984, -1, -0.9, 0.0984, 1, -0.9, 0.0984, -1, -1, 0.0984, -1, -1, 0.0984, 1, -0.9, 0.0984, 1, -0.9, 1.0984, -1, -1, 1.0984, 1, -1, 1.0984, -1, -0.9, 1.0984, -1, -0.9, 1.0984, 1, -1, 1.0984, 1, -0.9, 0.0984, 1, -1, 0.5984, 1, -0.9, 0.5984, 1, -0.9, 0.0984, 1, -1, 0.0984, 1, -1, 0.5984, 1, -0.9, 0.0984, -1, -0.9, 0.5984, 1, -0.9, 0.5984, -1, -0.9, 0.0984, -1, -0.9, 0.0984, 1, -0.9, 0.5984, 1, -1, 0.0984, -1, -0.9, 0.5984, -1, -1, 0.5984, -1, -1, 0.0984, -1, -0.9, 0.0984, -1, -0.9, 0.5984, -1, -1, 0.0984, 1, -1, 0.5984, -1, -1, 0.5984, 1, -1, 0.0984, 1, -1, 0.0984, -1, -1, 0.5984, -1)
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_6872b"]
+data = PackedVector3Array(-1, 0.4984, 1, -1, 0.9984, -1, -1, 0.9984, 1, -1, 0.4984, 1, -1, 0.4984, -1, -1, 0.9984, -1, -1, 0.4984, -1, -0.9, 0.9984, -1, -1, 0.9984, -1, -1, 0.4984, -1, -0.9, 0.4984, -1, -0.9, 0.9984, -1, -0.9, 0.4984, -1, -0.9, 0.9984, 1, -0.9, 0.9984, -1, -0.9, 0.4984, -1, -0.9, 0.4984, 1, -0.9, 0.9984, 1, -0.9, 0.4984, 1, -1, 0.9984, 1, -0.9, 0.9984, 1, -0.9, 0.4984, 1, -1, 0.4984, 1, -1, 0.9984, 1, -1, -0.0016, -1, -0.9, -0.0016, 1, -0.9, -0.0016, -1, -1, -0.0016, -1, -1, -0.0016, 1, -0.9, -0.0016, 1, -0.9, 0.9984, -1, -1, 0.9984, 1, -1, 0.9984, -1, -0.9, 0.9984, -1, -0.9, 0.9984, 1, -1, 0.9984, 1, -0.9, -0.0016, 1, -1, 0.4984, 1, -0.9, 0.4984, 1, -0.9, -0.0016, 1, -1, -0.0016, 1, -1, 0.4984, 1, -0.9, -0.0016, -1, -0.9, 0.4984, 1, -0.9, 0.4984, -1, -0.9, -0.0016, -1, -0.9, -0.0016, 1, -0.9, 0.4984, 1, -1, -0.0016, -1, -0.9, 0.4984, -1, -1, 0.4984, -1, -1, -0.0016, -1, -0.9, -0.0016, -1, -0.9, 0.4984, -1, -1, -0.0016, 1, -1, 0.4984, -1, -1, 0.4984, 1, -1, -0.0016, 1, -1, -0.0016, -1, -1, 0.4984, -1)
 
 [node name="Wall_Bottom2" instance=ExtResource("1_ljuaw")]
 
 [node name="Wall_Bottom" parent="." index="0"]
-surface_material_override/0 = SubResource("StandardMaterial3D_17e3a")
+surface_material_override/0 = ExtResource("2_po157")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Wall_Bottom" index="0"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Wall_Bottom/StaticBody3D" index="0"]
-shape = SubResource("ConcavePolygonShape3D_yo8fb")
+shape = SubResource("ConcavePolygonShape3D_6872b")

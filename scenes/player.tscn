@@ -530,12 +530,15 @@ interactLabel = NodePath("../../UserInterface/InteractText")
 player_input = NodePath("../../PlayerInput")
 
 [node name="ItemContainer" type="Node3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.778582)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.478582)
 
 [node name="Flashlight" parent="Head/ItemContainer" instance=ExtResource("6_lvndv")]
 
 [node name="Item" parent="Head/ItemContainer/Flashlight" index="0" node_paths=PackedStringArray("playerInput")]
 playerInput = NodePath("../../../../PlayerInput")
+
+[node name="SpotLight3D" parent="Head/ItemContainer/Flashlight" index="1"]
+spot_angle = 57.0452
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

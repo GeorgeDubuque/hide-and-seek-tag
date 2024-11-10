@@ -18,10 +18,12 @@ func turn_on_off(playerInteractor: PlayerInteractor):
 	light.visible = on
 
 func _process(delta):
+	var newMaterial = lightMesh.get_surface_override_material(0).duplicate()
 	if wasOn && !on:
-		lightMesh.get_surface_override_material(0).emission_enabled = on
+		newMaterial.emission_enabled = on
+		lightMesh.set_surface_override_material(0, newMaterial)
 
 	if !wasOn && on:
-		lightMesh.get_surface_override_material(0).emission_enabled = on
-
+		newMaterial.emission_enabled = on
+		lightMesh.set_surface_override_material(0, newMaterial)
 	wasOn = on

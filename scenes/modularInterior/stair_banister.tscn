@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://llc85bep6aa4"]
+
+[ext_resource type="PackedScene" uid="uid://cc4xfu8u62srm" path="res://models/StairBanister.glb" id="1_w0kmi"]
+[ext_resource type="Texture2D" uid="uid://dvofbf8gegjey" path="res://textures/Texture_BookShelf.png" id="2_xaido"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sun1h"]
+albedo_texture = ExtResource("2_xaido")
+texture_filter = 0
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_kiabq"]
+points = PackedVector3Array(1.96575, 1.06842, 0.0597101, 2, 0.99986, 0.0597101, 1.96575, 1.06842, 0, -0.0342083, 0.0684034, 0.0597101, 1.87933, 0.0577999, 0.05196, 2, 0.99986, 0, -0.000158805, -0.000153303, 0.0597101, 0.736385, -0.513688, 0.05196, -0.0342083, 0.0684034, 0, 0.120707, -0.79925, 0.05196, 1.87933, 0.0577999, 0.00774432, 0.736385, -0.513688, 0.00774432, -0.000158805, -0.000153303, 0, 0.164912, -0.79925, 0.05196, 0.120707, -0.79925, 0.00774432, 0.164912, -0.79925, 0.00774432)
+
+[node name="StairBanister" instance=ExtResource("1_w0kmi")]
+
+[node name="StairBanister" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_sun1h")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="StairBanister" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StairBanister/StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_kiabq")

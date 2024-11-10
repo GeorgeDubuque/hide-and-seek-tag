@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://d4ee6wg57emrq" path="res://models/Stairs.glb" id="1_qvijp"]
 [ext_resource type="PackedScene" uid="uid://ba252e7qvkpmc" path="res://scenes/modularInterior/stairs_ramp.tscn" id="2_41gpa"]
-[ext_resource type="Texture2D" uid="uid://yqxr6o0xdlda" path="res://textures/BedroomWall_Green_FullRes.png" id="2_pwymo"]
+[ext_resource type="Texture2D" uid="uid://yqxr6o0xdlda" path="res://textures/Texture_Wall_GreenBedroom.png" id="2_pwymo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jklof"]
 albedo_texture = ExtResource("2_pwymo")

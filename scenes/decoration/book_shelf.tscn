@@ -1,12 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dwg81yfjogkih"]
+[gd_scene load_steps=4 format=3 uid="uid://dwg81yfjogkih"]
 
 [ext_resource type="PackedScene" uid="uid://ctlcj4of3gp84" path="res://models/Model_BookShelf.glb" id="1_wrn33"]
-[ext_resource type="Texture2D" uid="uid://dvofbf8gegjey" path="res://textures/BookShelf_Texture.png" id="2_ye6cf"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8pn0x"]
-albedo_texture = ExtResource("2_ye6cf")
-roughness = 0.15
-texture_filter = 0
+[ext_resource type="Material" uid="uid://dnxsof2jj2rud" path="res://materials/mat_book_shelf.tres" id="2_tm1sv"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qkq4w"]
 points = PackedVector3Array(-0.9, 0.1, -0.720134, -0.9, 1.1, -0.720134, -0.500029, 0.1, -0.720134, -0.9, 0.1, 0.719866, -0.500029, 1.1, -0.720134, -0.9, 1.1, 0.719866, -0.491716, 0.134847, -0.685318, -0.500029, 0.1, 0.719866, -0.491716, 0.565055, -0.685318, -0.500029, 1.1, 0.719866, -0.491716, 0.134847, 0.684909, -0.491716, 0.565055, 0.684909)
@@ -14,7 +9,7 @@ points = PackedVector3Array(-0.9, 0.1, -0.720134, -0.9, 1.1, -0.720134, -0.50002
 [node name="BookShelf" instance=ExtResource("1_wrn33")]
 
 [node name="Cube_005" parent="." index="0"]
-surface_material_override/0 = SubResource("StandardMaterial3D_8pn0x")
+surface_material_override/0 = ExtResource("2_tm1sv")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cube_005" index="0"]
 

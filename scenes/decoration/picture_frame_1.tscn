@@ -1,0 +1,19 @@
+[gd_scene load_steps=6 format=3 uid="uid://cm6nrfati7fvh"]
+
+[ext_resource type="PackedScene" uid="uid://dhmcvrcsr2jl2" path="res://models/Model_PictureFrame1.glb" id="1_6kucg"]
+[ext_resource type="Texture2D" uid="uid://c4xuvy4vfefop" path="res://textures/Texture_PictureFrame1.png" id="2_yjjqk"]
+[ext_resource type="Texture2D" uid="uid://c8ve2xgax33c8" path="res://textures/drake.png" id="3_3w7y5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_egrcp"]
+albedo_texture = ExtResource("2_yjjqk")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_203iu"]
+albedo_texture = ExtResource("3_3w7y5")
+texture_filter = 0
+
+[node name="PictureFrame1" instance=ExtResource("1_6kucg")]
+
+[node name="Cube_006" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_egrcp")
+surface_material_override/1 = SubResource("StandardMaterial3D_203iu")

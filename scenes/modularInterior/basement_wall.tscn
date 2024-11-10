@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://bm6h6qkb2rspo"]
+
+[ext_resource type="PackedScene" uid="uid://dllgf7hwouuvd" path="res://models/Model_BasementWall.glb" id="1_04qh6"]
+[ext_resource type="Texture2D" uid="uid://jfxj81t8x1yl" path="res://textures/Texture_BasementWall.png" id="2_wcsed"]
+[ext_resource type="Texture2D" uid="uid://dhlckj566tycf" path="res://textures/Texture_BasementWall_Normal.png" id="3_v3053"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yjyql"]
+albedo_texture = ExtResource("2_wcsed")
+normal_enabled = true
+normal_texture = ExtResource("3_v3053")
+texture_filter = 0
+
+[node name="BasementWall" instance=ExtResource("1_04qh6")]
+
+[node name="Cube_001" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_yjyql")

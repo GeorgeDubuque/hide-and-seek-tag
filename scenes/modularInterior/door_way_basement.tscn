@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://c43ccm7le2q4b"]
+
+[ext_resource type="PackedScene" uid="uid://c1jx6mu7tuk50" path="res://scenes/modularInterior/door_way.tscn" id="1_3xbng"]
+[ext_resource type="Material" uid="uid://2eyoocnpxsxn" path="res://materials/mat_basement_wall.tres" id="2_om6ps"]
+
+[node name="Basement_DoorWay" instance=ExtResource("1_3xbng")]
+
+[node name="DoorWay" parent="." index="2"]
+surface_material_override/0 = ExtResource("2_om6ps")

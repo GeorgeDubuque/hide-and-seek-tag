@@ -1,0 +1,34 @@
+[gd_scene load_steps=8 format=3 uid="uid://dy68owjaar6x2"]
+
+[ext_resource type="PackedScene" uid="uid://c1sg12sy7hps8" path="res://models/GrandfatherClock.glb" id="1_fthk8"]
+[ext_resource type="Texture2D" uid="uid://dlota8vwn618t" path="res://textures/Texture_GrandfatherClock.png" id="2_juikg"]
+[ext_resource type="Texture2D" uid="uid://ccrwgcsmfk8wf" path="res://textures/Texture_GoldFoil.png" id="3_p8o33"]
+[ext_resource type="Texture2D" uid="uid://cjnwxk4xcq6be" path="res://textures/Texture_GoldFoil_Normal.png" id="4_pb222"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2kc6y"]
+albedo_texture = ExtResource("2_juikg")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ort1j"]
+albedo_texture = ExtResource("3_p8o33")
+metallic = 0.85
+metallic_specular = 0.26
+roughness = 0.3
+normal_enabled = true
+normal_scale = 0.4
+normal_texture = ExtResource("4_pb222")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2xvo2"]
+points = PackedVector3Array(1, 5.83506, 1.0753, 1, 6.27417, 0.556388, -1, 5.83506, 1.0753, 1, 0, 1.00815, 1, 6.49341, 0.278931, -1, 6.27417, 0.556388, -1, 0, 1.00815, 1, 0, -1.00836, 1, 6.56798, 0, -1, 6.49341, 0.278931, -1, 0, -1.00836, 1, 5.83506, -1.0753, -1, 6.56798, 0, 1, 6.49341, -0.279141, -1, 5.83506, -1.0753, 1, 6.27417, -0.556599, -1, 6.49341, -0.279141, -1, 6.27417, -0.556599)
+
+[node name="GrandfatherClock" instance=ExtResource("1_fthk8")]
+
+[node name="GrandfatherClock" parent="." index="0"]
+transform = Transform3D(0.15176, 0, 0, 0, 0.281943, 0, 0, 0, 0.281943, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_2kc6y")
+surface_material_override/1 = SubResource("StandardMaterial3D_ort1j")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="GrandfatherClock" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GrandfatherClock/StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_2xvo2")

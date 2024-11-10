@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://7xseywtsivnf"]
 
 [ext_resource type="PackedScene" uid="uid://87jll708so41" path="res://models/DiningRoomTable.glb" id="1_iyysg"]
-[ext_resource type="Texture2D" uid="uid://dv12ab3e0gno6" path="res://textures/DiningRoomTableTexture.png" id="2_afpv0"]
+[ext_resource type="Texture2D" uid="uid://dv12ab3e0gno6" path="res://textures/Texture_DiningRoomTable.png" id="2_afpv0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lsf2p"]
 albedo_texture = ExtResource("2_afpv0")

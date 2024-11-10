@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://br11glra3i45c"]
+
+[ext_resource type="PackedScene" uid="uid://bafcfcg4drdm" path="res://models/Model_FlatBanister.glb" id="1_sonxi"]
+[ext_resource type="Texture2D" uid="uid://dvofbf8gegjey" path="res://textures/Texture_BookShelf.png" id="2_xhq62"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oqm5y"]
+albedo_texture = ExtResource("2_xhq62")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bbwam"]
+albedo_texture = ExtResource("2_xhq62")
+texture_filter = 0
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_byayk"]
+points = PackedVector3Array(1.73639, 0.942024, 0.0221091, 1.73639, -5.96046e-08, 0.0221091, 1.73639, 0.942024, -0.0221091, -0.0221091, 0.942024, 0.0221091, 1.73639, -5.96046e-08, -0.0221091, -0.0221091, -5.96046e-08, 0.0221091, -0.0221091, 0.942024, -0.0221091, -0.0221091, -5.96046e-08, -0.0221091)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_nk0mt"]
+points = PackedVector3Array(1, 1.10952, -0.84029, 1, 1.10952, -0.9, -1, 1.10952, -0.84029, 1, 1.04202, -0.84029, 1, 1.04202, -0.9, -1, 1.10952, -0.9, -1, 1.04202, -0.84029, -1, 1.04202, -0.9)
+
+[node name="FlatBanister" instance=ExtResource("1_sonxi")]
+
+[node name="FlatBanister" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_oqm5y")
+
+[node name="StairBanister_001" parent="FlatBanister" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_bbwam")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="FlatBanister/StairBanister_001" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FlatBanister/StairBanister_001/StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_byayk")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="FlatBanister" index="1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FlatBanister/StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_nk0mt")
