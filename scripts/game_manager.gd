@@ -21,6 +21,7 @@ const lobbySpawnOffset = Vector3(2, 0, 0) # how far apart players should spawn f
 @export var hiderKey: PackedScene
 
 @onready var startGameButton = $LobbyUI/StartGameButton
+@onready var keySpawner: MultiplayerSpawner = $KeySpawner
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
