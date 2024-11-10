@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://caeiyj6f7i1d0"]
+[gd_scene load_steps=6 format=3 uid="uid://caeiyj6f7i1d0"]
 
 [ext_resource type="PackedScene" uid="uid://dhedkm6pu187l" path="res://scenes/interaction_area.tscn" id="1_4638j"]
 [ext_resource type="Script" path="res://scenes/hider_key.gd" id="1_igmxg"]
@@ -12,6 +12,11 @@ ring_segments = 4
 [sub_resource type="BoxShape3D" id="BoxShape3D_bw4dg"]
 size = Vector3(0.8, 0.8, 0.8)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0mxdw"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
 [node name="HiderKey" type="Node3D"]
 script = ExtResource("1_igmxg")
 
@@ -24,3 +29,6 @@ mesh = SubResource("TorusMesh_5byhk")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.98023e-08, 0.8, 4.47035e-08)
 shape = SubResource("BoxShape3D_bw4dg")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_0mxdw")
