@@ -42,10 +42,6 @@ offset_right = 414.0
 offset_bottom = 456.0
 text = "START GAME"
 
-[node name="KeySpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/hider_key.tscn")
-spawn_path = NodePath("../Keys")
-
 [node name="Keys" type="Node3D" parent="."]
 
 [connection signal="pressed" from="LobbyUI/StartGameButton" to="." method="_on_start_game_button_pressed"]
