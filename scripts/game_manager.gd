@@ -129,7 +129,7 @@ func placeKeys(level: GameLevel):
 		var randomKeySpawnIndex = randi_range(0, available_key_spawns.size() - 1)
 		var randomSpawnPosition: Vector3 = available_key_spawns[randomKeySpawnIndex].position
 		var key = hiderKey.instantiate() as HiderKey
-		level.add_child(key)
+		level.add_child(key, true)
 		# print("setting player ", hider, " as hider at position: ", randomSpawnPosition)
 		key.position = randomSpawnPosition
 		available_key_spawns.remove_at(randomKeySpawnIndex)
