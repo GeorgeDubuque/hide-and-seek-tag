@@ -1,3 +1,4 @@
+# PlayerInteractor.gd
 extends RayCast3D
 
 class_name PlayerInteractor
@@ -10,39 +11,28 @@ var activeInteractable: InteractionArea
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
-	# print(player)
 
+# Detect the active interactable area and send the interaction request to the server
 func _physics_process(delta: float) -> void:
-	if !multiplayer.is_server():
+	if !is_multiplayer_authority():
 		return
 
-	if player_input.interact_button_just_pressed:
-		if activeInteractable != null:
-			# print(player, " with id ", player.multiplayer.get_unique_id(), " tried to interact with ", activeInteractable)
-			# print(player, " client is sending rpc to server to check if interaction was valid")
-			activeInteractable.interact.call(self)
-			# InteractionManager.rpc_id(1, "is_valid_interact", activeInteractable.get_path())
-			# InteractionManager.label.hide()
-
-	player_input.interact_button_just_pressed = false
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	if !multiplayer.is_server():
-		return
-
+	# Update the active interactable object
 	if is_colliding():
-		activeInteractable = get_collider()
-		# print(player, " looking at ", activeInteractable)
+		activeInteractable = get_collider() as InteractionArea
 	else:
 		activeInteractable = null
-		# print(player, " looking at nothing")
 
+	# When the player presses the interact button, send an RPC to the server
+	if player_input.interact_button_just_pressed and activeInteractable != null:
+		print("Client sending RPC to server to interact with: ", activeInteractable)
+		# Send the interaction request to the server via RPC
+		activeInteractable.rpc_id(1, "handle_interaction", player.multiplayer.get_unique_id())
+		player_input.interact_button_just_pressed = false
+
+	# Update the interaction label
 	if activeInteractable != null:
 		interactLabel.text = "[E] to " + activeInteractable.actionName
 		interactLabel.show()
-		# InteractionManager.set_interaction_label_text(activeInteractable.actionName)
-		# InteractionManager.label.show()
 	else:
 		interactLabel.hide()
-		# InteractionManager.label.hide()

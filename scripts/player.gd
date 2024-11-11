@@ -151,6 +151,7 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity") #
 		player_id = id
 		# Give authority over the player_id input to the appropriate peer.
 		$PlayerInput.set_multiplayer_authority(id)
+		$Head/PlayerInteractor.set_multiplayer_authority(id)
 
 @onready var frozenIndicator = $FrozenIndicator
 @onready var interactorRayCast = $Head/PlayerInteractor
@@ -250,13 +251,15 @@ func set_player_status(newStatus: globals.PlayerStatus):
 func set_player_position(newPos: Vector3):
 	position = newPos
 
-func unfreeze_player(playerInteractor: PlayerInteractor):
-	if isFrozen && playerInteractor.player.isHider:
+func unfreeze_player(interactorPlayerId: int):
+	var interactingPlayer = GameManager.id_to_players[interactorPlayerId]
+	if isFrozen && interactingPlayer.isHider:
 		# GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.UNFROZEN, multiplayer.get_unique_id())
 		set_player_status.rpc(globals.PlayerStatus.NONE)
 
-func freeze_player(playerInteractor: PlayerInteractor):
-	if !isFrozen && playerInteractor.player.isTagger:
+func freeze_player(interactorPlayerId: int):
+	var interactingPlayer = GameManager.id_to_players[interactorPlayerId]
+	if !isFrozen && interactingPlayer.isTagger:
 		print("freeze player_id being called on ", GameManager.id_to_players[multiplayer.get_unique_id()])
 		# print(GameManager.id_to_players[multiplayer.get_unique_id()], " calling setPlayerStatus on server with status FROZEN")
 		# GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.FROZEN, multiplayer.get_unique_id())

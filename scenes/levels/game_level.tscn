@@ -1240,6 +1240,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
 [node name="OmniLight3D" parent="Level/WallLamp/WallLamp" index="0"]
 light_color = Color(0.702608, 0.638796, 0.45503, 1)
 
+[node name="InteractionArea" parent="Level/WallLamp/WallLamp" index="1"]
+actionName = null
+
 [node name="WallLamp2" parent="Level" instance=ExtResource("13_sa8b8")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3, 0, -2)
 on = true
@@ -1249,6 +1252,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.37114e-08)
 
 [node name="OmniLight3D" parent="Level/WallLamp2/WallLamp" index="0"]
 light_color = Color(0.702608, 0.638796, 0.45503, 1)
+
+[node name="InteractionArea" parent="Level/WallLamp2/WallLamp" index="1"]
+actionName = null
 
 [node name="WallLamp3" parent="Level" instance=ExtResource("13_sa8b8")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 3, 0, 2)
@@ -1260,6 +1266,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2.38419e-07)
 [node name="OmniLight3D" parent="Level/WallLamp3/WallLamp" index="0"]
 light_color = Color(0.702608, 0.638796, 0.45503, 1)
 
+[node name="InteractionArea" parent="Level/WallLamp3/WallLamp" index="1"]
+actionName = null
+
 [node name="WallLamp4" parent="Level" instance=ExtResource("13_sa8b8")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -1, 0, 2)
 on = true
@@ -1269,6 +1278,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 3.57628e-07)
 
 [node name="OmniLight3D" parent="Level/WallLamp4/WallLamp" index="0"]
 light_color = Color(0.702608, 0.638796, 0.45503, 1)
+
+[node name="InteractionArea" parent="Level/WallLamp4/WallLamp" index="1"]
+actionName = null
 
 [node name="Stairs" parent="Level" instance=ExtResource("8_41qc2")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, 0, -18)
