@@ -22,7 +22,7 @@ func _ready() -> void:
 
 @rpc("call_local", "authority", "reliable")
 func enableKey(player_id):
-	print("enabling key on ", multiplayer.get_unique_id(), " authority of key is ", get_multiplayer_authority())
+	print("enabling key on for ", player_id, " authority of key is ", get_multiplayer_authority())
 	if (multiplayer.get_unique_id() == player_id):
 		interactionArea.enable()
 		mesh.transparency = 0.0
