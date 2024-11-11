@@ -25,13 +25,11 @@ func _ready() -> void:
 func enableKey(player_id):
 	if (multiplayer.get_unique_id() == player_id):
 		print("ENABLING key on ", multiplayer.get_unique_id())
-		print("disabling key collider with path ", $InteractionArea/CollisionShape3D.get_path())
-		# interactionArea.enable()
+		print("enabling key collider with path ", $InteractionArea/CollisionShape3D.get_path())
 		$InteractionArea/CollisionShape3D.disabled = false
 		mesh.transparency = 0.0
 	else:
 		print("DISABLING key on ", multiplayer.get_unique_id())
-		# interactionArea.disable()
 		print("disabling key collider with path ", $InteractionArea/CollisionShape3D.get_path())
 		$InteractionArea/CollisionShape3D.disabled = true
 		mesh.transparency = 0.8
