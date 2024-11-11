@@ -25,21 +25,17 @@ func enableKey():
 	print("enabling key on ", multiplayer.get_unique_id())
 	interactionArea.enable()
 	mesh.transparency = 0.0
-	# var material: Material = hiderKeyRes.material.duplicate()
-	# var meshColor: Color = material.albedo_color
-	# meshColor.a = 1.0
-	# material.albedo_color = meshColor
-	# mesh.set_surface_override_material(0, material)
+	var material: Material = hiderKeyRes.material.duplicate()
+	var meshColor: Color = material.albedo_color
+	meshColor.a = 1.0
+	material.albedo_color = meshColor
+	mesh.set_surface_override_material(0, material)
 
 func disableKey():
 	interactionArea.disable()
 	mesh.transparency = 0.8
-	# var material: Material = hiderKeyRes.material.duplicate()
-	# var meshColor: Color = material.albedo_color
-	# meshColor.a = 0.8
-	# material.albedo_color = meshColor
-	# mesh.set_surface_override_material(0, material)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	print(hiderColor)
+	var material: Material = hiderKeyRes.material.duplicate()
+	var meshColor: Color = material.albedo_color
+	meshColor.a = 0.5
+	material.albedo_color = meshColor
+	mesh.set_surface_override_material(0, material)
