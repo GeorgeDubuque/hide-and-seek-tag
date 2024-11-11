@@ -67,21 +67,15 @@ properties/9/replication_mode = 1
 properties/10/path = NodePath("IA_PlayerUnfreeze/PlayerUnfreeze_CollisionShape:disabled")
 properties/10/spawn = true
 properties/10/replication_mode = 1
-properties/11/path = NodePath("UserInterface/InteractText:text")
+properties/11/path = NodePath(".:player_id")
 properties/11/spawn = true
 properties/11/replication_mode = 1
-properties/12/path = NodePath("UserInterface/InteractText:visible")
+properties/12/path = NodePath("Head:position")
 properties/12/spawn = true
 properties/12/replication_mode = 1
-properties/13/path = NodePath(".:player_id")
+properties/13/path = NodePath(".:hiderColor")
 properties/13/spawn = true
-properties/13/replication_mode = 1
-properties/14/path = NodePath("Head:position")
-properties/14/spawn = true
-properties/14/replication_mode = 1
-properties/15/path = NodePath(".:hiderColor")
-properties/15/spawn = true
-properties/15/replication_mode = 2
+properties/13/replication_mode = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o4lo6"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
