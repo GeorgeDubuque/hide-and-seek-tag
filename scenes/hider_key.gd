@@ -18,36 +18,15 @@ var hiderKeyRes: HiderKeyRes:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	disableKey()
 	pass
 	# disableKey()
 
-@rpc("call_local", "any_peer", "reliable")
+@rpc("call_local", "authority", "reliable")
 func enableKey(player_id):
-	if (multiplayer.get_unique_id() == player_id):
-		print("ENABLING key on ", multiplayer.get_unique_id())
-		print("enabling key collider with path ", $InteractionArea/CollisionShape3D.get_path())
-		$InteractionArea/CollisionShape3D.disabled = false
-		mesh.transparency = 0.0
-	else:
-		print("DISABLING key on ", multiplayer.get_unique_id())
-		print("disabling key collider with path ", $InteractionArea/CollisionShape3D.get_path())
-		$InteractionArea/CollisionShape3D.disabled = true
-		mesh.transparency = 0.8
-	# var material: Material = hiderKeyRes.material.duplicate()
-	# var meshColor: Color = material.albedo_color
-	# meshColor.a = 1.0
-	# material.albedo_color = meshColor
-	# mesh.set_surface_override_material(0, material)
+	interactionArea.enable()
+	mesh.transparency = 0.0
 
-# func disableKey():
-	# print("disabling key on ", multiplayer.get_unique_id())
-	# $InteractionArea/CollisionShape3D.disabled = true
-	# mesh.transparency = 0.8
-	# var material: Material = hiderKeyRes.material.duplicate()
-	# var meshColor: Color = material.albedo_color
-	# meshColor.a = 0.5
-	# material.albedo_color = meshColor
-	# mesh.set_surface_override_material(0, material)
-
-func _process(delta):
-	print("is key disabled: ", $InteractionArea/CollisionShape3D.disabled)
+func disableKey():
+	interactionArea.disable()
+	mesh.transparency = 0.8

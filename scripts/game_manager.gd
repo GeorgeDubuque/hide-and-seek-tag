@@ -145,14 +145,7 @@ func placeKeys(level: GameLevel):
 		# assign hiderKeyColor to key&hider which will in turn assign key.hiderKeyRes as well
 		key.hiderColor = chosenHiderColor
 		hider.hiderColor = chosenHiderColor
-		call_deferred("enable_key_for_player", key, hider.player_id, randomSpawnPosition, chosenHiderColor)
-
-func enable_key_for_player(key, player_id, position, hiderColor):
-	# print("setting authority on key to: ", player_id)
-	# key.set_multiplayer_authority(player_id)
-	print("immediately checking authority of key: ", key.get_multiplayer_authority())
-	# key.call_deferred("rpc_id", player_id, "enableKey", position, hiderColor)
-	key.rpc("enableKey", player_id)
+		key.rpc_id(hider.player_id, "enableKey")
 
 
 func change_level(level_scene: PackedScene, shouldStartGame = false):
