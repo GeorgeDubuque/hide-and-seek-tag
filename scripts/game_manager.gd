@@ -150,6 +150,7 @@ func placeKeys(level: GameLevel):
 func enable_key_for_player(key, player_id, position, hiderColor):
 	print("setting authority on key to: ", player_id)
 	key.set_multiplayer_authority(player_id)
+	print("immediately checking authority of key: ", key.get_multiplayer_authority())
 	key.call_deferred("rpc_id", player_id, "enableKey", position, hiderColor)
 	# key.rpc_id(player_id, "enableKey", position, hiderColor)
 
