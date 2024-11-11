@@ -13,6 +13,7 @@ var interact: Callable = func(interactor: PlayerInteractor):
 
 func enable():
 	collider.disabled = false
+	print("interaction area enabling collider: ", collider.get_path())
 
 func disable():
 	collider.disabled = true
