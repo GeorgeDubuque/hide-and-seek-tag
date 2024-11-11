@@ -37,8 +37,8 @@ extends CharacterBody3D
 				playerBodyMesh.material_override = noneMaterial
 			# globals.PlayerType.HIDER:
 			# 	playerBodyMesh.material_override = hiderMaterial
-			globals.PlayerType.TAGGER:
-				playerBodyMesh.material_override = taggerMaterial
+			# globals.PlayerType.TAGGER:
+			# 	playerBodyMesh.material_override = taggerMaterial
 
 # only applicable to hiders (which key they are looking for)
 @export var hiderColor: globals.HiderColor:
