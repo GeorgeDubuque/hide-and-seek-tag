@@ -24,11 +24,12 @@ func _ready() -> void:
 @rpc("call_local", "any_peer", "reliable")
 func enableKey(player_id):
 	if (multiplayer.get_unique_id() == player_id):
+		print("ENABLING key on ", multiplayer.get_unique_id())
 		# interactionArea.enable()
 		$InteractionArea/CollisionShape3D.disabled = false
 		mesh.transparency = 0.0
 	else:
-		print("disabling key on ", multiplayer.get_unique_id())
+		print("DISABLING key on ", multiplayer.get_unique_id())
 		# interactionArea.disable()
 		$InteractionArea/CollisionShape3D.set_disabled(true)
 		mesh.transparency = 0.8
