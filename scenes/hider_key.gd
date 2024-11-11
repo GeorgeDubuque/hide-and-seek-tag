@@ -29,7 +29,7 @@ func enableKey(player_id):
 	else:
 		print("disabling key on ", multiplayer.get_unique_id())
 		# interactionArea.disable()
-		$InteractionArea/CollisionShape3D.disabled = true
+		$InteractionArea/CollisionShape3D.set_disabled(true)
 		mesh.transparency = 0.8
 	# var material: Material = hiderKeyRes.material.duplicate()
 	# var meshColor: Color = material.albedo_color
