@@ -12,6 +12,7 @@ class_name HiderKey extends Node3D
 var hiderKeyRes: HiderKeyRes:
 	set(value):
 		hiderKeyRes = value
+		mesh = $MeshInstance3D
 		print("setting hiderkeyres: ", hiderKeyRes.material, " on mesh: ", mesh)
 		mesh.material_override = hiderKeyRes.material
 
