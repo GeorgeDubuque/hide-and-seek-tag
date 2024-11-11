@@ -16,3 +16,4 @@ func enable():
 
 func disable():
 	collider.disabled = true
+	print("interaction area disabling collider: ", collider.get_path())
