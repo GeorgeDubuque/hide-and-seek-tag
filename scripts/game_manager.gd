@@ -125,7 +125,7 @@ func placeKeys(level: GameLevel):
 	var available_keys = hiderKeys.duplicate() # TODO: do i need to copy this array in
 
 	for hider in hiders:
-		print("instantiating key")
+		print("instantiating key for hider ", hider)
 		var randomKeySpawnIndex = randi_range(0, available_key_spawns.size() - 1)
 		var randomSpawnPosition: Vector3 = available_key_spawns[randomKeySpawnIndex].position
 		var key = hiderKey.instantiate() as HiderKey
