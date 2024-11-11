@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="HiderKeyRes" load_steps=2 format=3 uid="uid://hrh05c6f0dsm"]
+[gd_resource type="Resource" script_class="HiderKeyRes" load_steps=3 format=3 uid="uid://hrh05c6f0dsm"]
 
 [ext_resource type="Script" path="res://resources/hider_key_res.gd" id="1_6ltww"]
+[ext_resource type="Material" uid="uid://nokleykct0uy" path="res://resources/mat_key_blue.tres" id="1_mtyqn"]
 
 [resource]
 script = ExtResource("1_6ltww")
+material = ExtResource("1_mtyqn")
 hiderColor = 0
