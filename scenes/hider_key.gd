@@ -21,7 +21,7 @@ func _ready() -> void:
 	disableKey()
 
 @rpc("call_local", "authority", "reliable")
-func enableKey():
+func enableKey(player_id):
 	print("enabling key on ", multiplayer.get_unique_id())
 	interactionArea.enable()
 	mesh.transparency = 0.0
