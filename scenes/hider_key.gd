@@ -23,15 +23,19 @@ func _ready() -> void:
 @rpc("call_local")
 func enableKey():
 	interactionArea.enable()
-	var meshColor: Color = mesh.material_override.color
+	var material: Material = mesh.get_surface_override_material(0).duplicate()
+	var meshColor: Color = material.albedo_color
 	meshColor.a = 1.0
-	mesh.material_override.color = meshColor
+	material.albedo_color = meshColor
+	mesh.set_surface_override_material(0, material)
 
 func disableKey():
 	interactionArea.disable()
-	var meshColor: Color = mesh.material_override.color
+	var material: Material = mesh.get_surface_override_material(0).duplicate()
+	var meshColor: Color = material.albedo_color
 	meshColor.a = 0.5
-	mesh.material_override.color = meshColor
+	material.albedo_color = meshColor
+	mesh.set_surface_override_material(0, material)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
