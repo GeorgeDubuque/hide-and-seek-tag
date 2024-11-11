@@ -122,10 +122,10 @@ func placePlayers(level: GameLevel):
 func placeKeys(level: GameLevel):
 	# place hiders
 	var available_key_spawns = level.hiderKeySpawns
-	var available_keys = hiderKeys #TODO: do i need to copy this array in
-	var available_hiders = hiders #TODO: do i need to copy this array in
+	var available_keys = hiderKeys # TODO: do i need to copy this array in
+	var available_hiders = hiders # TODO: do i need to copy this array in
 	# TODO: add logic to give keys colors here
-	for hider in taggers: #TODO: this should be looping through hiders
+	for hider in taggers: # TODO: this should be looping through hiders
 		print("instantiating key")
 		var randomKeySpawnIndex = randi_range(0, available_key_spawns.size() - 1)
 		var randomSpawnPosition: Vector3 = available_key_spawns[randomKeySpawnIndex].position
@@ -138,7 +138,7 @@ func placeKeys(level: GameLevel):
 		print(available_keys)
 		var randomKeyIndex = randi_range(0, available_keys.size() - 1)
 		print("chose key: ", available_keys[randomKeyIndex])
-		key.hiderKeyRes = available_keys[randomKeyIndex]
+		key.hiderColor = (available_keys[randomKeyIndex].hiderColor)
 		available_keys.remove_at(randomKeyIndex)
 
 		# TODO: also assign hiderKey to player
