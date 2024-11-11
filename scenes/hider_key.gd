@@ -23,7 +23,7 @@ func _ready() -> void:
 	# disableKey()
 
 @rpc("call_local", "authority", "reliable")
-func enableKey(player_id):
+func enableKey():
 	interactionArea.enable()
 	mesh.transparency = 0.0
 
