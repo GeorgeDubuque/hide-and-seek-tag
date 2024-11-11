@@ -19,6 +19,7 @@ var hiderKeyRes: HiderKeyRes:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	interactionArea.disable()
+	mesh = $MeshInstance3D
 
 func enableKey():
 	interactionArea.enable()
