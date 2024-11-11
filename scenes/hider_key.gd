@@ -22,6 +22,10 @@ func _ready() -> void:
 	pass
 	# disableKey()
 
+func interact(interactorPlayerId: int):
+	GameManager.collect_key()
+	call_deferred("queue_free")
+
 @rpc("call_local", "authority", "reliable")
 func enableKey():
 	interactionArea.enable()

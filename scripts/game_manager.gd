@@ -3,11 +3,11 @@ extends Node
 var id_to_players = {}
 var taggers = []
 var hiders = []
-var frozenHiders = {}
 var numTaggers = 1
 var id_to_status = {}
 var levelNode
 var gameStatus = globals.GameStatus.LOBBY
+var numKeysCollected = 0
 var keyColorToMaterial = {}
 
 const minNumPlayersToStartGame = 1
@@ -84,6 +84,7 @@ func placePlayersInLobby():
 
 		lastSpawnPos += lobbySpawnOffset
 
+		
 func load_lobby():
 	if multiplayer.is_server():
 
@@ -192,6 +193,12 @@ func update_player_status(player_id, newStatus: globals.PlayerStatus):
 		load_lobby.call_deferred()
 		gameStatus = globals.GameStatus.LOBBY
 
+func collect_key():
+	numKeysCollected += 1
+	if numKeysCollected == hiders.size():
+		print("hiders win!!!")
+		endGame()
+
 
 @rpc("reliable", "any_peer", "call_local")
 func setPlayerStatus(status: globals.PlayerStatus, peer_id):
@@ -210,11 +217,16 @@ func setPlayerStatus(status: globals.PlayerStatus, peer_id):
 			frozenCount += 1
 
 	if frozenCount == hiders.size():
-		# print("taggers win!!!")
-		unfreeze_all_players.call_deferred()
-		load_lobby.call_deferred()
+		print("taggers win!!!")
+		endGame()
+
+func endGame():
+	gameStatus = globals.GameStatus.LOBBY
+	unfreeze_all_players.call_deferred()
+	load_lobby.call_deferred()
 
 
 func _on_start_game_button_pressed() -> void:
 	change_level.call_deferred(load(defaultLevelPath), true)
+	numKeysCollected = 0
 	startGameButton.hide()

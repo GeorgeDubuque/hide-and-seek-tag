@@ -13,7 +13,6 @@ func _ready() -> void:
 	interactionArea.interact = Callable(self, "turn_on_off")
 
 
-@rpc("reliable", "call_local", "any_peer")
 func turn_on_off(interactorPlayerId: int):
 	on = !on
 	light.visible = on
