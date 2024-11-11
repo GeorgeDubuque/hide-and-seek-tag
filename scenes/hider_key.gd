@@ -22,6 +22,7 @@ func _ready() -> void:
 
 @rpc("call_local")
 func enableKey():
+	print("enabling key on ", multiplayer.get_unique_id())
 	interactionArea.enable()
 	mesh.transparency = 0.0
 	# var material: Material = hiderKeyRes.material.duplicate()
