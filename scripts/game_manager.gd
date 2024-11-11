@@ -178,6 +178,12 @@ func unfreeze_all_players():
 		# print("setting ", player, " status to: NONE")
 		player.set_player_status.rpc(globals.PlayerStatus.NONE)
 		id_to_status[player_id] = globals.PlayerStatus.NONE
+
+func reset_player_types():
+	for player_id in id_to_players:
+		var player = id_to_players[player_id]
+		player.set_player_type(globals.PlayerType.NONE)
+
 		
 func update_player_status(player_id, newStatus: globals.PlayerStatus):
 	id_to_status[player_id] = newStatus
@@ -199,6 +205,7 @@ func collect_key():
 
 func endGame():
 	unfreeze_all_players.call_deferred()
+	reset_player_types.call_deferred()
 	load_lobby.call_deferred()
 	gameStatus = globals.GameStatus.LOBBY
 
