@@ -33,6 +33,7 @@ extends CharacterBody3D
 		playerType = value
 		match value:
 			globals.PlayerType.NONE:
+				print("setting ", self, " to tagger material")
 				playerBodyMesh = $Graphics/Mesh
 				playerBodyMesh.material_override = noneMaterial
 			# globals.PlayerType.HIDER:
@@ -49,7 +50,7 @@ extends CharacterBody3D
 var hiderKeyRes: HiderKeyRes:
 	set(value):
 		hiderKeyRes = value
-		print("setting ", self, " color to ", hiderKeyRes.material)
+		print("setting hider color of ", self, " to ", hiderKeyRes.resource_name)
 		playerBodyMesh.material_override = hiderKeyRes.material
 
 
