@@ -21,12 +21,11 @@ func _ready() -> void:
 	disableKey()
 
 @rpc("call_local", "authority", "reliable")
-func enableKey(newPos, newHiderColor):
+func enableKey(player_id):
 	print("enabling key on ", multiplayer.get_unique_id(), " authority of key is ", get_multiplayer_authority())
-	position = newPos
-	hiderColor = newHiderColor
-	interactionArea.enable()
-	mesh.transparency = 0.0
+	if (multiplayer.get_unique_id() == player_id):
+		interactionArea.enable()
+		mesh.transparency = 0.0
 	# var material: Material = hiderKeyRes.material.duplicate()
 	# var meshColor: Color = material.albedo_color
 	# meshColor.a = 1.0
