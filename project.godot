@@ -159,3 +159,5 @@ flashlight={
 3d_physics/layer_3="TagTrigger"
 3d_physics/layer_4="Interactor"
 3d_physics/layer_5="Interactable"
+3d_physics/layer_31="Unfreeze"
+3d_physics/layer_32="Freeze"

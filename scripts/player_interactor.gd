@@ -20,6 +20,7 @@ func _physics_process(delta: float) -> void:
 	# Update the active interactable object
 	if is_colliding():
 		activeInteractable = get_collider() as InteractionArea
+
 	else:
 		activeInteractable = null
 

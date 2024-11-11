@@ -132,6 +132,8 @@ var isFrozen: bool:
 @export var taggerMaterial: StandardMaterial3D
 @export var hiderMaterial: StandardMaterial3D
 
+@onready var playerInteractor: PlayerInteractor = $Head/PlayerInteractor
+
 
 # Member variables
 var speed: float = base_speed
@@ -279,9 +281,11 @@ func set_player_type(type: globals.PlayerType):
 		globals.PlayerType.TAGGER:
 			tagInteractionArea.collider.disabled = true
 			unfreezeInteractionArea.collider.disabled = true
+			playerInteractor.collision_mask = globals.LAYER_INTERACT | globals.LAYER_FREEZE
 		globals.PlayerType.HIDER:
 			tagInteractionArea.collider.disabled = false
 			unfreezeInteractionArea.collider.disabled = true
+			playerInteractor.collision_mask = globals.LAYER_INTERACT | globals.LAYER_UNFREEZE
 
 
 func change_reticle(reticle): # Yup, this function is kinda strange

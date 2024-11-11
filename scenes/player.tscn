@@ -603,6 +603,7 @@ mesh = SubResource("CapsuleMesh_dhnk8")
 skeleton = NodePath("../IA_PlayerUnfreeze")
 
 [node name="IA_PlayerTag" parent="." instance=ExtResource("7_yd3o4")]
+collision_layer = 2147483664
 actionName = "tag."
 
 [node name="PlayerTag_CollisionShape" type="CollisionShape3D" parent="IA_PlayerTag"]
@@ -611,6 +612,7 @@ shape = SubResource("CapsuleShape3D_ufnxo")
 disabled = true
 
 [node name="IA_PlayerUnfreeze" parent="." instance=ExtResource("7_yd3o4")]
+collision_layer = 1073741840
 actionName = "unfreeze"
 
 [node name="PlayerUnfreeze_CollisionShape" type="CollisionShape3D" parent="IA_PlayerUnfreeze"]
