@@ -145,8 +145,8 @@ func placeKeys(level: GameLevel):
 		key.hiderColor = chosenHiderColor
 		hider.hiderColor = chosenHiderColor
 
-		# TODO: also assign hiderKey to player
-		# var randomHiderIndex = randi_range(0, available_hiders.size() - 1)
+		# enabling key for specific hider
+		key.rpc_id(hider.player_id, "enableKey")
 
 func change_level(level_scene: PackedScene, shouldStartGame = false):
 	if multiplayer.is_server():

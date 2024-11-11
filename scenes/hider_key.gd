@@ -20,6 +20,7 @@ var hiderKeyRes: HiderKeyRes:
 func _ready() -> void:
 	interactionArea.disable()
 
+@rpc("call_local")
 func enableKey():
 	interactionArea.enable()
 	var meshColor: Color = mesh.material_override.color
