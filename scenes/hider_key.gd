@@ -18,7 +18,8 @@ var hiderKeyRes: HiderKeyRes:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	disableKey()
+	pass
+	# disableKey()
 
 @rpc("call_local", "any_peer", "reliable")
 func enableKey(player_id):
@@ -37,10 +38,10 @@ func enableKey(player_id):
 	# material.albedo_color = meshColor
 	# mesh.set_surface_override_material(0, material)
 
-func disableKey():
-	print("disabling key on ", multiplayer.get_unique_id())
-	$InteractionArea/CollisionShape3D.disabled = true
-	mesh.transparency = 0.8
+# func disableKey():
+	# print("disabling key on ", multiplayer.get_unique_id())
+	# $InteractionArea/CollisionShape3D.disabled = true
+	# mesh.transparency = 0.8
 	# var material: Material = hiderKeyRes.material.duplicate()
 	# var meshColor: Color = material.albedo_color
 	# meshColor.a = 0.5
