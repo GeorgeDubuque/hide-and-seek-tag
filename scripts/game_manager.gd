@@ -151,7 +151,7 @@ func placeKeys(level: GameLevel):
 		# key.call_deferred("rpc_id", hider.player_id, "enableKey")
 
 func enable_key_for_player(key, player_id):
-	key.rpc(player_id, "enableKey")
+	key.rpc_id(player_id, "enableKey")
 
 
 func change_level(level_scene: PackedScene, shouldStartGame = false):
