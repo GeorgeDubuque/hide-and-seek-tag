@@ -49,7 +49,7 @@ extends CharacterBody3D
 var hiderKeyRes: HiderKeyRes:
 	set(value):
 		hiderKeyRes = value
-		print("setting ", self, " color on: ", multiplayer.get_unique_id())
+		print("setting ", self, " color to ", hiderKeyRes.material)
 		playerBodyMesh.material_override = hiderKeyRes.material
 
 
