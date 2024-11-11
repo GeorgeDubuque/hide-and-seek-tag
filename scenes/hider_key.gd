@@ -7,13 +7,13 @@ class_name HiderKey extends Node3D
 	set(value):
 		hiderColor = value
 		hiderKeyRes = GameManager.hiderKeys.filter(func(key): return key.hiderColor == value)[0]
-		print("setting", self, "color to: ", hiderKeyRes.material.resource_name)
+		print("setting ", self, " color to: ", hiderKeyRes.resource_path)
 
 var hiderKeyRes: HiderKeyRes:
 	set(value):
 		hiderKeyRes = value
 		mesh = $MeshInstance3D
-		mesh.material_override = hiderKeyRes.material
+		mesh.material_override = hiderKeyRes.material.duplicate()
 
 
 # Called when the node enters the scene tree for the first time.

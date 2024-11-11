@@ -139,7 +139,7 @@ func placeKeys(level: GameLevel):
 		# choose random key and then remove it from array so it cant be chosen again
 		var randomKeyIndex = randi_range(0, available_keys.size() - 1)
 		var chosenHiderKeyRes: HiderKeyRes = available_keys[randomKeyIndex]
-		print("chose key: ", chosenHiderKeyRes.material.resource_name, " for player ", hider)
+		print("chose key: ", chosenHiderKeyRes.material.resource_path, " for player ", hider)
 		var chosenHiderColor: globals.HiderColor = chosenHiderKeyRes.hiderColor
 		available_keys.remove_at(randomKeyIndex)
 

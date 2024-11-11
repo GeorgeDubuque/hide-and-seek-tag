@@ -53,7 +53,7 @@ extends CharacterBody3D
 var hiderKeyRes: HiderKeyRes:
 	set(value):
 		hiderKeyRes = value
-		print("setting ", self, " hider color to ", hiderKeyRes.resource_name)
+		print("setting ", self, " hider color to ", hiderKeyRes.resource_path)
 		playerBodyMesh.material_override = hiderKeyRes.material
 
 
