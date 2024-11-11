@@ -147,7 +147,8 @@ func placeKeys(level: GameLevel):
 
 		key.set_multiplayer_authority(hider.player_id) # give the hider authority over the object
 		# enabling key for specific hider
-		key.rpc_id(hider.player_id, "enableKey")
+		key.call_deferred("rpc_id", hider.player_id, "enableKey")
+		# key.rpc_id(hider.player_id, "enableKey")
 
 		# key.call_deferred("set_multiplayer_authority", hider.player_id)
 
