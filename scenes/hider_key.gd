@@ -20,7 +20,7 @@ var hiderKeyRes: HiderKeyRes:
 func _ready() -> void:
 	disableKey()
 
-@rpc("call_local", "authority", "reliable")
+@rpc("call_local", "any_peer", "reliable")
 func enableKey(player_id):
 	if (multiplayer.get_unique_id() == player_id):
 		# interactionArea.enable()
