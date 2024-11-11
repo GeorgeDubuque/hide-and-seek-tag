@@ -22,7 +22,7 @@ func _ready() -> void:
 
 @rpc("call_local", "authority", "reliable")
 func enableKey(newPos, newHiderColor):
-	print("enabling key on ", multiplayer.get_unique_id())
+	print("enabling key on ", multiplayer.get_unique_id(), " authority of key is ", get_multiplayer_authority())
 	position = newPos
 	hiderColor = newHiderColor
 	interactionArea.enable()
