@@ -149,6 +149,8 @@ func placeKeys(level: GameLevel):
 		# enabling key for specific hider
 		key.rpc_id(hider.player_id, "enableKey")
 
+		key.call_deferred("set_multiplayer_authority", hider.player_id)
+
 func change_level(level_scene: PackedScene, shouldStartGame = false):
 	if multiplayer.is_server():
 
