@@ -129,7 +129,7 @@ func placeKeys(level: GameLevel):
 		var randomKeySpawnIndex = randi_range(0, available_key_spawns.size() - 1)
 		var randomSpawnPosition: Vector3 = available_key_spawns[randomKeySpawnIndex].position
 		var key = hiderKey.instantiate() as HiderKey
-		key.set_multiplayer_authority(hider.player_id) # give the hider authority over the object
+		# key.set_multiplayer_authority(hider.player_id) # give the hider authority over the object
 		levelNode.add_child(key, true)
 		# print("setting player ", hider, " as hider at position: ", randomSpawnPosition)
 		key.position = randomSpawnPosition
