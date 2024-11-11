@@ -8,15 +8,13 @@ var numTaggers = 1
 var id_to_status = {}
 var levelNode
 var gameStatus = globals.GameStatus.LOBBY
+var keyColorToMaterial = {}
 
 const minNumPlayersToStartGame = 1
 const lobbyLevelPath = "res://scenes/levels/lobby_level.tscn"
 const defaultLevelPath = "res://scenes/levels/game_level.tscn"
 const lobbySpawnOffset = Vector3(2, 0, 0) # how far apart players should spawn from one another
-
-@export var hiderMatRed: StandardMaterial3D
-@export var hiderMatGreen: StandardMaterial3D
-@export var hiderMatBlue: StandardMaterial3D
+@export var hiderKeys: Array[HiderKeyRes]
 
 @export var hiderKey: PackedScene
 
@@ -124,8 +122,10 @@ func placePlayers(level: GameLevel):
 func placeKeys(level: GameLevel):
 	# place hiders
 	var available_key_spawns = level.hiderKeySpawns
+	var available_keys = hiderKeys #TODO: do i need to copy this array in
+	var available_hiders = hiders #TODO: do i need to copy this array in
 	# TODO: add logic to give keys colors here
-	for hider in taggers:
+	for hider in taggers: #TODO: this should be looping through hiders
 		print("instantiating key")
 		var randomKeySpawnIndex = randi_range(0, available_key_spawns.size() - 1)
 		var randomSpawnPosition: Vector3 = available_key_spawns[randomKeySpawnIndex].position
@@ -134,6 +134,15 @@ func placeKeys(level: GameLevel):
 		# print("setting player ", hider, " as hider at position: ", randomSpawnPosition)
 		key.position = randomSpawnPosition
 		available_key_spawns.remove_at(randomKeySpawnIndex)
+
+		print(available_keys)
+		var randomKeyIndex = randi_range(0, available_keys.size() - 1)
+		print("chose key: ", available_keys[randomKeyIndex])
+		key.hiderKeyRes = available_keys[randomKeyIndex]
+		available_keys.remove_at(randomKeyIndex)
+
+		# TODO: also assign hiderKey to player
+		# var randomHiderIndex = randi_range(0, available_hiders.size() - 1)
 
 func change_level(level_scene: PackedScene, shouldStartGame = false):
 	if multiplayer.is_server():

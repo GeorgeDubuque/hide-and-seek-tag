@@ -1,25 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://cowsi6knonjju"]
+[gd_scene load_steps=7 format=3 uid="uid://cowsi6knonjju"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_ynrm1"]
 [ext_resource type="PackedScene" uid="uid://caeiyj6f7i1d0" path="res://scenes/hider_key.tscn" id="2_fwvwm"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ps46p"]
-transparency = 1
-albedo_color = Color(0.986324, 0, 0.273828, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ni44f"]
-transparency = 1
-albedo_color = Color(0.420202, 0.584363, 0.242225, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_giiyh"]
-transparency = 1
-albedo_color = Color(0.219521, 0.551192, 1, 1)
+[ext_resource type="Script" path="res://resources/hider_key_res.gd" id="2_gpibt"]
+[ext_resource type="Resource" uid="uid://hrh05c6f0dsm" path="res://resources/key_blue.tres" id="3_6dlxg"]
+[ext_resource type="Resource" uid="uid://b6p217mh7vkyb" path="res://resources/key_green.tres" id="4_m2sno"]
+[ext_resource type="Resource" uid="uid://ddsv8o10oy0ma" path="res://resources/key_red.tres" id="5_l63lq"]
 
 [node name="GameManager" type="Node3D"]
 script = ExtResource("1_ynrm1")
-hiderMatRed = SubResource("StandardMaterial3D_ps46p")
-hiderMatGreen = SubResource("StandardMaterial3D_ni44f")
-hiderMatBlue = SubResource("StandardMaterial3D_giiyh")
+hiderKeys = Array[ExtResource("2_gpibt")]([ExtResource("3_6dlxg"), ExtResource("4_m2sno"), ExtResource("5_l63lq")])
 hiderKey = ExtResource("2_fwvwm")
 
 [node name="LobbyUI" type="Control" parent="."]

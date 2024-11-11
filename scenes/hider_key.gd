@@ -3,16 +3,10 @@ class_name HiderKey extends Node3D
 @onready var interactionArea: InteractionArea = $InteractionArea
 @onready var mesh: MeshInstance3D = $MeshInstance3D
 
-@export var hiderColor: globals.HiderColor:
+@export var hiderKeyRes: HiderKeyRes:
 	set(value):
-		hiderColor = value
-		match value:
-			globals.HiderColor.RED:
-				mesh.material_override = GameManager.hiderMatRed
-			globals.HiderColor.GREEN:
-				mesh.material_override = GameManager.hiderMatGreen
-			globals.HiderColor.BLUE:
-				mesh.material_override = GameManager.hiderMatBlue
+		hiderKeyRes = value
+		mesh.material_override = value.material
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
