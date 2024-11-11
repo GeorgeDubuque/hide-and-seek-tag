@@ -122,8 +122,7 @@ func placePlayers(level: GameLevel):
 func placeKeys(level: GameLevel):
 	# place hiders
 	var available_key_spawns = level.hiderKeySpawns
-	var available_keys = hiderKeys # TODO: do i need to copy this array in
-	var available_hiders = hiders # TODO: do i need to copy this array in
+	var available_keys = hiderKeys.duplicate() # TODO: do i need to copy this array in
 
 	for hider in hiders:
 		print("instantiating key")
