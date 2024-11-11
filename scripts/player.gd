@@ -33,6 +33,7 @@ extends CharacterBody3D
 		playerType = value
 		match value:
 			globals.PlayerType.NONE:
+				playerBodyMesh = $Graphics/Mesh
 				playerBodyMesh.material_override = noneMaterial
 			# globals.PlayerType.HIDER:
 			# 	playerBodyMesh.material_override = hiderMaterial
