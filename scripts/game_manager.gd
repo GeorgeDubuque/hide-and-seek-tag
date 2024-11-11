@@ -130,8 +130,10 @@ func placeKeys(level: GameLevel):
 		var randomSpawnPosition: Vector3 = available_key_spawns[randomKeySpawnIndex].position
 		var key = hiderKey.instantiate() as HiderKey
 		levelNode.add_child(key, true)
+		key.set_multiplayer_authority(hider.player_id)
+
 		# print("setting player ", hider, " as hider at position: ", randomSpawnPosition)
-		key.position = randomSpawnPosition
+		# key.position = randomSpawnPosition
 		available_key_spawns.remove_at(randomKeySpawnIndex)
 
 		# choose random key and then remove it from array so it cant be chosen again
@@ -142,16 +144,16 @@ func placeKeys(level: GameLevel):
 		available_keys.remove_at(randomKeyIndex)
 
 		# assign hiderKeyColor to key&hider which will in turn assign key.hiderKeyRes as well
-		key.hiderColor = chosenHiderColor
+		# key.hiderColor = chosenHiderColor
 		hider.hiderColor = chosenHiderColor
-		call_deferred("enable_key_for_player", key, hider.player_id)
+		call_deferred("enable_key_for_player", key, hider.player_id, randomSpawnPosition, chosenHiderColor)
 
 		# key.call_deferred("set_multiplayer_authority", (hider.player_id)) # give the hider authority over the object
 		# enabling key for specific hider
 		# key.call_deferred("rpc_id", hider.player_id, "enableKey")
 
-func enable_key_for_player(key, player_id):
-	key.rpc_id(player_id, "enableKey")
+func enable_key_for_player(key, player_id, position, hiderColor):
+	key.rpc_id(player_id, "enableKey", position, hiderColor)
 
 
 func change_level(level_scene: PackedScene, shouldStartGame = false):
