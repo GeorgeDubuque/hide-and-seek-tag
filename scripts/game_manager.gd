@@ -189,41 +189,18 @@ func update_player_status(player_id, newStatus: globals.PlayerStatus):
 
 	if frozenCount == hiders.size() && gameStatus == globals.GameStatus.IN_GAME:
 		print("taggers win!!!")
-		unfreeze_all_players.call_deferred()
-		load_lobby.call_deferred()
-		gameStatus = globals.GameStatus.LOBBY
+		endGame()
 
 func collect_key():
 	numKeysCollected += 1
-	if numKeysCollected == hiders.size():
+	if numKeysCollected == hiders.size() && globals.GameStatus.IN_GAME:
 		print("hiders win!!!")
 		endGame()
 
-
-@rpc("reliable", "any_peer", "call_local")
-func setPlayerStatus(status: globals.PlayerStatus, peer_id):
-	# var peer_id = multiplayer.get_remote_sender_id()
-	print("server recieved setPlayerStatus rpc from ", id_to_players[peer_id])
-
-	id_to_status[peer_id] = status
-	print("server sending rpc on player ", id_to_players[peer_id], " with status ", status)
-	id_to_players[peer_id].set_player_status.rpc(status)
-
-	# print("setting player ", peer_id, " to status ", str(status))
-
-	var frozenCount = 0
-	for currStatus in id_to_status.values():
-		if currStatus == globals.PlayerStatus.FROZEN:
-			frozenCount += 1
-
-	if frozenCount == hiders.size():
-		print("taggers win!!!")
-		endGame()
-
 func endGame():
-	gameStatus = globals.GameStatus.LOBBY
 	unfreeze_all_players.call_deferred()
 	load_lobby.call_deferred()
+	gameStatus = globals.GameStatus.LOBBY
 
 
 func _on_start_game_button_pressed() -> void:
