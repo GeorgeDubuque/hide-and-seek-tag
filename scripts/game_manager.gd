@@ -135,11 +135,16 @@ func placeKeys(level: GameLevel):
 		key.position = randomSpawnPosition
 		available_key_spawns.remove_at(randomKeySpawnIndex)
 
-		print(available_keys)
+		# choose random key and then remove it from array so it cant be chosen again
 		var randomKeyIndex = randi_range(0, available_keys.size() - 1)
-		print("chose key: ", available_keys[randomKeyIndex])
-		key.hiderColor = (available_keys[randomKeyIndex].hiderColor)
+		var chosenHiderKeyRes: HiderKeyRes = available_keys[randomKeyIndex]
+		print("chose key: ", chosenHiderKeyRes)
+		var chosenHiderColor: globals.HiderColor = chosenHiderKeyRes.hiderColor
 		available_keys.remove_at(randomKeyIndex)
+
+		# assign hiderKeyColor to key&hider which will in turn assign key.hiderKeyRes as well
+		key.hiderColor = chosenHiderColor
+		hider.hiderColor = chosenHiderColor
 
 		# TODO: also assign hiderKey to player
 		# var randomHiderIndex = randi_range(0, available_hiders.size() - 1)
