@@ -26,6 +26,10 @@ func enableKey(player_id):
 	if (multiplayer.get_unique_id() == player_id):
 		interactionArea.enable()
 		mesh.transparency = 0.0
+	else:
+		print("disabling key on ", multiplayer.get_unique_id())
+		interactionArea.disable()
+		mesh.transparency = 0.8
 	# var material: Material = hiderKeyRes.material.duplicate()
 	# var meshColor: Color = material.albedo_color
 	# meshColor.a = 1.0
