@@ -7,9 +7,12 @@ class_name HiderKey extends Node3D
 	set(value):
 		hiderColor = value
 		hiderKeyRes = GameManager.hiderKeys.filter(func(key): return key.hiderColor == value)[0]
+
+var hiderKeyRes: HiderKeyRes:
+	set(value):
+		hiderKeyRes = value
 		mesh.material_override = hiderKeyRes.material
 
-var hiderKeyRes: HiderKeyRes
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
