@@ -6,7 +6,7 @@ class_name HiderKey extends Node3D
 @export var hiderColor: globals.HiderColor:
 	set(value):
 		hiderColor = value
-		print(hiderColor)
+		print("setting hider color on key: ", hiderColor)
 		hiderKeyRes = GameManager.hiderKeys.filter(func(key): return key.hiderColor == value)[0]
 
 var hiderKeyRes: HiderKeyRes:
