@@ -23,7 +23,7 @@ func _ready() -> void:
 @rpc("call_local")
 func enableKey():
 	interactionArea.enable()
-	var material: Material = mesh.get_surface_override_material(0).duplicate()
+	var material: Material = hiderKeyRes.material.duplicate()
 	var meshColor: Color = material.albedo_color
 	meshColor.a = 1.0
 	material.albedo_color = meshColor
@@ -31,7 +31,7 @@ func enableKey():
 
 func disableKey():
 	interactionArea.disable()
-	var material: Material = mesh.get_surface_override_material(0).duplicate()
+	var material: Material = hiderKeyRes.material.duplicate()
 	var meshColor: Color = material.albedo_color
 	meshColor.a = 0.5
 	material.albedo_color = meshColor
