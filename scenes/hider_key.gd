@@ -13,14 +13,12 @@ var hiderKeyRes: HiderKeyRes:
 	set(value):
 		hiderKeyRes = value
 		mesh = $MeshInstance3D
-		print("setting hiderkeyres: ", hiderKeyRes.material, " on mesh: ", mesh)
 		mesh.material_override = hiderKeyRes.material
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	interactionArea.disable()
-	mesh = $MeshInstance3D
 
 func enableKey():
 	interactionArea.enable()

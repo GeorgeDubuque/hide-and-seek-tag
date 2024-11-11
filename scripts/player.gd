@@ -43,13 +43,13 @@ extends CharacterBody3D
 @export var hiderColor: globals.HiderColor:
 	set(value):
 		hiderColor = value
-		match value:
-			globals.HiderColor.RED:
-				playerBodyMesh.material_override = GameManager.hiderMatRed
-			globals.HiderColor.GREEN:
-				playerBodyMesh.material_override = GameManager.hiderMatGreen
-			globals.HiderColor.BLUE:
-				playerBodyMesh.material_override = GameManager.hiderMatBlue
+		print(hiderColor)
+		hiderKeyRes = GameManager.hiderKeys.filter(func(key): return key.hiderColor == value)[0]
+
+var hiderKeyRes: HiderKeyRes:
+	set(value):
+		hiderKeyRes = value
+		playerBodyMesh.material_override = hiderKeyRes.material
 
 
 # Whether the player_id is tagger or taggee
@@ -122,7 +122,7 @@ var isFrozen: bool:
 @export var gravity_enabled: bool = true
 
 @export_group("References")
-@export var playerBodyMesh: MeshInstance3D
+@onready var playerBodyMesh: MeshInstance3D = $Graphics/Mesh
 @export var noneMaterial: StandardMaterial3D
 @export var taggerMaterial: StandardMaterial3D
 @export var hiderMaterial: StandardMaterial3D
