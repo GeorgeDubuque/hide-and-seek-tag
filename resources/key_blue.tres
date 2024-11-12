@@ -6,4 +6,4 @@
 [resource]
 script = ExtResource("1_6ltww")
 material = ExtResource("1_mtyqn")
-hiderColor = 0
+hiderColor = 2
