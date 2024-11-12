@@ -31,6 +31,7 @@ extends CharacterBody3D
 @export var playerType: globals.PlayerType:
 	set(value):
 		playerType = value
+		print("setting player type to: ", value)
 		match value:
 			globals.PlayerType.NONE:
 				print("setting none ", self, " to none material")
