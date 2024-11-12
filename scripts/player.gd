@@ -36,12 +36,15 @@ extends CharacterBody3D
 		if value == null:
 			return
 		hiderColor = value
-		hiderKeyRes = GameManager.hiderKeys.filter(func(key): return key.hiderColor == value)[0]
+		var matchingHiderKeyRes = GameManager.hiderKeys.filter(func(key): return key.hiderColor == value)
+		if matchingHiderKeyRes.size() > 0:
+			hiderKeyRes = matchingHiderKeyRes[0]
 
 var hiderKeyRes: HiderKeyRes:
 	set(value):
 		hiderKeyRes = value
 		print("setting ", self, " hider color to ", hiderKeyRes.resource_path)
+		playerBodyMesh = $Graphics/Mesh
 		playerBodyMesh.material_override = hiderKeyRes.material
 
 
