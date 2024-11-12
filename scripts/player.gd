@@ -249,7 +249,7 @@ func freeze_player(interactorPlayerId: int):
 		# GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.FROZEN, multiplayer.get_unique_id())
 		set_player_status.rpc(globals.PlayerStatus.FROZEN)
 
-func set_player_hider_color(newHiderColor: globals.HiderColor):
+func set_hider_color(newHiderColor: globals.HiderColor):
 	if newHiderColor == null:
 		return
 	hiderColor = newHiderColor
