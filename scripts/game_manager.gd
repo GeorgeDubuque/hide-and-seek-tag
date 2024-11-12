@@ -145,7 +145,7 @@ func placeKeys(level: GameLevel):
 
 		# assign hiderKeyColor to key&hider which will in turn assign key.hiderKeyRes as well
 		key.hiderColor = chosenHiderColor
-		hider.hiderColor = chosenHiderColor
+		hider.set_hider_color(chosenHiderColor)
 		key.rpc_id(hider.player_id, "enableKey")
 
 

@@ -31,21 +31,8 @@ extends CharacterBody3D
 @export var playerType: globals.PlayerType
 
 # only applicable to hiders (which key they are looking for)
-@export var hiderColor: globals.HiderColor:
-	set(value):
-		if value == null:
-			return
-		hiderColor = value
-		var matchingHiderKeyRes = GameManager.hiderKeys.filter(func(key): return key.hiderColor == value)
-		if matchingHiderKeyRes.size() > 0:
-			hiderKeyRes = matchingHiderKeyRes[0]
-
-var hiderKeyRes: HiderKeyRes:
-	set(value):
-		hiderKeyRes = value
-		print("setting ", self, " hider color to ", hiderKeyRes.resource_path)
-		playerBodyMesh = $Graphics/Mesh
-		playerBodyMesh.material_override = hiderKeyRes.material
+@export var hiderColor: globals.HiderColor
+@export var hiderKeyRes: HiderKeyRes
 
 
 # Whether the player_id is tagger or taggee
@@ -261,6 +248,16 @@ func freeze_player(interactorPlayerId: int):
 		# print(GameManager.id_to_players[multiplayer.get_unique_id()], " calling setPlayerStatus on server with status FROZEN")
 		# GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.FROZEN, multiplayer.get_unique_id())
 		set_player_status.rpc(globals.PlayerStatus.FROZEN)
+
+func set_player_hider_color(newHiderColor: globals.HiderColor):
+	if newHiderColor == null:
+		return
+	hiderColor = newHiderColor
+	var matchingHiderKeyRes = GameManager.hiderKeys.filter(func(key): return key.hiderColor == newHiderColor)
+	if matchingHiderKeyRes.size() > 0:
+		hiderKeyRes = matchingHiderKeyRes[0]
+		playerBodyMesh = $Graphics/Mesh
+		playerBodyMesh.material_override = hiderKeyRes.material
 
 # @rpc("any_peer", "reliable", "call_local")
 func set_player_type(type: globals.PlayerType):
