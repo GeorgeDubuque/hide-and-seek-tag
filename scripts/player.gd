@@ -28,22 +28,7 @@ extends CharacterBody3D
 @export var canMove: bool = true
 
 # Whether the player_id is tagger or taggee
-@export var playerType: globals.PlayerType:
-	set(value):
-		playerType = value
-		print("setting player type to: ", value)
-		match value:
-			globals.PlayerType.NONE:
-				print("setting none ", self, " to none material")
-				playerBodyMesh = $Graphics/Mesh
-				playerBodyMesh.material_override = noneMaterial
-			# globals.PlayerType.HIDER:
-			# 	playerBodyMesh.material_override = hiderMaterial
-			globals.PlayerType.TAGGER:
-				print("setting tagger ", self, " to none material")
-				playerBodyMesh = $Graphics/Mesh
-				playerBodyMesh.material_override = noneMaterial
-			# 	playerBodyMesh.material_override = taggerMaterial
+@export var playerType: globals.PlayerType
 
 # only applicable to hiders (which key they are looking for)
 @export var hiderColor: globals.HiderColor:
@@ -281,10 +266,18 @@ func set_player_type(type: globals.PlayerType):
 		globals.PlayerType.NONE:
 			tagInteractionArea.collider.disabled = true
 			unfreezeInteractionArea.collider.disabled = true
+
+			print("setting none ", self, " to none material")
+			playerBodyMesh = $Graphics/Mesh
+			playerBodyMesh.material_override = noneMaterial
 		globals.PlayerType.TAGGER:
 			tagInteractionArea.collider.disabled = true
 			unfreezeInteractionArea.collider.disabled = true
 			playerInteractor.collision_mask = globals.LAYER_INTERACT | globals.LAYER_FREEZE
+
+			print("setting tagger ", self, " to none material")
+			playerBodyMesh = $Graphics/Mesh
+			playerBodyMesh.material_override = noneMaterial
 		globals.PlayerType.HIDER:
 			tagInteractionArea.collider.disabled = false
 			unfreezeInteractionArea.collider.disabled = true
