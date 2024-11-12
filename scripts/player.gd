@@ -47,6 +47,8 @@ extends CharacterBody3D
 # only applicable to hiders (which key they are looking for)
 @export var hiderColor: globals.HiderColor:
 	set(value):
+		if value == null:
+			return
 		hiderColor = value
 		hiderKeyRes = GameManager.hiderKeys.filter(func(key): return key.hiderColor == value)[0]
 
