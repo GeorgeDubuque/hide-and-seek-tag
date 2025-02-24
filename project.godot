@@ -27,6 +27,10 @@ window/size/viewport_width=854
 window/size/viewport_height=480
 window/stretch/mode="viewport"
 
+[dotnet]
+
+project/assembly_name="MultiplayerCustomBuild"
+
 [editor]
 
 version_control/plugin_name="GitPlugin"

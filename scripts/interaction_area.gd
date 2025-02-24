@@ -6,6 +6,7 @@ class_name InteractionArea
 
 var collider: CollisionShape3D
 
+# defined by parent object (ie, turn light on and off) check player start method for what this is bound to
 var interact: Callable = func(playerInteractorId: int):
 	pass
 

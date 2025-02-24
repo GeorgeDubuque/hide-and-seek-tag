@@ -28,11 +28,11 @@ extends MultiplayerSynchronizer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# Only process for the local player.
 	if get_multiplayer_authority() == multiplayer.get_unique_id():
 		username = Steam.getPersonaName()
 		print("setting username to: ", username)
 
+	# Only process for the local player.
 	set_process(get_multiplayer_authority() == multiplayer.get_unique_id())
 	set_process_unhandled_input(get_multiplayer_authority() == multiplayer.get_unique_id())
 	set_physics_process(get_multiplayer_authority() == multiplayer.get_unique_id())
@@ -88,4 +88,4 @@ func _process(delta: float) -> void:
 func _unhandled_input(event: InputEvent):
 	mouse_input = Vector2.ZERO
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		move_head.rpc(event.relative)
+		move_head.rpc(event.relative) # passing relative mouse movement

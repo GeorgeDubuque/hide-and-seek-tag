@@ -147,7 +147,6 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity") #
 var activeInteractable: InteractionArea
 
 func _ready():
-
 	if player_id == multiplayer.get_unique_id():
 		CAMERA.current = true
 		$Graphics.visible = false
@@ -173,6 +172,8 @@ func _ready():
 	CROUCH_ANIMATION.play("RESET")
 	
 	check_controls()
+
+	# Bind callables for interactables on player
 	tagInteractionArea.interact = Callable(self, "freeze_player")
 	unfreezeInteractionArea.interact = Callable(self, "unfreeze_player")
 
@@ -363,7 +364,7 @@ func handle_jumping():
 
 
 func handle_movement(delta, input_dir):
-	var direction = input_dir.rotated(-HEAD.rotation.y)
+	var direction = input_dir.rotated(- HEAD.rotation.y)
 	direction = Vector3(direction.x, 0, direction.y)
 	move_and_slide()
 	
