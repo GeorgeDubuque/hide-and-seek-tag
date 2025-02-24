@@ -22,13 +22,14 @@ func _ready() -> void:
 	interactionArea.interact = Callable(self, "interact")
 	pass
 	# disableKey()
-
+#comment
 func interact(interactorPlayerId: int):
 	GameManager.collect_key()
 	call_deferred("queue_free")
 
 @rpc("call_local", "authority", "reliable")
 func enableKey():
+	print("Enabling %s key." % hiderColor)
 	interactionArea.enable()
 	mesh.transparency = 0.0
 

@@ -2,7 +2,7 @@ extends Node
 
 var id_to_players = {}
 var taggers = []
-var hiders = []
+var hiderPlayers = []
 var numTaggers = 1
 var id_to_status = {}
 var levelNode
@@ -60,20 +60,19 @@ func assignPlayerTypes():
 		print("assigning player ", player, "as TAGGER")
 		player.set_player_type(globals.PlayerType.TAGGER)
 	
-	# set hiders
-	hiders = available_players
+	# set hiderPlayers
+	hiderPlayers = available_players
 	for player in available_players:
 		print("assigning player ", player, "as HIDER")
 		player.set_player_type(globals.PlayerType.HIDER)
 
-	# TODO: go through hiders and assign colors
+	# TODO: go through hiderPlayers and assign colors
 
 func placePlayersInLobby():
 	#place taggers
 	var lastSpawnPos = Vector3(0, 0, 0)
 	for player in id_to_players.values():
 		# print("placing player ", player, " at position in lobby: ", lastSpawnPos)
-
 		player.position = lastSpawnPos
 
 		# remove all status on player
@@ -87,7 +86,6 @@ func placePlayersInLobby():
 		
 func load_lobby():
 	if multiplayer.is_server():
-
 		# Spawn Lobby Level
 		var newLevel = load(lobbyLevelPath).instantiate()
 		levelNode.add_child(newLevel)
@@ -111,9 +109,9 @@ func placePlayers(level: GameLevel):
 		# print("setting player ", tagger, " as tagger at position: ", lastTaggerSpawnPos)
 		lastTaggerSpawnPos += Vector3(1, 0, 0)
 
-	# place hiders
+	# place hiderPlayers
 	var available_hider_spawns = level.hiderSpawns
-	for hider in hiders:
+	for hider in hiderPlayers:
 		var randomHiderSpawnIndex = randi_range(0, available_hider_spawns.size() - 1)
 		var randomSpawnPosition: Vector3 = available_hider_spawns[randomHiderSpawnIndex].position
 		# print("setting player ", hider, " as hider at position: ", randomSpawnPosition)
@@ -121,11 +119,10 @@ func placePlayers(level: GameLevel):
 		available_hider_spawns.remove_at(randomHiderSpawnIndex)
 
 func placeKeys(level: GameLevel):
-	# place hiders
 	var available_key_spawns = level.hiderKeySpawns
 	var available_keys = hiderKeys.duplicate() # TODO: do i need to copy this array in
 
-	for hider in hiders:
+	for hider in hiderPlayers:
 		print("placing key for hider ", hider)
 		var randomKeySpawnIndex = randi_range(0, available_key_spawns.size() - 1)
 		var randomSpawnPosition: Vector3 = available_key_spawns[randomKeySpawnIndex].position
@@ -145,14 +142,13 @@ func placeKeys(level: GameLevel):
 
 		# assign hiderKeyColor to key&hider which will in turn assign key.hiderKeyRes as well
 		key.hiderColor = chosenHiderColor
-		hider.set_hider_color(chosenHiderColor)
+		#hider.set_hider_color(chosenHiderColor)
+		hider.rpc("set_hider_color", chosenHiderColor)
 		key.rpc_id(hider.player_id, "enableKey")
 
 
 func change_level(level_scene: PackedScene, shouldStartGame = false):
 	if multiplayer.is_server():
-
-
 		# Remove everthing BUT new level
 		for c in levelNode.get_children():
 			levelNode.remove_child(c)
@@ -193,14 +189,14 @@ func update_player_status(player_id, newStatus: globals.PlayerStatus):
 		if currStatus == globals.PlayerStatus.FROZEN:
 			frozenCount += 1
 
-	if frozenCount == hiders.size() && gameStatus == globals.GameStatus.IN_GAME:
+	if frozenCount == hiderPlayers.size() && gameStatus == globals.GameStatus.IN_GAME:
 		print("taggers win!!!")
 		endGame()
 
 func collect_key():
 	numKeysCollected += 1
-	if numKeysCollected == hiders.size() && globals.GameStatus.IN_GAME:
-		print("hiders win!!!")
+	if numKeysCollected == hiderPlayers.size() && globals.GameStatus.IN_GAME:
+		print("hiderPlayers win!!!")
 		endGame()
 
 func endGame():

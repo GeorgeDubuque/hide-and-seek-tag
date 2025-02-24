@@ -11,6 +11,7 @@ extends MultiplayerSynchronizer
 @export var CROUCH: String = "crouch"
 @export var SPRINT: String = "sprint"
 @export var INTERACT: String = "interact"
+@export var DEBUG_MENU: String = "debug_menu"
 @export var FLASHLIGHT: String = "flashlight"
 
 @export var input_direction := Vector2()
@@ -21,6 +22,7 @@ extends MultiplayerSynchronizer
 @export var crouch_pressed := false
 @export var pause_button_just_pressed := false
 @export var interact_button_just_pressed := false
+@export var debug_menu_button_just_pressed := false
 @export var use_item_button_just_pressed := false
 @export var use_item_button_pressed := false
 @export var mouse_input := Vector2()
@@ -28,10 +30,9 @@ extends MultiplayerSynchronizer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if get_multiplayer_authority() == multiplayer.get_unique_id():
-		username = Steam.getPersonaName()
-		print("setting username to: ", username)
-
+	# if get_multiplayer_authority() == multiplayer.get_unique_id():
+	# 	username = Steam.getPersonaName()
+	# 	print("setting username to: ", username)
 	# Only process for the local player.
 	set_process(get_multiplayer_authority() == multiplayer.get_unique_id())
 	set_process_unhandled_input(get_multiplayer_authority() == multiplayer.get_unique_id())
@@ -44,6 +45,10 @@ func jump():
 @rpc("call_local")
 func interact():
 	interact_button_just_pressed = true
+
+@rpc("call_local")
+func debug_menu():
+	debug_menu_button_just_pressed = true
 
 @rpc("call_local")
 func use_item():
@@ -81,6 +86,8 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed(INTERACT):
 		interact.rpc()
 
+	if Input.is_action_just_pressed(DEBUG_MENU):
+		debug_menu.rpc()
 
 	if Input.is_action_pressed(JUMP) or Input.is_action_just_pressed(JUMP):
 		jump.rpc()

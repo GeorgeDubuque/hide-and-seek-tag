@@ -15,7 +15,7 @@ playerSpawner = NodePath("PlayerSpawner")
 script = ExtResource("2_woepv")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/levels/lobby_level.tscn", "res://scenes/levels/game_level.tscn", "res://scenes/hider_key.tscn", "res://scenes/player.tscn")
+_spawnable_scenes = PackedStringArray("res://scenes/levels/lobby_level.tscn", "res://scenes/levels/game_level.tscn", "res://scenes/player.tscn")
 spawn_path = NodePath("../Level")
 
 [node name="Level" type="Node" parent="."]
@@ -29,20 +29,26 @@ playerScene = ExtResource("4_uk1g5")
 minNumPlayers = 1
 testLevelPath = "res://scenes/levels/game_level.tscn"
 
-[node name="LobbyUI" type="Control" parent="."]
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LobbyUI" type="Control" parent="UI"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
 
-[node name="Host" type="Button" parent="LobbyUI"]
+[node name="Host" type="Button" parent="UI/LobbyUI"]
 layout_mode = 0
 offset_right = 134.0
 offset_bottom = 102.0
 text = "Host"
 
-[node name="JoinByLobbIdButton" type="Button" parent="LobbyUI"]
+[node name="JoinByLobbIdButton" type="Button" parent="UI/LobbyUI"]
 layout_mode = 0
 offset_left = 46.0
 offset_top = 371.0
@@ -50,21 +56,21 @@ offset_right = 180.0
 offset_bottom = 414.0
 text = "Join"
 
-[node name="Refresh" type="Button" parent="LobbyUI"]
+[node name="Refresh" type="Button" parent="UI/LobbyUI"]
 layout_mode = 0
 offset_top = 104.0
 offset_right = 134.0
 offset_bottom = 206.0
 text = "Refresh"
 
-[node name="LobbyIdInput" type="LineEdit" parent="LobbyUI"]
+[node name="LobbyIdInput" type="LineEdit" parent="UI/LobbyUI"]
 layout_mode = 0
 offset_top = 326.0
 offset_right = 221.0
 offset_bottom = 364.0
 placeholder_text = "Enter Lobby Id"
 
-[node name="Label_LobbyId" type="Label" parent="LobbyUI"]
+[node name="Label_LobbyId" type="Label" parent="UI/LobbyUI"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -82,15 +88,45 @@ text = "Lobby ID: 123141122"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LobbyContainer" type="ScrollContainer" parent="LobbyUI"]
+[node name="LobbyContainer" type="ScrollContainer" parent="UI/LobbyUI"]
 layout_mode = 0
 offset_left = 136.0
 offset_right = 736.0
 offset_bottom = 300.0
 
-[node name="Lobbies" type="VBoxContainer" parent="LobbyUI/LobbyContainer"]
+[node name="Lobbies" type="VBoxContainer" parent="UI/LobbyUI/LobbyContainer"]
 layout_mode = 2
 
-[connection signal="pressed" from="LobbyUI/Host" to="." method="_on_host_pressed"]
-[connection signal="pressed" from="LobbyUI/JoinByLobbIdButton" to="." method="_on_join_by_lobb_id_button_pressed"]
-[connection signal="pressed" from="LobbyUI/Refresh" to="." method="_on_refresh_pressed"]
+[node name="ENetHost" type="Button" parent="UI/LobbyUI"]
+layout_mode = 0
+offset_left = 717.0
+offset_top = 5.0
+offset_right = 850.0
+offset_bottom = 36.0
+text = "Host New Game"
+
+[node name="EnetJoin" type="Button" parent="UI/LobbyUI"]
+layout_mode = 0
+offset_left = 717.0
+offset_top = 42.0
+offset_right = 850.0
+offset_bottom = 73.0
+text = "Join Game"
+
+[node name="DebugInfo" type="Control" parent="UI"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="UI/DebugInfo"]
+layout_mode = 0
+offset_left = 420.0
+offset_right = 460.0
+offset_bottom = 23.0
+text = "Player 1"
+
+[connection signal="pressed" from="UI/LobbyUI/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="UI/LobbyUI/JoinByLobbIdButton" to="." method="_on_join_by_lobb_id_button_pressed"]
+[connection signal="pressed" from="UI/LobbyUI/Refresh" to="." method="_on_refresh_pressed"]
+[connection signal="button_down" from="UI/LobbyUI/ENetHost" to="." method="_on_enet_host_pressed"]
+[connection signal="button_down" from="UI/LobbyUI/EnetJoin" to="." method="_on_enet_join_pressed"]

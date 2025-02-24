@@ -48,6 +48,8 @@ var isFrozen: bool:
 	get:
 		return playerStatus == globals.PlayerStatus.FROZEN
 
+var username: String
+
 ## The reticle file to import at runtime. By default are in res://addons/fpc/reticles/. Set to an empty string to remove.
 @export_file var default_reticle
 
@@ -177,8 +179,10 @@ func _ready():
 	tagInteractionArea.interact = Callable(self, "freeze_player")
 	unfreezeInteractionArea.interact = Callable(self, "unfreeze_player")
 
-func set_username():
-	$Label_Username.text = input.username
+func set_username(new_username: String):
+	username = new_username
+	$Label_Username.text = new_username
+	
 
 func check_controls(): # If you add a control, you might want to add a check for it here.
 	# The actions are being disabled so the engine doesn't halt the entire project in debug mode
@@ -240,7 +244,7 @@ func unfreeze_player(interactorPlayerId: int):
 	var interactingPlayer = GameManager.id_to_players[interactorPlayerId]
 	if isFrozen && interactingPlayer.isHider:
 		# GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.UNFROZEN, multiplayer.get_unique_id())
-		set_player_status.rpc(globals.PlayerStatus.NONE)
+		set_player_status.rpc(globals.PlayerStatus.UNFROZEN)
 
 func freeze_player(interactorPlayerId: int):
 	var interactingPlayer = GameManager.id_to_players[interactorPlayerId]
@@ -250,6 +254,7 @@ func freeze_player(interactorPlayerId: int):
 		# GameManager.setPlayerStatus.rpc_id(1, globals.PlayerStatus.FROZEN, multiplayer.get_unique_id())
 		set_player_status.rpc(globals.PlayerStatus.FROZEN)
 
+@rpc("call_local")
 func set_hider_color(newHiderColor: globals.HiderColor):
 	if newHiderColor == null:
 		return
@@ -294,58 +299,17 @@ func change_reticle(reticle): # Yup, this function is kinda strange
 	$UserInterface.add_child(RETICLE)
 
 
-func _physics_process(delta):
-	if !multiplayer.is_server():
-		return
-	# Big thanks to github.com/LorenzoAncora for the concept of the improved debug values
-	current_speed = Vector3.ZERO.distance_to(get_real_velocity())
-	$UserInterface/DebugPanel.add_property("Speed", snappedf(current_speed, 0.001), 1)
-	$UserInterface/DebugPanel.add_property("Target speed", speed, 2)
-	var cv: Vector3 = get_real_velocity()
-	var vd: Array[float] = [
-		snappedf(cv.x, 0.001),
-		snappedf(cv.y, 0.001),
-		snappedf(cv.z, 0.001)
-	]
-	var readable_velocity: String = "X: " + str(vd[0]) + " Y: " + str(vd[1]) + " Z: " + str(vd[2])
-	$UserInterface/DebugPanel.add_property("Velocity", readable_velocity, 3)
-	
-	# Gravity
-	#gravity = ProjectSettings.get_setting("physics/3d/default_gravity") # If the gravity changes during your game, uncomment this code
-	if not is_on_floor() and gravity and gravity_enabled:
-		velocity.y -= gravity * delta
-	
-	handle_jumping()
-	
-	var input_dir = Vector2.ZERO
-	if canMove && !isFrozen: # Immobility works by interrupting user input, so other forces can still be applied to the player_id
-		input_dir = input.input_direction
+func handle_debug_menu():
+	if input.debug_menu_button_just_pressed:
+		print("pressed debug menu button")
+		if $UserInterface/DebugPanel.visible:
+			$UserInterface/DebugPanel.visible = false
+		else:
+			$UserInterface/DebugPanel.visible = true
 
-	handle_movement(delta, input_dir)
+		input.debug_menu_button_just_pressed = false
 
-	handle_head_rotation()
-	
-	# The player_id is not able to stand up if the ceiling is too low
-	low_ceiling = $CrouchCeilingDetection.is_colliding()
-	
-	handle_state(input_dir)
-	if dynamic_fov: # This may be changed to an AnimationPlayer
-		update_camera_fov()
-	
-	if view_bobbing:
-		headbob_animation(input_dir)
-	
-	if jump_animation:
-		if !was_on_floor and is_on_floor(): # The player_id just landed
-			match randi() % 2: # TODO: Change this to detecting velocity direction
-				0:
-					JUMP_ANIMATION.play("land_left", 0.25)
-				1:
-					JUMP_ANIMATION.play("land_right", 0.25)
-	
-	was_on_floor = is_on_floor() # This must always be at the end of physics_process
-	input.mouse_input = Vector2.ZERO
-
+		
 func handle_jumping():
 	if jumping_enabled:
 		if continuous_jumping: # Hold down the jump button
@@ -509,24 +473,68 @@ func headbob_animation(moving):
 
 
 func _process(delta):
+	if player_id == multiplayer.get_unique_id():
+		$UserInterface/DebugPanel.add_property("FPS", Performance.get_monitor(Performance.TIME_FPS), 0)
+		var status: String = state
+		if !is_on_floor():
+			status += " in the air"
+		$UserInterface/DebugPanel.add_property("State", status, 4)
+
+		if !multiplayer.is_server():
+			return
+
+func _physics_process(delta):
+	# Big thanks to github.com/LorenzoAncora for the concept of the improved debug values
+	if player_id == multiplayer.get_unique_id():
+		current_speed = Vector3.ZERO.distance_to(get_real_velocity())
+		$UserInterface/DebugPanel.add_property("Username", username, 0)
+		$UserInterface/DebugPanel.add_property("Speed", snappedf(current_speed, 0.001), 1)
+		$UserInterface/DebugPanel.add_property("Target speed", speed, 2)
+		var cv: Vector3 = get_real_velocity()
+		var vd: Array[float] = [
+			snappedf(cv.x, 0.001),
+			snappedf(cv.y, 0.001),
+			snappedf(cv.z, 0.001)
+		]
+		var readable_velocity: String = "X: " + str(vd[0]) + " Y: " + str(vd[1]) + " Z: " + str(vd[2])
+		$UserInterface/DebugPanel.add_property("Velocity", readable_velocity, 3)
+
 	if !multiplayer.is_server():
 		return
-	$Label_Username.text = input.username # TODO: figure out a better place to put this
-	# $Graphics/Label_Username.look_at(get_viewport().get_camera_3d().global_position)
-	$UserInterface/DebugPanel.add_property("FPS", Performance.get_monitor(Performance.TIME_FPS), 0)
-	var status: String = state
-	if !is_on_floor():
-		status += " in the air"
-	$UserInterface/DebugPanel.add_property("State", status, 4)
 	
-	# if pausing_enabled:
-	# 	if input.pause_button_just_pressed:
-	# 		# You may want another node to handle pausing, because this player_id may get paused too.
-	# 		match Input.mouse_mode:
-	# 			Input.MOUSE_MODE_CAPTURED:
-	# 				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	# 				#get_tree().paused = false
-	# 			Input.MOUSE_MODE_VISIBLE:
-	# 				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	# 				#get_tree().paused = false
-	# input.pause_button_just_pressed = false
+	# Gravity
+	#gravity = ProjectSettings.get_setting("physics/3d/default_gravity") # If the gravity changes during your game, uncomment this code
+	if not is_on_floor() and gravity and gravity_enabled:
+		velocity.y -= gravity * delta
+	
+	handle_jumping()
+	handle_debug_menu()
+	
+	var input_dir = Vector2.ZERO
+	if canMove && !isFrozen: # Immobility works by interrupting user input, so other forces can still be applied to the player_id
+		input_dir = input.input_direction
+
+	handle_movement(delta, input_dir)
+
+	handle_head_rotation()
+	
+	# The player_id is not able to stand up if the ceiling is too low
+	low_ceiling = $CrouchCeilingDetection.is_colliding()
+	
+	handle_state(input_dir)
+	if dynamic_fov: # This may be changed to an AnimationPlayer
+		update_camera_fov()
+	
+	if view_bobbing:
+		headbob_animation(input_dir)
+	
+	if jump_animation:
+		if !was_on_floor and is_on_floor(): # The player_id just landed
+			match randi() % 2: # TODO: Change this to detecting velocity direction
+				0:
+					JUMP_ANIMATION.play("land_left", 0.25)
+				1:
+					JUMP_ANIMATION.play("land_right", 0.25)
+	
+	was_on_floor = is_on_floor() # This must always be at the end of physics_process
+	input.mouse_input = Vector2.ZERO
