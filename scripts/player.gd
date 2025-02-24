@@ -59,8 +59,9 @@ var username: String
 @export var GRAPHICS: Node3D
 @export var CAMERA: Camera3D
 @export var HEADBOB_ANIMATION: AnimationPlayer
-@export var JUMP_ANIMATION: AnimationPlayer
-@export var CROUCH_ANIMATION: AnimationPlayer
+@export var ANIMATION_TREE: AnimationTree
+# @export var JUMP_ANIMATION: AnimationPlayer
+# @export var CROUCH_ANIMATION: AnimationPlayer
 @export var COLLISION_MESH: CollisionShape3D
 
 @export_group("Controls")
@@ -97,10 +98,6 @@ var username: String
 @export var dynamic_fov: bool = true
 ## If the player_id holds down the jump button, should the player_id keep hopping.
 @export var continuous_jumping: bool = true
-## Enables the view bobbing animation.
-@export var view_bobbing: bool = true
-## Enables an immersive animation when the player_id jumps and hits the ground.
-@export var jump_animation: bool = true
 ## This determines wether the player_id can use the pause button, not wether the game will actually pause.
 @export var pausing_enabled: bool = true
 ## Use with caution.
@@ -115,13 +112,22 @@ var username: String
 @onready var playerInteractor: PlayerInteractor = $Head/PlayerInteractor
 
 
+@export_group("Animation State")
+@export var input_dir: Vector2
+@export var on_floor: bool
+@export var low_ceiling: bool = false # This is for when the cieling is too low and the player_id needs to crouch.
+@export var was_on_floor: bool = true # Was the player_id on the floor last frame (for landing animation)
+## Enables the view bobbing animation.
+@export var view_bobbing: bool = true
+## Enables an immersive animation when the player_id jumps and hits the ground.
+@export var jump_animation: bool = true
+@export var state: String = "normal"
+@export var current_speed: float = 0.0
+@export var current_animation: String
+@export var speed: float = base_speed
+
 # Member variables
-var speed: float = base_speed
-var current_speed: float = 0.0
 # States: normal, crouching, sprinting
-var state: String = "normal"
-var low_ceiling: bool = false # This is for when the cieling is too low and the player_id needs to crouch.
-var was_on_floor: bool = true # Was the player_id on the floor last frame (for landing animation)
 @export var playerStatus: globals.PlayerStatus = globals.PlayerStatus.NONE
 
 # The reticle should always have a Control node as the root
@@ -169,9 +175,9 @@ func _ready():
 	
 	# Reset the camera position
 	# If you want to change the default head height, change these animations.
-	HEADBOB_ANIMATION.play("RESET")
-	JUMP_ANIMATION.play("RESET")
-	CROUCH_ANIMATION.play("RESET")
+	# HEADBOB_ANIMATION.play("RESET")
+	# JUMP_ANIMATION.play("RESET")
+	# CROUCH_ANIMATION.play("RESET")
 	
 	check_controls()
 
@@ -314,14 +320,14 @@ func handle_jumping():
 	if jumping_enabled:
 		if continuous_jumping: # Hold down the jump button
 			if input.jumping and is_on_floor() and !low_ceiling:
-				if jump_animation:
-					JUMP_ANIMATION.play("jump", 0.25)
+				# if jump_animation:
+				# 	JUMP_ANIMATION.play("jump", 0.25)
 				velocity.y += jump_velocity # Adding instead of setting so jumping on slopes works properly
 				# print("is server: ", multiplayer.is_server())
 		else:
 			if input.jumping and is_on_floor() and !low_ceiling:
-				if jump_animation:
-					JUMP_ANIMATION.play("jump", 0.25)
+				# if jump_animation:
+				# 	JUMP_ANIMATION.play("jump", 0.25)
 				velocity.y += jump_velocity
 
 		input.jumping = false
@@ -417,8 +423,8 @@ func handle_state(moving):
 func enter_normal_state():
 	#print("entering normal state")
 	var prev_state = state
-	if prev_state == "crouching":
-		CROUCH_ANIMATION.play_backwards("crouch")
+	# if prev_state == "crouching":
+	# 	CROUCH_ANIMATION.play_backwards("crouch")
 	state = "normal"
 	speed = base_speed
 
@@ -427,13 +433,13 @@ func enter_crouch_state():
 	var prev_state = state
 	state = "crouching"
 	speed = crouch_speed
-	CROUCH_ANIMATION.play("crouch")
+	# CROUCH_ANIMATION.play("crouch")
 
 func enter_sprint_state():
 	#print("entering sprint state")
 	var prev_state = state
-	if prev_state == "crouching":
-		CROUCH_ANIMATION.play_backwards("crouch")
+	# if prev_state == "crouching":
+	# 	CROUCH_ANIMATION.play_backwards("crouch")
 	state = "sprinting"
 	speed = sprint_speed
 
@@ -443,9 +449,8 @@ func update_camera_fov():
 	else:
 		CAMERA.fov = lerp(CAMERA.fov, 90.0, 0.3)
 
-
 func headbob_animation(moving):
-	if moving and is_on_floor():
+	if moving and on_floor:
 		var use_headbob_animation: String
 		match state:
 			"normal", "crouching":
@@ -454,7 +459,7 @@ func headbob_animation(moving):
 				use_headbob_animation = "sprint"
 		
 		var was_playing: bool = false
-		if HEADBOB_ANIMATION.current_animation == use_headbob_animation:
+		if current_animation == use_headbob_animation:
 			was_playing = true
 		
 		HEADBOB_ANIMATION.play(use_headbob_animation, 0.25)
@@ -467,50 +472,23 @@ func headbob_animation(moving):
 			# This code is extremely performant but it makes no sense.
 		
 	else:
-		if HEADBOB_ANIMATION.current_animation == "sprint" or HEADBOB_ANIMATION.current_animation == "walk":
+		if current_animation == "sprint" or current_animation == "walk":
 			HEADBOB_ANIMATION.speed_scale = 1
 			HEADBOB_ANIMATION.play("RESET", 1)
 
+func _apply_input(delta: float):
+	current_speed = Vector3.ZERO.distance_to(get_real_velocity())
+	# current_animation = HEADBOB_ANIMATION.current_animation
+	$UserInterface/DebugPanel.add_property("Username", username, 0)
 
-func _process(delta):
-	if player_id == multiplayer.get_unique_id():
-		$UserInterface/DebugPanel.add_property("FPS", Performance.get_monitor(Performance.TIME_FPS), 0)
-		var status: String = state
-		if !is_on_floor():
-			status += " in the air"
-		$UserInterface/DebugPanel.add_property("State", status, 4)
-
-		if !multiplayer.is_server():
-			return
-
-func _physics_process(delta):
-	# Big thanks to github.com/LorenzoAncora for the concept of the improved debug values
-	if player_id == multiplayer.get_unique_id():
-		current_speed = Vector3.ZERO.distance_to(get_real_velocity())
-		$UserInterface/DebugPanel.add_property("Username", username, 0)
-		$UserInterface/DebugPanel.add_property("Speed", snappedf(current_speed, 0.001), 1)
-		$UserInterface/DebugPanel.add_property("Target speed", speed, 2)
-		var cv: Vector3 = get_real_velocity()
-		var vd: Array[float] = [
-			snappedf(cv.x, 0.001),
-			snappedf(cv.y, 0.001),
-			snappedf(cv.z, 0.001)
-		]
-		var readable_velocity: String = "X: " + str(vd[0]) + " Y: " + str(vd[1]) + " Z: " + str(vd[2])
-		$UserInterface/DebugPanel.add_property("Velocity", readable_velocity, 3)
-
-	if !multiplayer.is_server():
-		return
-	
-	# Gravity
-	#gravity = ProjectSettings.get_setting("physics/3d/default_gravity") # If the gravity changes during your game, uncomment this code
+	#Gravity
 	if not is_on_floor() and gravity and gravity_enabled:
 		velocity.y -= gravity * delta
 	
 	handle_jumping()
 	handle_debug_menu()
 	
-	var input_dir = Vector2.ZERO
+	input_dir = Vector2.ZERO
 	if canMove && !isFrozen: # Immobility works by interrupting user input, so other forces can still be applied to the player_id
 		input_dir = input.input_direction
 
@@ -522,19 +500,37 @@ func _physics_process(delta):
 	low_ceiling = $CrouchCeilingDetection.is_colliding()
 	
 	handle_state(input_dir)
-	if dynamic_fov: # This may be changed to an AnimationPlayer
-		update_camera_fov()
-	
-	if view_bobbing:
-		headbob_animation(input_dir)
-	
-	if jump_animation:
-		if !was_on_floor and is_on_floor(): # The player_id just landed
-			match randi() % 2: # TODO: Change this to detecting velocity direction
-				0:
-					JUMP_ANIMATION.play("land_left", 0.25)
-				1:
-					JUMP_ANIMATION.play("land_right", 0.25)
 	
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
 	input.mouse_input = Vector2.ZERO
+
+func animate():
+	# if dynamic_fov: # This may be changed to an AnimationPlayer
+	# 	update_camera_fov()
+	if view_bobbing:
+		ANIMATION_TREE.set("parameters/IdleWalkRun/blend_position", velocity.length() / sprint_speed)
+		# headbob_animation(input_dir)
+	# if jump_animation:
+	# 	if !was_on_floor and on_floor: # The player_id just landed
+	# 		match randi() % 2: # TODO: Change this to detecting velocity direction
+	# 			0:
+	# 				JUMP_ANIMATION.play("land_left", 0.25)
+	# 			1:
+	# 				JUMP_ANIMATION.play("land_right", 0.25)
+
+func _process(delta):
+	if multiplayer.is_server():
+		$UserInterface/DebugPanel.add_property("FPS", Performance.get_monitor(Performance.TIME_FPS), 0)
+		var status: String = state
+		if !on_floor:
+			status += " in the air"
+		$UserInterface/DebugPanel.add_property("State", status, 4)
+
+func _physics_process(delta):
+	if multiplayer.is_server():
+		on_floor = is_on_floor()
+		_apply_input(delta)
+		animate()
+	
+	if multiplayer.get_unique_id() == player_id:
+		animate()
