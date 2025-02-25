@@ -16,21 +16,17 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if !is_multiplayer_authority():
 		return
-
 	# Update the active interactable object
 	if is_colliding():
 		activeInteractable = get_collider() as InteractionArea
-
 	else:
 		activeInteractable = null
-
 	# When the player presses the interact button, send an RPC to the server
 	if player_input.interact_button_just_pressed and activeInteractable != null:
 		print("Client sending RPC to server to interact with: ", activeInteractable)
 		# Send the interaction request to the server via RPC
 		activeInteractable.rpc_id(1, "handle_interaction", player.multiplayer.get_unique_id())
 		player_input.interact_button_just_pressed = false
-
 	# Update the interaction label
 	if activeInteractable != null:
 		interactLabel.text = "[E] to " + activeInteractable.actionName

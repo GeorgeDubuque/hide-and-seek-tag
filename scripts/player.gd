@@ -108,13 +108,12 @@ var username: String
 @export var noneMaterial: StandardMaterial3D
 @export var taggerMaterial: StandardMaterial3D
 @export var hiderMaterial: StandardMaterial3D
+@export var flashlight: Flashlight
 
 @onready var playerInteractor: PlayerInteractor = $Head/PlayerInteractor
 
 
 @export_group("Animation State")
-@export var input_dir: Vector2
-@export var on_floor: bool
 @export var low_ceiling: bool = false # This is for when the cieling is too low and the player_id needs to crouch.
 @export var was_on_floor: bool = true # Was the player_id on the floor last frame (for landing animation)
 ## Enables the view bobbing animation.
@@ -142,20 +141,26 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity") #
 @export var player_id := 1:
 	set(id):
 		player_id = id
-		# Give authority over the player_id input to the appropriate peer.
-		$PlayerInput.set_multiplayer_authority(id)
-		$Head/PlayerInteractor.set_multiplayer_authority(id)
+		set_multiplayer_authority(1)
+		$Input.set_multiplayer_authority(player_id)
+		# $Head/ItemContainer.set_multiplayer_authority(player_id)
 
 @onready var frozenIndicator = $FrozenIndicator
 @onready var interactorRayCast = $Head/PlayerInteractor
 @onready var graphics = $Graphics
-@onready var input = $PlayerInput
+@onready var input = $Input
+@onready var rollback_synchronizer = $RollbackSynchronizer
 
 @export var tagInteractionArea: InteractionArea
 @export var unfreezeInteractionArea: InteractionArea
 var activeInteractable: InteractionArea
 
 func _ready():
+	await get_tree().process_frame # wait a frame so player_id is set
+
+	# Give authority over the player_id input to the appropriate peer.
+	rollback_synchronizer.process_settings()
+
 	if player_id == multiplayer.get_unique_id():
 		CAMERA.current = true
 		$Graphics.visible = false
@@ -169,16 +174,6 @@ func _ready():
 	# If the controller is rotated in a certain direction for game design purposes, redirect this rotation into the head.
 	HEAD.rotation.y = rotation.y
 	rotation.y = 0
-	
-	if is_multiplayer_authority():
-		if default_reticle:
-			change_reticle(default_reticle)
-	
-	# Reset the camera position
-	# If you want to change the default head height, change these animations.
-	# HEADBOB_ANIMATION.play("RESET")
-	# JUMP_ANIMATION.play("RESET")
-	# CROUCH_ANIMATION.play("RESET")
 	
 	check_controls()
 
@@ -322,29 +317,21 @@ func handle_jumping():
 		# sync bool to play jump anim on client
 		if play_jump_anim:
 			play_jump_anim = false
-		if !play_jump_anim and input.jumping:
+		if !play_jump_anim and input.jumping > 0:
 			play_jump_anim = true
 
-		if continuous_jumping: # Hold down the jump button
-			if input.jumping and is_on_floor() and !low_ceiling:
-				# if jump_animation:
-				# 	JUMP_ANIMATION.play("jump", 0.25)
-				velocity.y += jump_velocity # Adding instead of setting so jumping on slopes works properly
-				# print("is server: ", multiplayer.is_server())
-		else:
-			if input.jumping and is_on_floor() and !low_ceiling:
-				# if jump_animation:
-				# 	JUMP_ANIMATION.play("jump", 0.25)
-				velocity.y += jump_velocity
-
-		input.jumping = false
+		if input.jumping > 0 and is_on_floor() and !low_ceiling:
+			# if jump_animation:
+			# 	JUMP_ANIMATION.play("jump", 0.25)
+			velocity.y += jump_velocity # Adding instead of setting so jumping on slopes works properly
+			# print("is server: ", multiplayer.is_server())
 
 
 func handle_movement(delta, input_dir):
 	var direction = input_dir.rotated(- HEAD.rotation.y)
 	direction = Vector3(direction.x, 0, direction.y)
-	move_and_slide()
-	
+
+
 	if in_air_momentum:
 		if is_on_floor():
 			if motion_smoothing:
@@ -361,13 +348,14 @@ func handle_movement(delta, input_dir):
 			velocity.x = direction.x * speed
 			velocity.z = direction.z * speed
 
-func handle_head_rotation():
-	HEAD.rotation_degrees.y -= input.mouse_input.x * mouse_sensitivity
-	GRAPHICS.rotation_degrees.y -= input.mouse_input.x * mouse_sensitivity
-	if invert_mouse_y:
-		HEAD.rotation_degrees.x -= input.mouse_input.y * mouse_sensitivity * -1.0
-	else:
-		HEAD.rotation_degrees.x -= input.mouse_input.y * mouse_sensitivity
+func handle_head_rotation(delta):
+	if input.mouse_input.length() > 0:
+		HEAD.rotation_degrees.y -= input.mouse_input.x * mouse_sensitivity * delta
+		GRAPHICS.rotation_degrees.y -= input.mouse_input.x * mouse_sensitivity * delta
+		if invert_mouse_y:
+			HEAD.rotation_degrees.x -= input.mouse_input.y * mouse_sensitivity * -1.0 * delta
+		else:
+			HEAD.rotation_degrees.x -= input.mouse_input.y * mouse_sensitivity * delta
 	
 	# Uncomment for controller support
 	#var controller_view_rotation = Input.get_vector(LOOK_DOWN, LOOK_UP, LOOK_RIGHT, LOOK_LEFT) * controller_sensitivity # These are inverted because of the nature of 3D rotation.
@@ -456,33 +444,6 @@ func update_camera_fov():
 	else:
 		CAMERA.fov = lerp(CAMERA.fov, 90.0, 0.3)
 
-# func headbob_animation(moving):
-# 	if moving and on_floor:
-# 		var use_headbob_animation: String
-# 		match state:
-# 			"normal", "crouching":
-# 				use_headbob_animation = "walk"
-# 			"sprinting":
-# 				use_headbob_animation = "sprint"
-# 		
-# 		var was_playing: bool = false
-# 		if current_animation == use_headbob_animation:
-# 			was_playing = true
-# 		
-# 		HEADBOB_ANIMATION.play(use_headbob_animation, 0.25)
-# 		HEADBOB_ANIMATION.speed_scale = (current_speed / base_speed) * 1.75
-# 		if !was_playing:
-# 			HEADBOB_ANIMATION.seek(float(randi() % 2)) # Randomize the initial headbob direction
-# 			# Let me explain that piece of code because it looks like it does the opposite of what it actually does.
-# 			# The headbob animation has two starting positions. One is at 0 and the other is at 1.
-# 			# randi() % 2 returns either 0 or 1, and so the animation randomly starts at one of the starting positions.
-# 			# This code is extremely performant but it makes no sense.
-# 		
-# 	else:
-# 		if current_animation == "sprint" or current_animation == "walk":
-# 			HEADBOB_ANIMATION.speed_scale = 1
-# 			HEADBOB_ANIMATION.play("RESET", 1)
-
 func headbob_animation(moving):
 	var horizontal_velocity = Vector2(velocity.x, velocity.z)
 	match (state):
@@ -508,6 +469,8 @@ func headbob_animation(moving):
 	# 		HEADBOB_ANIMATION.play("RESET", 1)
 
 func _apply_input(delta: float):
+	_force_update_is_on_floor()
+
 	current_speed = Vector3.ZERO.distance_to(get_real_velocity())
 	# current_animation = HEADBOB_ANIMATION.current_animation
 	$UserInterface/DebugPanel.add_property("Username", username, 0)
@@ -519,13 +482,13 @@ func _apply_input(delta: float):
 	handle_jumping()
 	handle_debug_menu()
 	
-	input_dir = Vector2.ZERO
+	var input_dir = Vector2.ZERO
 	if canMove && !isFrozen: # Immobility works by interrupting user input, so other forces can still be applied to the player_id
 		input_dir = input.input_direction
 
 	handle_movement(delta, input_dir)
 
-	handle_head_rotation()
+	handle_head_rotation(delta)
 	
 	# The player_id is not able to stand up if the ceiling is too low
 	low_ceiling = $CrouchCeilingDetection.is_colliding()
@@ -535,6 +498,12 @@ func _apply_input(delta: float):
 	was_on_floor = is_on_floor() # This must always be at the end of physics_process
 	input.mouse_input = Vector2.ZERO
 
+	velocity *= NetworkTime.physics_factor # allows move and slide to take into account the delta time NetFox uses
+
+	move_and_slide()
+
+	velocity /= NetworkTime.physics_factor # resets our velocity to original so we can continue to accumulate velocity
+
 func animate():
 	ANIMATION_TREE.set("parameters/conditions/grounded", is_on_floor())
 	ANIMATION_TREE.set("parameters/conditions/jump", input.jumping)
@@ -542,7 +511,7 @@ func animate():
 		update_camera_fov()
 
 	if view_bobbing:
-		headbob_animation(input_dir)
+		headbob_animation(input.input_direction)
 
 
 		# if !was_on_floor and on_floor: # The player_id just landed
@@ -551,20 +520,17 @@ func animate():
 			# 		JUMP_ANIMATION.play("land_left", 0.25)
 			# 	1:
 			# 		JUMP_ANIMATION.play("land_right", 0.25)
-func _process(delta):
-	if multiplayer.is_server():
-		$UserInterface/DebugPanel.add_property("FPS", Performance.get_monitor(Performance.TIME_FPS), 0)
-		var status: String = state
-		if !on_floor:
-			status += " in the air"
-		$UserInterface/DebugPanel.add_property("State", status, 4)
+
+func _force_update_is_on_floor():
+	var old_velocity = velocity
+	velocity = Vector3.ZERO
+	move_and_slide()
+	velocity = old_velocity
 
 
-func _physics_process(delta):
-	if multiplayer.is_server():
-		on_floor = is_on_floor()
-		_apply_input(delta)
-		animate()
+func _rollback_tick(delta, tick, is_fresh):
+	_apply_input(delta)
 
-	if multiplayer.get_unique_id() == player_id:
-		animate()
+
+func _process(delta: float) -> void:
+	animate()

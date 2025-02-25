@@ -12,10 +12,10 @@ var use_item: Callable = func():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if !multiplayer.is_server() || playerInput == null:
+	if playerInput == null:
 		return
 
-	if playerInput.use_item_button_just_pressed:
+	if playerInput.use_item:
 		use_item.call()
 
-	playerInput.use_item_button_just_pressed = false
+	playerInput.use_item = false

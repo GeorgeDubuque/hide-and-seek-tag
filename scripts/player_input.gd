@@ -1,5 +1,5 @@
 class_name PlayerInput
-extends MultiplayerSynchronizer
+extends Node
 
 @export var JUMP: String = "jump"
 @export var LEFT: String = "ui_left"
@@ -14,19 +14,20 @@ extends MultiplayerSynchronizer
 @export var DEBUG_MENU: String = "debug_menu"
 @export var FLASHLIGHT: String = "flashlight"
 
-@export var input_direction := Vector2()
-@export var jumping := false
-@export var sprinting_just_pressed := false
-@export var sprinting_pressed := false
-@export var crouch_just_pressed := false
-@export var crouch_pressed := false
-@export var pause_button_just_pressed := false
-@export var interact_button_just_pressed := false
-@export var debug_menu_button_just_pressed := false
-@export var use_item_button_just_pressed := false
-@export var use_item_button_pressed := false
-@export var mouse_input := Vector2()
-@export var username: String
+var input_direction := Vector2()
+var jumping: float
+var sprinting_just_pressed := false
+var sprinting_pressed := false
+var crouch_just_pressed := false
+var crouch_pressed := false
+var pause_button_just_pressed := false
+var interact_button_just_pressed := false
+var debug_menu_button_just_pressed := false
+var use_item := false
+var mouse_input := Vector2()
+var username: String
+
+var last_mouse_movement: Vector2 # relative mouse movement set in unhandled input
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,32 +38,36 @@ func _ready():
 	set_process(get_multiplayer_authority() == multiplayer.get_unique_id())
 	set_process_unhandled_input(get_multiplayer_authority() == multiplayer.get_unique_id())
 	set_physics_process(get_multiplayer_authority() == multiplayer.get_unique_id())
+	NetworkTime.before_tick_loop.connect(_gather)
 
-@rpc("call_local")
-func jump():
-	jumping = true
+func _gather():
+	if not is_multiplayer_authority():
+		return
 
-@rpc("call_local")
-func interact():
-	interact_button_just_pressed = true
 
-@rpc("call_local")
-func debug_menu():
-	debug_menu_button_just_pressed = true
+	input_direction = Input.get_vector(LEFT, RIGHT, FORWARD, BACKWARD)
+	sprinting_just_pressed = Input.is_action_just_pressed(SPRINT)
+	sprinting_pressed = Input.is_action_pressed(SPRINT)
+	crouch_just_pressed = Input.is_action_just_pressed(CROUCH)
+	crouch_pressed = Input.is_action_pressed(CROUCH)
 
-@rpc("call_local")
-func use_item():
-	use_item_button_just_pressed = true
+	mouse_input.x += last_mouse_movement.x
+	mouse_input.y += last_mouse_movement.y
+	last_mouse_movement = Vector2.ZERO
 
-@rpc("call_local")
-func move_head(mouse_movement: Vector2):
-	mouse_input.x += mouse_movement.x
-	mouse_input.y += mouse_movement.y
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta: float) -> void:
+	if Input.is_action_just_pressed(INTERACT):
+		interact_button_just_pressed = true
+
+	if Input.is_action_just_pressed(DEBUG_MENU):
+		debug_menu_button_just_pressed = true
+
+
+func _process(delta: float) -> void:
+	jumping = Input.get_action_strength(JUMP)
 	pause_button_just_pressed = Input.is_action_just_pressed(PAUSE)
 
+	use_item = Input.is_action_just_pressed(FLASHLIGHT)
 	if pause_button_just_pressed:
 		# You may want another node to handle pausing, because this player may get paused too.
 		match Input.mouse_mode:
@@ -73,26 +78,8 @@ func _physics_process(delta: float) -> void:
 				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 				#get_tree().paused = false
 
-func _process(delta: float) -> void:
-	input_direction = Input.get_vector(LEFT, RIGHT, FORWARD, BACKWARD)
-	sprinting_just_pressed = Input.is_action_just_pressed(SPRINT)
-	sprinting_pressed = Input.is_action_pressed(SPRINT)
-	crouch_just_pressed = Input.is_action_just_pressed(CROUCH)
-	crouch_pressed = Input.is_action_pressed(CROUCH)
-
-	if Input.is_action_just_pressed(FLASHLIGHT):
-		use_item.rpc()
-
-	if Input.is_action_just_pressed(INTERACT):
-		interact.rpc()
-
-	if Input.is_action_just_pressed(DEBUG_MENU):
-		debug_menu.rpc()
-
-	if Input.is_action_pressed(JUMP) or Input.is_action_just_pressed(JUMP):
-		jump.rpc()
 
 func _unhandled_input(event: InputEvent):
 	mouse_input = Vector2.ZERO
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		move_head.rpc(event.relative) # passing relative mouse movement
+		last_mouse_movement = event.relative # passing relative mouse movement

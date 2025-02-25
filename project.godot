@@ -20,6 +20,11 @@ config/icon="res://icon.svg"
 globals="*res://scripts/globals.gd"
 InteractionManager="*res://scenes/managers/interaction_manager.tscn"
 GameManager="*res://scenes/autoloads/game_manager.tscn"
+NetworkTime="*res://addons/netfox/network-time.gd"
+NetworkTimeSynchronizer="*res://addons/netfox/network-time-synchronizer.gd"
+NetworkRollback="*res://addons/netfox/rollback/network-rollback.gd"
+NetworkEvents="*res://addons/netfox/network-events.gd"
+NetworkPerformance="*res://addons/netfox/network-performance.gd"
 
 [display]
 
@@ -36,6 +41,10 @@ project/assembly_name="MultiplayerCustomBuild"
 
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/netfox.internals/plugin.cfg", "res://addons/netfox/plugin.cfg")
 
 [global_group]
 

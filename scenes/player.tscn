@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=42 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_uajkv"]
 [ext_resource type="Material" uid="uid://c832cg6yrl8wm" path="res://materials/material_tagger.tres" id="2_h22dh"]
@@ -6,7 +6,9 @@
 [ext_resource type="Script" path="res://scripts/player_interactor.gd" id="3_glr05"]
 [ext_resource type="Material" uid="uid://33bvkkcsxf6x" path="res://materials/material_hider.tres" id="3_gqwcm"]
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/EditorModule.gd" id="4_mwxu7"]
+[ext_resource type="Script" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="4_rlumb"]
 [ext_resource type="Script" path="res://scripts/player_input.gd" id="4_t3erj"]
+[ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="5_6dk3b"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://cmdlr7xcpbosy" path="res://resources/animation/BT_IdleWalkRun.tres" id="5_8263k"]
 [ext_resource type="PackedScene" uid="uid://cme1citet8iai" path="res://scenes/items/flashlight.tscn" id="6_lvndv"]
 [ext_resource type="PackedScene" uid="uid://dhedkm6pu187l" path="res://scenes/components/interaction_area.tscn" id="7_yd3o4"]
@@ -14,120 +16,10 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j60o4"]
 albedo_color = Color(0.629847, 0.479353, 0.14129, 1)
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_6bmlt"]
-properties/0/path = NodePath("PlayerInput:input_direction")
-properties/0/spawn = false
-properties/0/replication_mode = 1
-properties/1/path = NodePath("PlayerInput:sprinting_just_pressed")
-properties/1/spawn = false
-properties/1/replication_mode = 1
-properties/2/path = NodePath("PlayerInput:sprinting_pressed")
-properties/2/spawn = false
-properties/2/replication_mode = 1
-properties/3/path = NodePath("PlayerInput:crouch_just_pressed")
-properties/3/spawn = false
-properties/3/replication_mode = 1
-properties/4/path = NodePath("PlayerInput:crouch_pressed")
-properties/4/spawn = false
-properties/4/replication_mode = 1
-properties/5/path = NodePath("PlayerInput:username")
-properties/5/spawn = true
-properties/5/replication_mode = 1
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_56ji0"]
-properties/0/path = NodePath(".:position")
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ue1ev"]
+properties/0/path = NodePath(".:player_id")
 properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:rotation")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-properties/2/path = NodePath("Graphics:rotation")
-properties/2/spawn = true
-properties/2/replication_mode = 1
-properties/3/path = NodePath(".:playerType")
-properties/3/spawn = true
-properties/3/replication_mode = 1
-properties/4/path = NodePath(".:canMove")
-properties/4/spawn = true
-properties/4/replication_mode = 1
-properties/5/path = NodePath(".:playerStatus")
-properties/5/spawn = true
-properties/5/replication_mode = 1
-properties/6/path = NodePath("Head:rotation")
-properties/6/spawn = true
-properties/6/replication_mode = 1
-properties/7/path = NodePath("FrozenIndicator:visible")
-properties/7/spawn = true
-properties/7/replication_mode = 1
-properties/8/path = NodePath("Label_Username:text")
-properties/8/spawn = true
-properties/8/replication_mode = 1
-properties/9/path = NodePath("IA_PlayerTag/PlayerTag_CollisionShape:disabled")
-properties/9/spawn = true
-properties/9/replication_mode = 1
-properties/10/path = NodePath("IA_PlayerUnfreeze/PlayerUnfreeze_CollisionShape:disabled")
-properties/10/spawn = true
-properties/10/replication_mode = 1
-properties/11/path = NodePath(".:player_id")
-properties/11/spawn = true
-properties/11/replication_mode = 1
-properties/12/path = NodePath("Head:position")
-properties/12/spawn = true
-properties/12/replication_mode = 1
-properties/13/path = NodePath(".:hiderColor")
-properties/13/spawn = true
-properties/13/replication_mode = 1
-properties/14/path = NodePath("Head/PlayerInteractor:collision_mask")
-properties/14/spawn = true
-properties/14/replication_mode = 1
-properties/15/path = NodePath("UserInterface/DebugPanel:visible")
-properties/15/spawn = true
-properties/15/replication_mode = 1
-properties/16/path = NodePath(".:on_floor")
-properties/16/spawn = true
-properties/16/replication_mode = 1
-properties/17/path = NodePath(".:was_on_floor")
-properties/17/spawn = true
-properties/17/replication_mode = 1
-properties/18/path = NodePath(".:input_dir")
-properties/18/spawn = true
-properties/18/replication_mode = 1
-properties/19/path = NodePath(".:low_ceiling")
-properties/19/spawn = true
-properties/19/replication_mode = 1
-properties/20/path = NodePath(".:jump_animation")
-properties/20/spawn = true
-properties/20/replication_mode = 2
-properties/21/path = NodePath(".:dynamic_fov")
-properties/21/spawn = true
-properties/21/replication_mode = 1
-properties/22/path = NodePath(".:state")
-properties/22/spawn = true
-properties/22/replication_mode = 1
-properties/23/path = NodePath(".:current_speed")
-properties/23/spawn = true
-properties/23/replication_mode = 1
-properties/24/path = NodePath(".:current_animation")
-properties/24/spawn = true
-properties/24/replication_mode = 1
-properties/25/path = NodePath(".:base_speed")
-properties/25/spawn = true
-properties/25/replication_mode = 1
-properties/26/path = NodePath(".:speed")
-properties/26/spawn = true
-properties/26/replication_mode = 1
-properties/27/path = NodePath(".:velocity")
-properties/27/spawn = true
-properties/27/replication_mode = 1
-properties/28/path = NodePath(".:sprint_speed")
-properties/28/spawn = true
-properties/28/replication_mode = 1
-properties/29/path = NodePath(".:play_jump_anim")
-properties/29/spawn = true
-properties/29/replication_mode = 2
-properties/30/path = NodePath(".:jumping_enabled")
-properties/30/spawn = true
-properties/30/replication_mode = 1
+properties/0/replication_mode = 0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o4lo6"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
@@ -233,6 +125,84 @@ tracks/0/keys = {
 "values": []
 }
 
+[sub_resource type="Animation" id="Animation_ex4ka"]
+resource_name = "in_air"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+
+[sub_resource type="Animation" id="Animation_0fi5x"]
+resource_name = "jump_land"
+length = 0.1
+step = 0.01
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.0275, -0.00845782, -0.01, -0.03, 0.00154218, 0.09, -0.00128203, 1.47992e-05, -0.07, -0.00968299, 0.04, 0, -0.000186928, -0.03, 0.000201727, 0.25, 0),
+"times": PackedFloat32Array(0.0025, 0.1, 0.4, 0.5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.0191143, -0.0844025, -0.00315876, -0.0413538, -0.205346, 0.084627, 0.320174, -0.000149879, -0.0602864, 0.306441, 0.0370229, -0.133281, -0.000186928, -0.0173633, -0.0688942, 0.0670985, 0.000564871),
+"times": PackedFloat32Array(0, 0.1, 0.4, 0.5)
+}
+
+[sub_resource type="Animation" id="Animation_jhsur"]
+resource_name = "jump_start"
+length = 0.333
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.233333, 0.466667)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.005213, -0.214633, -0.216166, -0.0296245, 0.00612852, 0.077793, 0.0336594, 0.0473608, -0.0333333, 4.95631e-05, 0.0245608, -0.00612852, 0, -0.0333333, 0.000594759, 0.0333333, -4.95632e-05),
+"times": PackedFloat32Array(0, 0.0713285, 0.181171, 0.333333)
+}
+
 [sub_resource type="Animation" id="Animation_8ku67"]
 resource_name = "sprint"
 length = 2.0
@@ -287,84 +257,6 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.5, 1, 1.5, 2)
 }
 
-[sub_resource type="Animation" id="Animation_jhsur"]
-resource_name = "jump_start"
-length = 0.333
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera:position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.233333, 0.466667)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.005213, -0.214633, -0.216166, -0.0296245, 0.00612852, 0.077793, 0.0336594, 0.0473608, -0.0333333, 4.95631e-05, 0.0245608, -0.00612852, 0, -0.0333333, 0.000594759, 0.0333333, -4.95632e-05),
-"times": PackedFloat32Array(0, 0.0713285, 0.181171, 0.333333)
-}
-
-[sub_resource type="Animation" id="Animation_0fi5x"]
-resource_name = "jump_land"
-length = 0.1
-step = 0.01
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera:position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.0275, -0.00845782, -0.01, -0.03, 0.00154218, 0.09, -0.00128203, 1.47992e-05, -0.07, -0.00968299, 0.04, 0, -0.000186928, -0.03, 0.000201727, 0.25, 0),
-"times": PackedFloat32Array(0.0025, 0.1, 0.4, 0.5)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.0191143, -0.0844025, -0.00315876, -0.0413538, -0.205346, 0.084627, 0.320174, -0.000149879, -0.0602864, 0.306441, 0.0370229, -0.133281, -0.000186928, -0.0173633, -0.0688942, 0.0670985, 0.000564871),
-"times": PackedFloat32Array(0, 0.1, 0.4, 0.5)
-}
-
-[sub_resource type="Animation" id="Animation_ex4ka"]
-resource_name = "in_air"
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera:position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(),
-"points": PackedFloat32Array(),
-"times": PackedFloat32Array()
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(),
-"points": PackedFloat32Array(),
-"times": PackedFloat32Array()
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o0unb"]
 _data = {
 "RESET": SubResource("Animation_gh776"),
@@ -404,6 +296,7 @@ collision_mask = 7
 script = ExtResource("1_uajkv")
 base_speed = 2.0
 sprint_speed = 4.0
+mouse_sensitivity = 5.0
 HEAD = NodePath("Head")
 GRAPHICS = NodePath("Graphics")
 CAMERA = NodePath("Head/Camera")
@@ -417,12 +310,23 @@ hiderMaterial = ExtResource("3_gqwcm")
 tagInteractionArea = NodePath("IA_PlayerTag")
 unfreezeInteractionArea = NodePath("IA_PlayerUnfreeze")
 
-[node name="PlayerInput" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_6bmlt")
-script = ExtResource("4_t3erj")
-
 [node name="ServerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_56ji0")
+replication_config = SubResource("SceneReplicationConfig_ue1ev")
+
+[node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("4_rlumb")
+root = NodePath("..")
+enable_prediction = true
+state_properties = Array[String]([":global_transform", ":velocity", "Head:rotation", "Graphics:rotation"])
+input_properties = Array[String](["Input:input_direction", "Input:jumping", "Input:mouse_input"])
+
+[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("5_6dk3b")
+root = NodePath("..")
+properties = Array[String]([":global_transform", ":velocity"])
+
+[node name="Input" type="Node" parent="."]
+script = ExtResource("4_t3erj")
 
 [node name="Label_Username" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.41273, 0)
@@ -480,7 +384,7 @@ collide_with_areas = true
 script = ExtResource("3_glr05")
 player = NodePath("../..")
 interactLabel = NodePath("../../UserInterface/InteractText")
-player_input = NodePath("../../PlayerInput")
+player_input = NodePath("../../Input")
 
 [node name="ItemContainer" type="Node3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.478582)
@@ -488,7 +392,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.478582)
 [node name="Flashlight" parent="Head/ItemContainer" instance=ExtResource("6_lvndv")]
 
 [node name="Item" parent="Head/ItemContainer/Flashlight" index="0" node_paths=PackedStringArray("playerInput")]
-playerInput = NodePath("../../../../PlayerInput")
+playerInput = NodePath("../../../../Input")
 
 [node name="SpotLight3D" parent="Head/ItemContainer/Flashlight" index="1"]
 spot_angle = 57.0452
