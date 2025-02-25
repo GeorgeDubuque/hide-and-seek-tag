@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=41 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_uajkv"]
 [ext_resource type="Material" uid="uid://c832cg6yrl8wm" path="res://materials/material_tagger.tres" id="2_h22dh"]
@@ -7,6 +7,7 @@
 [ext_resource type="Material" uid="uid://33bvkkcsxf6x" path="res://materials/material_hider.tres" id="3_gqwcm"]
 [ext_resource type="Script" path="res://FirstPersonController/addons/fpc/EditorModule.gd" id="4_mwxu7"]
 [ext_resource type="Script" path="res://scripts/player_input.gd" id="4_t3erj"]
+[ext_resource type="AnimationNodeBlendTree" uid="uid://cmdlr7xcpbosy" path="res://resources/animation/BT_IdleWalkRun.tres" id="5_8263k"]
 [ext_resource type="PackedScene" uid="uid://cme1citet8iai" path="res://scenes/items/flashlight.tscn" id="6_lvndv"]
 [ext_resource type="PackedScene" uid="uid://dhedkm6pu187l" path="res://scenes/components/interaction_area.tscn" id="7_yd3o4"]
 
@@ -112,18 +113,21 @@ properties/24/replication_mode = 1
 properties/25/path = NodePath(".:base_speed")
 properties/25/spawn = true
 properties/25/replication_mode = 1
-properties/26/path = NodePath("Head/HeadbobAnimation:speed_scale")
+properties/26/path = NodePath(".:speed")
 properties/26/spawn = true
 properties/26/replication_mode = 1
-properties/27/path = NodePath(".:speed")
+properties/27/path = NodePath(".:velocity")
 properties/27/spawn = true
 properties/27/replication_mode = 1
-properties/28/path = NodePath(".:velocity")
+properties/28/path = NodePath(".:sprint_speed")
 properties/28/spawn = true
 properties/28/replication_mode = 1
-properties/29/path = NodePath(".:sprint_speed")
+properties/29/path = NodePath(".:play_jump_anim")
 properties/29/spawn = true
-properties/29/replication_mode = 1
+properties/29/replication_mode = 2
+properties/30/path = NodePath(".:jumping_enabled")
+properties/30/spawn = true
+properties/30/replication_mode = 1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o4lo6"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
@@ -142,33 +146,50 @@ height = 0.8
 [sub_resource type="BoxMesh" id="BoxMesh_3uy6v"]
 size = Vector3(0.5, 0.3, 0.2)
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_msmbo"]
-animation = &"idle"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_aavwn"]
+animation = &"in_air"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nem84"]
-animation = &"walk"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_acqu8"]
+animation = &"jump_land"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u77we"]
-animation = &"sprint"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5tjqw"]
+animation = &"jump_start"
+use_custom_timeline = true
+timeline_length = 1.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 0
 
-[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_iacg5"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_msmbo")
-blend_point_0/pos = 0.1
-blend_point_1/node = SubResource("AnimationNodeAnimation_nem84")
-blend_point_1/pos = 0.5
-blend_point_2/node = SubResource("AnimationNodeAnimation_u77we")
-blend_point_2/pos = 0.7
-min_space = 0.0
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xoctu"]
+advance_mode = 2
 
-[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_oufv7"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rq2o2"]
+advance_mode = 2
+advance_condition = &"jump"
 
-[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_c0h5x"]
-graph_offset = Vector2(-815, -147.744)
-nodes/IdleWalkRun/node = SubResource("AnimationNodeBlendSpace1D_iacg5")
-nodes/IdleWalkRun/position = Vector2(-300, 100)
-nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_oufv7")
-nodes/TimeScale/position = Vector2(80, 200)
-node_connections = [&"TimeScale", 0, &"IdleWalkRun", &"output", 0, &"TimeScale"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_iit8y"]
+advance_mode = 2
+advance_condition = &"grounded"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5yldr"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_03as7"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_531ou"]
+states/BT_IWR/node = ExtResource("5_8263k")
+states/BT_IWR/position = Vector2(425, 105)
+states/in_air/node = SubResource("AnimationNodeAnimation_aavwn")
+states/in_air/position = Vector2(537, -5)
+states/jump_land/node = SubResource("AnimationNodeAnimation_acqu8")
+states/jump_land/position = Vector2(639, 77)
+states/jump_start/node = SubResource("AnimationNodeAnimation_5tjqw")
+states/jump_start/position = Vector2(374, -5)
+transitions = ["Start", "BT_IWR", SubResource("AnimationNodeStateMachineTransition_xoctu"), "BT_IWR", "jump_start", SubResource("AnimationNodeStateMachineTransition_rq2o2"), "in_air", "jump_land", SubResource("AnimationNodeStateMachineTransition_iit8y"), "jump_land", "BT_IWR", SubResource("AnimationNodeStateMachineTransition_5yldr"), "jump_start", "in_air", SubResource("AnimationNodeStateMachineTransition_03as7")]
+graph_offset = Vector2(-78, -216)
 
 [sub_resource type="Animation" id="Animation_gh776"]
 resource_name = "RESET"
@@ -195,6 +216,21 @@ tracks/1/keys = {
 "handle_modes": PackedInt32Array(0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_bmpss"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
 }
 
 [sub_resource type="Animation" id="Animation_8ku67"]
@@ -251,25 +287,91 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.5, 1, 1.5, 2)
 }
 
-[sub_resource type="Animation" id="Animation_bmpss"]
-resource_name = "idle"
-tracks/0/type = "value"
+[sub_resource type="Animation" id="Animation_jhsur"]
+resource_name = "jump_start"
+length = 0.333
+tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera:position")
+tracks/0/path = NodePath("Camera:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
-"update": 0,
-"values": []
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.233333, 0.466667)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.005213, -0.214633, -0.216166, -0.0296245, 0.00612852, 0.077793, 0.0336594, 0.0473608, -0.0333333, 4.95631e-05, 0.0245608, -0.00612852, 0, -0.0333333, 0.000594759, 0.0333333, -4.95632e-05),
+"times": PackedFloat32Array(0, 0.0713285, 0.181171, 0.333333)
+}
+
+[sub_resource type="Animation" id="Animation_0fi5x"]
+resource_name = "jump_land"
+length = 0.1
+step = 0.01
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.0275, -0.00845782, -0.01, -0.03, 0.00154218, 0.09, -0.00128203, 1.47992e-05, -0.07, -0.00968299, 0.04, 0, -0.000186928, -0.03, 0.000201727, 0.25, 0),
+"times": PackedFloat32Array(0.0025, 0.1, 0.4, 0.5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.0191143, -0.0844025, -0.00315876, -0.0413538, -0.205346, 0.084627, 0.320174, -0.000149879, -0.0602864, 0.306441, 0.0370229, -0.133281, -0.000186928, -0.0173633, -0.0688942, 0.0670985, 0.000564871),
+"times": PackedFloat32Array(0, 0.1, 0.4, 0.5)
+}
+
+[sub_resource type="Animation" id="Animation_ex4ka"]
+resource_name = "in_air"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o0unb"]
 _data = {
 "RESET": SubResource("Animation_gh776"),
 "idle": SubResource("Animation_bmpss"),
+"in_air": SubResource("Animation_ex4ka"),
+"jump_land": SubResource("Animation_0fi5x"),
+"jump_start": SubResource("Animation_jhsur"),
 "sprint": SubResource("Animation_8ku67"),
 "walk": SubResource("Animation_lrqmv")
 }
@@ -305,9 +407,10 @@ sprint_speed = 4.0
 HEAD = NodePath("Head")
 GRAPHICS = NodePath("Graphics")
 CAMERA = NodePath("Head/Camera")
-HEADBOB_ANIMATION = NodePath("Head/AnimationPlayer")
+HEADBOB_ANIMATION = NodePath("Head/FPS_AnimationPlayer")
 ANIMATION_TREE = NodePath("Head/AnimationTree")
 COLLISION_MESH = NodePath("Collision")
+continuous_jumping = false
 noneMaterial = SubResource("StandardMaterial3D_j60o4")
 taggerMaterial = ExtResource("2_h22dh")
 hiderMaterial = ExtResource("3_gqwcm")
@@ -352,19 +455,22 @@ skeleton = NodePath("../../Head")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="AnimationTree" type="AnimationTree" parent="Head"]
-tree_root = SubResource("AnimationNodeBlendTree_c0h5x")
-anim_player = NodePath("../AnimationPlayer")
-parameters/IdleWalkRun/blend_position = 0.0314136
-parameters/TimeScale/scale = 4.0
+tree_root = SubResource("AnimationNodeStateMachine_531ou")
+advance_expression_base_node = NodePath("../..")
+anim_player = NodePath("../FPS_AnimationPlayer")
+parameters/conditions/grounded = true
+parameters/conditions/jump = false
+parameters/BT_IWR/IWR_Blend/blend_position = 0.5
+parameters/BT_IWR/IWR_TimeScale/scale = 1.0
+parameters/BT_IWR/IWR_TimeSeek/seek_request = -1.0
 
 [node name="Camera" type="Camera3D" parent="Head"]
 fov = 90.0
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Head"]
+[node name="FPS_AnimationPlayer" type="AnimationPlayer" parent="Head"]
 libraries = {
 "": SubResource("AnimationLibrary_o0unb")
 }
-speed_scale = 4.0
 blend_times = [&"RESET", &"RESET", 0.5, &"RESET", &"walk", 0.5, &"walk", &"RESET", 0.5]
 
 [node name="PlayerInteractor" type="RayCast3D" parent="Head" node_paths=PackedStringArray("player", "interactLabel", "player_input")]

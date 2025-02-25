@@ -121,6 +121,7 @@ var username: String
 @export var view_bobbing: bool = true
 ## Enables an immersive animation when the player_id jumps and hits the ground.
 @export var jump_animation: bool = true
+@export var play_jump_anim: bool = false
 @export var state: String = "normal"
 @export var current_speed: float = 0.0
 @export var current_animation: String
@@ -318,6 +319,12 @@ func handle_debug_menu():
 		
 func handle_jumping():
 	if jumping_enabled:
+		# sync bool to play jump anim on client
+		if play_jump_anim:
+			play_jump_anim = false
+		if !play_jump_anim and input.jumping:
+			play_jump_anim = true
+
 		if continuous_jumping: # Hold down the jump button
 			if input.jumping and is_on_floor() and !low_ceiling:
 				# if jump_animation:
@@ -449,32 +456,56 @@ func update_camera_fov():
 	else:
 		CAMERA.fov = lerp(CAMERA.fov, 90.0, 0.3)
 
+# func headbob_animation(moving):
+# 	if moving and on_floor:
+# 		var use_headbob_animation: String
+# 		match state:
+# 			"normal", "crouching":
+# 				use_headbob_animation = "walk"
+# 			"sprinting":
+# 				use_headbob_animation = "sprint"
+# 		
+# 		var was_playing: bool = false
+# 		if current_animation == use_headbob_animation:
+# 			was_playing = true
+# 		
+# 		HEADBOB_ANIMATION.play(use_headbob_animation, 0.25)
+# 		HEADBOB_ANIMATION.speed_scale = (current_speed / base_speed) * 1.75
+# 		if !was_playing:
+# 			HEADBOB_ANIMATION.seek(float(randi() % 2)) # Randomize the initial headbob direction
+# 			# Let me explain that piece of code because it looks like it does the opposite of what it actually does.
+# 			# The headbob animation has two starting positions. One is at 0 and the other is at 1.
+# 			# randi() % 2 returns either 0 or 1, and so the animation randomly starts at one of the starting positions.
+# 			# This code is extremely performant but it makes no sense.
+# 		
+# 	else:
+# 		if current_animation == "sprint" or current_animation == "walk":
+# 			HEADBOB_ANIMATION.speed_scale = 1
+# 			HEADBOB_ANIMATION.play("RESET", 1)
+
 func headbob_animation(moving):
-	if moving and on_floor:
-		var use_headbob_animation: String
-		match state:
-			"normal", "crouching":
-				use_headbob_animation = "walk"
-			"sprinting":
-				use_headbob_animation = "sprint"
-		
-		var was_playing: bool = false
-		if current_animation == use_headbob_animation:
-			was_playing = true
-		
-		HEADBOB_ANIMATION.play(use_headbob_animation, 0.25)
-		HEADBOB_ANIMATION.speed_scale = (current_speed / base_speed) * 1.75
-		if !was_playing:
-			HEADBOB_ANIMATION.seek(float(randi() % 2)) # Randomize the initial headbob direction
-			# Let me explain that piece of code because it looks like it does the opposite of what it actually does.
-			# The headbob animation has two starting positions. One is at 0 and the other is at 1.
-			# randi() % 2 returns either 0 or 1, and so the animation randomly starts at one of the starting positions.
-			# This code is extremely performant but it makes no sense.
-		
-	else:
-		if current_animation == "sprint" or current_animation == "walk":
-			HEADBOB_ANIMATION.speed_scale = 1
-			HEADBOB_ANIMATION.play("RESET", 1)
+	var horizontal_velocity = Vector2(velocity.x, velocity.z)
+	match (state):
+		"normal", "crouching", "sprinting":
+			ANIMATION_TREE.set("parameters/BT_IWR/IWR_Blend/blend_position", horizontal_velocity.length() / sprint_speed)
+			ANIMATION_TREE.set("parameters/BT_IWR/IWR_TimeScale/scale", (current_speed / base_speed) * 1.75)
+		_:
+			ANIMATION_TREE.set("parameters/BT_IWR/IWR_Blend/blend_position", 0)
+			ANIMATION_TREE.set("parameters/BT_IWR/IWR_TimeScale/scale", (current_speed / base_speed) * 1.75)
+
+
+	# if moving and on_floor:
+	# 	if !was_playing:
+	# 		HEADBOB_ANIMATION.seek(float(randi() % 2)) # Randomize the initial headbob direction
+	# 		# Let me explain that piece of code because it looks like it does the opposite of what it actually does.
+	# 		# The headbob animation has two starting positions. One is at 0 and the other is at 1.
+	# 		# randi() % 2 returns either 0 or 1, and so the animation randomly starts at one of the starting positions.
+	# 		# This code is extremely performant but it makes no sense.
+	# 	
+	# else:
+	# 	if current_animation == "sprint" or current_animation == "walk":
+	# 		HEADBOB_ANIMATION.speed_scale = 1
+	# 		HEADBOB_ANIMATION.play("RESET", 1)
 
 func _apply_input(delta: float):
 	current_speed = Vector3.ZERO.distance_to(get_real_velocity())
@@ -505,19 +536,21 @@ func _apply_input(delta: float):
 	input.mouse_input = Vector2.ZERO
 
 func animate():
-	# if dynamic_fov: # This may be changed to an AnimationPlayer
-	# 	update_camera_fov()
-	if view_bobbing:
-		ANIMATION_TREE.set("parameters/IdleWalkRun/blend_position", velocity.length() / sprint_speed)
-		# headbob_animation(input_dir)
-	# if jump_animation:
-	# 	if !was_on_floor and on_floor: # The player_id just landed
-	# 		match randi() % 2: # TODO: Change this to detecting velocity direction
-	# 			0:
-	# 				JUMP_ANIMATION.play("land_left", 0.25)
-	# 			1:
-	# 				JUMP_ANIMATION.play("land_right", 0.25)
+	ANIMATION_TREE.set("parameters/conditions/grounded", is_on_floor())
+	ANIMATION_TREE.set("parameters/conditions/jump", input.jumping)
+	if dynamic_fov: # This may be changed to an AnimationPlayer
+		update_camera_fov()
 
+	if view_bobbing:
+		headbob_animation(input_dir)
+
+
+		# if !was_on_floor and on_floor: # The player_id just landed
+			# match randi() % 2: # TODO: Change this to detecting velocity direction
+			# 	0:
+			# 		JUMP_ANIMATION.play("land_left", 0.25)
+			# 	1:
+			# 		JUMP_ANIMATION.play("land_right", 0.25)
 func _process(delta):
 	if multiplayer.is_server():
 		$UserInterface/DebugPanel.add_property("FPS", Performance.get_monitor(Performance.TIME_FPS), 0)
@@ -526,11 +559,12 @@ func _process(delta):
 			status += " in the air"
 		$UserInterface/DebugPanel.add_property("State", status, 4)
 
+
 func _physics_process(delta):
 	if multiplayer.is_server():
 		on_floor = is_on_floor()
 		_apply_input(delta)
 		animate()
-	
+
 	if multiplayer.get_unique_id() == player_id:
 		animate()

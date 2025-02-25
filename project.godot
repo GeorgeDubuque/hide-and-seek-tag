@@ -25,6 +25,7 @@ GameManager="*res://scenes/autoloads/game_manager.tscn"
 
 window/size/viewport_width=854
 window/size/viewport_height=480
+window/size/always_on_top=true
 window/stretch/mode="viewport"
 
 [dotnet]
